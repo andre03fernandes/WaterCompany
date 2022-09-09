@@ -3,74 +3,61 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Next Level</title>
+    <title>@ViewData["Title"] - The Next Level</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
-
 <body>
-    <main>
-        <div class="big-wrapper light">
-            <img src="~/images/shape.png" alt="" class="shape" />
-
-            <header>
-                <div class="container">
-                    <div class="logo">
-                        <img src="~/images/logo.png" alt="Logo" />
-                        <h3>Next Level</h3>
-                    </div>
-                    
-                    <div class="links">
-                    <ul>
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#">Orders</a></li>
-                    <li><a href="#">Back Office</a></li>
-                    <li><a href="#">Sign up</a></li>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container">
+                <img class="logo" src="~/images/logo.png" />&nbsp;<a class="navbar-brand">The Next Level</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        </li>
+                         <li class="nav-item">
+                            <a class="nav-link text-dark" asp-controller="Clients" asp-action="Index">Clients</a>
+                        </li>
                     </ul>
-                    </div>
-
-                    <div class="overlay"></div>
-
-                    <div class="hamburger-menu">
-                        <div class="bar"></div>
-                    </div>
-                </div>
-            </header>
-
-            <div class="showcase-area">
-                <div class="container">
-                    <div class="left">
-                        <div class="big-title">
-                            <h1>Drink Water,</h1>
-                            <h1>Is Good.</h1>
-                        </div>
-                        <p class="text">
-                            &nbsp; Water is an essential nutrient for life. About 60% of the human body is water. We depend on water consumption to survive. <br />
-                            &nbsp; That's why drinking water is essential and maintaining a good state of hydration is a recommendation in all situations.
-                        </p>
-                        <div class="cta">
-                            <a href="#" class="btn">Get started</a> <!-- Mandar para a página Login-->
-                        </div>
-                    </div>
-
-                    <div class="right">
-                        <img src="~/images/water.png" alt="Person Image" class="person" />
-                    </div>
                 </div>
             </div>
-        </div>
-    </main>
-
+            <div class="icons">
+                <ul>
+                    <li>
+                        <a href="https://github.com/andre03fernandes" target="_blank"><img src="~/images/github.png"></a>
+                    </li>
+                    <li>
+                        <a href="https://www.linkedin.com/in/andr%C3%A9-fernandes-4b181a1a9/" target="_blank">
+                            <img src="~/images/linkedin.png">
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
+
+    <footer class="border-top footer footer-content">
+        <div class="container">
+            CINEL | UFCD 5417 - Programação para a WEB - servidor (server-side) | 25853 
+        </div>
+    </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/lib/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-    <script src="https://kit.fontawesome.com/a81368914c.js"></script>
-    <script src="~/js/site.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
