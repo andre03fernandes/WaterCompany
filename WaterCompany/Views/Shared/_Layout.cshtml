@@ -4,57 +4,162 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - The Next Level</title>
+    <link rel="stylesheet" href="~/lib/font-awesome/css/all.min.css" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
     <header>
+        <!-- Navbar -->
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <img class="logo" src="~/images/logo.png" />&nbsp;<a class="navbar-brand">The Next Level</a>
+                <a class="navbar-brand" style="color: #007bff;">The Next Level</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
+                    <ul class="navbar-nav ml-auto navbar-right-top flex-grow-1">
+                        <li class="nav-item ">
                             <a class="nav-link text-dark" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-controller="Clients" asp-action="Index">Clients</a>
+                        </li>
+                        <li class="nav-item dropdown nav-user">
+                            <a style="color: #343a40;" class="dropdown-toggle nav-link nav-user-img" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Back Office</a>
+                            <div class="dropdown-menu dropdown-menu-right nav-user-dropdown" aria-labelledby="navbarDropdownMenuLink2">
+                                <a class="dropdown-item" href="#"><i class="fas fa-user"></i> Users</a>
+                                <a class="dropdown-item" href="#"><i class="fas fa-book"></i> Roles</a>
+                                <a class="dropdown-item" href="#"><i class="fas fa-address-book"></i> User Roles</a>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-controller="#" asp-action="Index">Offers</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="collapse navbar-collapse " id="navbarSupportedContent">
+                    <ul class="navbar-nav ml-auto navbar-right-top">
+                        <li class="nav-item dropdown connection">
+                            <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fas fa-fw fa-th"></i> </a>
+                            <ul class="dropdown-menu dropdown-menu-right connection-dropdown">
+                                <li class="connection-list">
+                                    <div class="row">
+                                        <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 ">
+                                            <a href="#" class="connection-item"><img src="~/images/aboutUs.png" alt=""> <span>About</span></a>
+                                        </div>
+                                        <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 ">
+                                            <a href="#" class="connection-item"><img src="~/images/offers.png" alt=""> <span>Offers</span></a>
+                                        </div>
+                                        <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 ">
+                                            <a class="connection-item" asp-controller="Home" asp-action="Privacy"><img src="~/images/privacy.png" alt=""> <span>Privacy</span></a>
+                                        </div>
+                                    </div>
+                                    @*                                    <div class="row">
+                                    <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 ">
+                                    <a href="#" class="connection-item"><img src="https://img.icons8.com/color/100/000000/bitbucket.png" alt=""> <span>Bitbucket</span></a>
+                                    </div>
+                                    <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 ">
+                                    <a href="#" class="connection-item"><img src="https://img.icons8.com/color/100/000000/remove-ads.png" alt=""><span>Facebook ads</span></a>
+                                    </div>
+                                    <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 ">
+                                    <a href="#" class="connection-item"><img src="https://img.icons8.com/wired/64/000000/slack.png" alt=""> <span>Slack</span></a>
+                                    </div>
+                                    </div>*@
+                                </li>
+                                @*                                <li>
+                                <div class="conntection-footer" style="background-color:#007bff;"><a href="#">More</a></div>
+                                </li>*@
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown nav-user">
+                            <a class="nav-link nav-user-img" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="~/images/profiledefault.png" alt="" class="user-avatar-md rounded-circle"></a>
+                            <div class="dropdown-menu dropdown-menu-right nav-user-dropdown" aria-labelledby="navbarDropdownMenuLink2">
+                                <div class="nav-user-info" style="background-color:#007bff;">
+                                    <h6 class="mb-0 text-white nav-user-name" style="background-color:#007bff;">&ensp;Admin</h6>
+                                </div>
+                                <a class="dropdown-item" href="#"><i class="fas fa-user mr-2"></i>Account</a>
+                                <a class="dropdown-item" href="#"><i class="fas fa-cog mr-2"></i>Settings</a>
+                                <a class="dropdown-item" href="#"><i class="fas fa-power-off mr-2"></i>Login</a>
+                            </div>
                         </li>
                     </ul>
                 </div>
             </div>
-            <div class="icons">
-                <ul>
-                    <li>
-                        <a href="https://github.com/andre03fernandes" target="_blank"><img src="~/images/github.png"></a>
-                    </li>
-                    <li>
-                        <a href="https://www.linkedin.com/in/andr%C3%A9-fernandes-4b181a1a9/" target="_blank">
-                            <img src="~/images/linkedin.png">
-                        </a>
-                    </li>
-                </ul>
-            </div>
         </nav>
     </header>
+
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer footer-content">
-        <div class="container">
-            CINEL | UFCD 5417 - Programação para a WEB - servidor (server-side) | 25853 
+    <footer class="text-center text-dark col100 footer2">
+        <!-- Grid container -->
+        <div class="container pt-4">
+            <!-- Section: Social media -->
+            <section class="mb-4">
+                <!-- Facebook -->
+                <a class="btn btn-link btn-floating btn-lg text-light m-1"
+                   href="https://en-gb.facebook.com/cinelcentroformacaoeletronica/" target="_blank"
+                   role="button"
+                   data-mdb-ripple-color="dark">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+
+                <!-- Twitter -->
+                <a class="btn btn-link btn-floating btn-lg text-light m-1"
+                   href="https://twitter.com/cinel_formacao?lang=pt" target="_blank"
+                   role="button"
+                   data-mdb-ripple-color="dark">
+                    <i class="fab fa-twitter"></i>
+                </a>
+
+                <!-- Google -->
+                <a class="btn btn-link btn-floating btn-lg text-light m-1"
+                   href="https://www.google.com/" target="_blank"
+                   role="button"
+                   data-mdb-ripple-color="dark">
+                    <i class="fab fa-google"></i>
+                </a>
+
+                <!-- Instagram -->
+                <a class="btn btn-link btn-floating btn-lg text-light m-1"
+                   href="https://www.instagram.com/cinel.formacao/" target="_blank"
+                   role="button"
+                   data-mdb-ripple-color="dark">
+                    <i class="fab fa-instagram"></i>
+                </a>
+
+                <!-- Linkedin -->
+                <a class="btn btn-link btn-floating btn-lg text-light m-1"
+                   href="https://www.linkedin.com/in/andr%C3%A9-fernandes-4b181a1a9/" target="_blank"
+                   role="button"
+                   data-mdb-ripple-color="dark">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+                <!-- Github -->
+                <a class="btn btn-link btn-floating btn-lg text-light m-1"
+                   href="https://github.com/andre03fernandes" target="_blank"
+                   role="button"
+                   data-mdb-ripple-color="dark">
+                    <i class="fab fa-github"></i>
+                </a>
+            </section>
+            <!-- Section: Social media -->
         </div>
+        <!-- Grid container -->
+        <!-- Copyright -->
+        <div class="text-center text-dark p-3 col100 footer2" style="background-color: white">
+            <a class="text-dark">&copy; @DateTime.Now.Year - André Fernandes. All rights reserved. Enjoy it!</a>
+        </div>
+        <!-- Copyright -->
     </footer>
+
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

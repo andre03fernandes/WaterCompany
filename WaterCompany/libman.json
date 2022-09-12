@@ -3,19 +3,20 @@
   "defaultProvider": "cdnjs",
   "libraries": [
     {
-      "provider": "cdnjs",
       "library": "bootstrap-datepicker@1.9.0",
       "destination": "wwwroot/lib/bootstrap-datepicker/"
     },
     {
-      "provider": "cdnjs",
       "library": "datatables.net@2.1.1",
       "destination": "wwwroot/lib/datatables.net/"
     },
     {
-      "provider": "cdnjs",
       "library": "font-awesome@5.15.4",
       "destination": "wwwroot/lib/font-awesome/"
+    },
+    {
+      "library": "bootstrap@5.2.1",
+      "destination": "wwwroot/lib/bootstrap/"
     }
   ]
 }

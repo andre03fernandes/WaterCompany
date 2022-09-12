@@ -3,13 +3,14 @@
 @{
     ViewData["Title"] = "Create";
 }
+<br />
+<br />
 
-<h1>Create</h1>
-
-<h4>Client</h4>
+<h1 style="text-align:center;">New Client</h1>
 <hr />
-<div class="row">
-    <div class="col-md-4">
+<br />
+<div class="row centerform">
+    <div class="col-md-12">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
@@ -41,6 +42,7 @@
                 <label asp-for="Email" class="control-label"></label>
                 <input asp-for="Email" class="form-control" />
                 <span asp-validation-for="Email" class="text-danger"></span>
+                <br />
             </div>
             <div class="form-group form-check">
                 <label class="form-check-label">
@@ -48,16 +50,18 @@
                 </label>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <br />
+                <button type="submit" value="Create" class="btn btn-outline-primary"><i class="far fa-plus-square"></i></button>
+                <a class="btn btn-outline-primary" asp-action="Index"><i class="fas fa-backward"></i></a>
             </div>
         </form>
     </div>
 </div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+<br />
+<br />
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }

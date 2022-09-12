@@ -10,7 +10,7 @@ namespace WaterCompany.Data.Entities
 
         [Required]
         [MaxLength(50, ErrorMessage = "The field {0} only can contain {1} characters lenght.")]
-        [Display(Name = "Client Name")]
+        [Display(Name = "Name")]
         public string ClientName { get; set; }
 
         [MinLength(9, ErrorMessage = "Not a valide phone number!")]
@@ -29,14 +29,14 @@ namespace WaterCompany.Data.Entities
         [Required]
         [MinLength(9)]
         [MaxLength(9)]
-        [Display(Name = "Tax identification number")]
+        [Display(Name = "TIN")]
         public string TIN { get; set; }
 
         [Required]
         [EmailAddress]
         public string Email { get; set; }
 
-        [Display(Name = "Is Available")]
+        [Display(Name = "Available")]
         public bool IsAvailable { get; set; }
 
         //public User User { get; set; }
