@@ -31,6 +31,7 @@ namespace WaterCompany
             });
 
             services.AddTransient<SeedDb>();
+            services.AddScoped<IClientRepository, ClientRepository>();
             services.AddControllersWithViews();
         }
 

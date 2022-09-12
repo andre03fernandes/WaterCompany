@@ -1,10 +1,8 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-using static System.Net.Mime.MediaTypeNames;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace WaterCompany.Data.Entities
 {
-    public class Client
+    public class Client : IEntity
     {
         public int Id { get; set; }
 

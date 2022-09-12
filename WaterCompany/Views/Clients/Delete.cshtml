@@ -11,8 +11,11 @@
 <hr />
 <br />
 <div class="centerform">
-    <a asp-action="Delete" asp-for="Id" class="btn btn-outline-primary"><i class="fas fa-trash-alt"></i></a>
-    <a class="btn btn-outline-primary" asp-action="Index"><i class="fas fa-backward"></i></a>
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <button type="submit" class="btn btn-outline-primary"><i class="fas fa-trash-alt"></i></button>
+        <a class="btn btn-outline-primary" asp-action="Index"><i class="fas fa-backward"></i></a>
+    </form>
 </div>
 <br />
 <div class="row col align-self-center">
