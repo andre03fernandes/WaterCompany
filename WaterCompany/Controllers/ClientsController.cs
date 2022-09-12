@@ -1,24 +1,28 @@
 ﻿namespace WaterCompany.Controllers
 {
+    using System.Linq;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
     using WaterCompany.Data;
     using WaterCompany.Data.Entities;
+    using WaterCompany.Helpers;
 
     public class ClientsController : Controller
     {
         private readonly IClientRepository _clientRepository;
+        private readonly IUserHelper _userHelper;
 
-        public ClientsController(IClientRepository clientRepository)
+        public ClientsController(IClientRepository clientRepository, IUserHelper userHelper)
         {
             _clientRepository = clientRepository;
+            _userHelper = userHelper;
         }
 
         // GET: Clients
         public IActionResult Index()
         {
-            return View(_clientRepository.GetAll());
+            return View(_clientRepository.GetAll().OrderBy(p => p.ClientName));
         }
 
         // GET: Clients/Details/5
@@ -53,6 +57,8 @@
         {
             if (ModelState.IsValid)
             {
+                // TODO: Modificar para o user que tiver logado
+                client.User = await _userHelper.GetUserByEmailAsync("andre2411adm@gmail.com");
                 await _clientRepository.CreateAsync(client);
                 return RedirectToAction(nameof(Index));
             }
@@ -91,6 +97,8 @@
             {
                 try
                 {
+                    // TODO: Modificar para o user que tiver logado
+                    client.User = await _userHelper.GetUserByEmailAsync("andre2411adm@gmail.com");
                     await _clientRepository.UpdateAsync(client);
                 }
                 catch (DbUpdateConcurrencyException)

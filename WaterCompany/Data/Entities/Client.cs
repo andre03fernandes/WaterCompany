@@ -37,7 +37,7 @@ namespace WaterCompany.Data.Entities
         [Display(Name = "Available")]
         public bool IsAvailable { get; set; }
 
-        //public User User { get; set; }
+        public User User { get; set; }
 
         //[Display(Name = "Image")]
         //public Guid ImageId { get; set; }
