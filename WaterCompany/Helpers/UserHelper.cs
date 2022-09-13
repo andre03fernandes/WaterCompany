@@ -18,9 +18,9 @@
             return await _userManager.CreateAsync(user, password);
         }
 
-        public async Task<User> GetUserByEmailAsync(string email)
+        public async Task<User> GetUserByUserNameAsync(string username)
         {
-            return await _userManager.FindByEmailAsync(email);
+            return await _userManager.FindByNameAsync(username);
         }
     }
 }

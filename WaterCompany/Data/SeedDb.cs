@@ -25,7 +25,7 @@
         {
             await _context.Database.MigrateAsync();
 
-            var user = await _userHelper.GetUserByEmailAsync("andre2411adm@gmail.com");
+            var user = await _userHelper.GetUserByUserNameAsync("andre@admin");
             if(user == null)
             {
                 user = new User
@@ -46,9 +46,9 @@
 
             if (!_context.Clients.Any())
             {
-                AddClient("Ricardo Simão", user);
-                AddClient("José Simão", user);
-                AddClient("Ricardo Mourato", user);
+                AddClient("Client 1", user);
+                AddClient("Client 2", user);
+                AddClient("Client 3", user);
                 await _context.SaveChangesAsync();
             }
         }
@@ -59,10 +59,10 @@
             {
                 ClientName = name,
                 Telephone = Convert.ToString(_random.Next(930000000, 939999999)),
-                Address = "Rua xpto",
-                PostalCode = "1950-345",
-                TIN = Convert.ToString(_random.Next(000000000, 999999999)),
-                Email = "test1@gmail.com",
+                Address = "Rua xpto " + Convert.ToString(_random.Next(000, 999)),
+                PostalCode = "1950-" + Convert.ToString(_random.Next(100, 999)),
+                TIN = Convert.ToString(_random.Next(100000000, 999999999)),
+                Email = "test" + Convert.ToString(_random.Next(000, 999)) + "@gmail.com",
                 IsAvailable = true,
                 User = user
             });

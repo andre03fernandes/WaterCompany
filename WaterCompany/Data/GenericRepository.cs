@@ -16,7 +16,6 @@ namespace WaterCompany.Data
 
         public IQueryable<T> GetAll()
         {
-            // AsNoTracking - vai buscar à tabela os dados e desliga a ligação, não ficando preso à tabela (Set<T> - é a tabela correspondente)
             return _context.Set<T>().AsNoTracking();
         }
 
@@ -35,7 +34,7 @@ namespace WaterCompany.Data
 
         public async Task UpdateAsync(T entity)
         {
-            _context.Set<T>().Update(entity); // UpdateRange - update a vários ao mesmo tempo - vamos utlizar mais à frente
+            _context.Set<T>().Update(entity);
             await SaveAllAsync();
         }
 
@@ -47,7 +46,7 @@ namespace WaterCompany.Data
 
         public async Task<bool> ExistAsync(int id)
         {
-            return await _context.Set<T>().AnyAsync(e => e.Id == id); // Busca qualquer um que tenha os mesmo id
+            return await _context.Set<T>().AnyAsync(e => e.Id == id);
         }
 
         private async Task<bool> SaveAllAsync()

@@ -38,13 +38,5 @@ namespace WaterCompany.Data.Entities
         public bool IsAvailable { get; set; }
 
         public User User { get; set; }
-
-        //[Display(Name = "Image")]
-        //public Guid ImageId { get; set; }
-
-        //[Display(Name = "Image")]
-        //public string ImageFullPath => ImageId == Guid.Empty
-        //    ? $"https://supershop25853.blob.core.windows.net/images/noimage.png"
-        //    : $"https://supershop25853.blob.core.windows.net/products/{ImageId}";
     }
 }

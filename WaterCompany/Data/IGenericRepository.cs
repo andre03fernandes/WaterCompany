@@ -5,16 +5,16 @@ namespace WaterCompany.Data
 {
     public interface IGenericRepository<T> where T : class
     {
-        IQueryable<T> GetAll(); // Método que devolve todas as entidades (a que o T tiver a usar) (IQueryable - lista)
+        IQueryable<T> GetAll();
 
         Task<T> GetByIdAsync(int id);
 
-        Task CreateAsync(T entity); // Parâmetro - entidade T - genérico
+        Task CreateAsync(T entity);
 
         Task UpdateAsync(T entity);
 
         Task DeleteAsync(T entity);
 
-        Task<bool> ExistAsync(int id); // Se existe uma entidade que recebe o id
+        Task<bool> ExistAsync(int id);
     }
 }

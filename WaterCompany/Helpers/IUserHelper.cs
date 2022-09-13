@@ -6,7 +6,7 @@ namespace WaterCompany.Helpers
 {
     public interface IUserHelper
     {
-        Task<User> GetUserByEmailAsync(string email);
+        Task<User> GetUserByUserNameAsync(string username);
 
         Task<IdentityResult> AddUserAsync(User user, string password);
     }

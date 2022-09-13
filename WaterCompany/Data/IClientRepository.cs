@@ -2,7 +2,5 @@
 
 namespace WaterCompany.Data
 {
-    public interface IClientRepository : IGenericRepository<Client>
-    {
-    }
+    public interface IClientRepository : IGenericRepository<Client> { }
 }

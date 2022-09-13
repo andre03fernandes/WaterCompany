@@ -58,7 +58,7 @@
             if (ModelState.IsValid)
             {
                 // TODO: Modificar para o user que tiver logado
-                client.User = await _userHelper.GetUserByEmailAsync("andre2411adm@gmail.com");
+                client.User = await _userHelper.GetUserByUserNameAsync("andre@admin");
                 await _clientRepository.CreateAsync(client);
                 return RedirectToAction(nameof(Index));
             }
@@ -98,7 +98,7 @@
                 try
                 {
                     // TODO: Modificar para o user que tiver logado
-                    client.User = await _userHelper.GetUserByEmailAsync("andre2411adm@gmail.com");
+                    client.User = await _userHelper.GetUserByUserNameAsync("andre@admin");
                     await _clientRepository.UpdateAsync(client);
                 }
                 catch (DbUpdateConcurrencyException)

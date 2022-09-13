@@ -11,7 +11,6 @@
 </head>
 <body>
     <header>
-        <!-- Navbar -->
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
                 <a class="navbar-brand" style="color: #007bff;" >The Next Level&nbsp;</a>
@@ -57,25 +56,25 @@
                                             <a class="connection-item" asp-controller="Home" asp-action="Privacy"><img src="~/images/privacy.png" alt=""> <span>Privacy</span></a>
                                         </div>
                                     </div>
-                                    @*                                    <div class="row">
+                                    @*<div class="row">
                                     <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 ">
-                                    <a href="#" class="connection-item"><img src="https://img.icons8.com/color/100/000000/bitbucket.png" alt=""> <span>Bitbucket</span></a>
+                                    <a href="#" class="connection-item"><img src="" alt=""> <span></span></a>
                                     </div>
                                     <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 ">
-                                    <a href="#" class="connection-item"><img src="https://img.icons8.com/color/100/000000/remove-ads.png" alt=""><span>Facebook ads</span></a>
+                                    <a href="#" class="connection-item"><img src="" alt=""><span></span></a>
                                     </div>
                                     <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 ">
-                                    <a href="#" class="connection-item"><img src="https://img.icons8.com/wired/64/000000/slack.png" alt=""> <span>Slack</span></a>
+                                    <a href="#" class="connection-item"><img src="" alt=""> <span></span></a>
                                     </div>
                                     </div>*@
                                 </li>
-                                @*                                <li>
+                                @*<li>
                                 <div class="conntection-footer" style="background-color:#007bff;"><a href="#">More</a></div>
                                 </li>*@
                             </ul>
                         </li>
                         <li class="nav-item dropdown nav-user">
-                            <a class="nav-link nav-user-img" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="~/images/profiledefault.png" alt="" class="user-avatar-md rounded-circle"></a>
+                            <a class="nav-link nav-user-img" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="~/images/Admin.jpg" alt="" class="user-avatar-md rounded-circle"></a>
                             <div class="dropdown-menu dropdown-menu-right nav-user-dropdown" aria-labelledby="navbarDropdownMenuLink2">
                                 <div class="nav-user-info" style="background-color:#007bff;">
                                     <h6 class="mb-0 text-white nav-user-name" style="background-color:#007bff;">&ensp;Admin</h6>
@@ -98,50 +97,38 @@
     </div>
 
     <footer class="text-center text-dark col100 footer2">
-        <!-- Grid container -->
         <div class="container pt-4">
-            <!-- Section: Social media -->
             <section class="mb-4">
-                <!-- Facebook -->
                 <a class="btn btn-link btn-floating btn-lg text-light m-1"
                    href="https://en-gb.facebook.com/cinelcentroformacaoeletronica/" target="_blank"
                    role="button"
                    data-mdb-ripple-color="dark">
                     <i class="fab fa-facebook-f"></i>
                 </a>
-
-                <!-- Twitter -->
                 <a class="btn btn-link btn-floating btn-lg text-light m-1"
                    href="https://twitter.com/cinel_formacao?lang=pt" target="_blank"
                    role="button"
                    data-mdb-ripple-color="dark">
                     <i class="fab fa-twitter"></i>
                 </a>
-
-                <!-- Google -->
                 <a class="btn btn-link btn-floating btn-lg text-light m-1"
                    href="https://www.google.com/" target="_blank"
                    role="button"
                    data-mdb-ripple-color="dark">
                     <i class="fab fa-google"></i>
                 </a>
-
-                <!-- Instagram -->
                 <a class="btn btn-link btn-floating btn-lg text-light m-1"
                    href="https://www.instagram.com/cinel.formacao/" target="_blank"
                    role="button"
                    data-mdb-ripple-color="dark">
                     <i class="fab fa-instagram"></i>
                 </a>
-
-                <!-- Linkedin -->
                 <a class="btn btn-link btn-floating btn-lg text-light m-1"
                    href="https://www.linkedin.com/in/andr%C3%A9-fernandes-4b181a1a9/" target="_blank"
                    role="button"
                    data-mdb-ripple-color="dark">
                     <i class="fab fa-linkedin"></i>
                 </a>
-                <!-- Github -->
                 <a class="btn btn-link btn-floating btn-lg text-light m-1"
                    href="https://github.com/andre03fernandes" target="_blank"
                    role="button"
@@ -149,20 +136,50 @@
                     <i class="fab fa-github"></i>
                 </a>
             </section>
-            <!-- Section: Social media -->
         </div>
-        <!-- Grid container -->
-        <!-- Copyright -->
         <div class="text-center text-dark p-3 col100 footer2" style="background-color: white">
             <a class="text-dark">&copy; @DateTime.Now.Year - André Fernandes. All rights reserved. Enjoy it!</a>
         </div>
-        <!-- Copyright -->
     </footer>
 
+    <div class="loader-wrapper">
+        <span class="loader"><span class="loader-inner"></span></span>
+    </div>
+
+    <div class="scrollTop" onclick="scrollToTop();"><img src="~/images/up-arrow.png"/></div>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script>
+        window.addEventListener('scroll', function(){
+            var scroll = document.querySelector('.scrollTop');
+            scroll.classList.toggle("active", window.scrollY > 500)
+        })
+
+        function scrollToTop(){
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            })
+        }
+    </script>
+    <script>
+        $(window).on("load", function(){
+            $(".loader-wrapper").fadeOut("slow");
+        });
+    </script>
+    @*<script type="text/javascript" id="cookieinfo"
+            src="//cookieinfoscript.com/js/cookieinfo.min.js"
+            data-bg="#1f4f66"
+            data-fg="#FFFFFF"
+            data-link="#f1d600"
+            data-moreinfo="https://nextlevel.azurewebsites.net/Home/Privacy"
+            data-message="Cookies help us deliver the best experience on our website. By using our website, you agree to the use of cookies."
+            data-text-align="center"
+            data-close-text="Got it!"
+            data-cookie="CookieInfoScript">
+    </script>*@
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
