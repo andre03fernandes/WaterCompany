@@ -15,11 +15,15 @@
     {
         private readonly IClientRepository _clientRepository;
         private readonly IUserHelper _userHelper;
+        private readonly IImageHelper _imageHelper;
+        private readonly IConverterHelper _converterHelper;
 
-        public ClientsController(IClientRepository clientRepository, IUserHelper userHelper)
+        public ClientsController(IClientRepository clientRepository, IUserHelper userHelper, IImageHelper imageHelper, IConverterHelper converterHelper)
         {
             _clientRepository = clientRepository;
             _userHelper = userHelper;
+            _imageHelper = imageHelper;
+            _converterHelper = converterHelper;
         }
 
         // GET: Clients
@@ -64,23 +68,10 @@
 
                 if(model.ImageFile != null && model.ImageFile.Length > 0)
                 {
-                    var guid = Guid.NewGuid().ToString();
-                    var file = $"{guid}.png";
-
-                    path = Path.Combine(
-                        Directory.GetCurrentDirectory(),
-                        "wwwroot\\images\\clients",
-                        file);
-
-                    using(var stream = new FileStream(path, FileMode.Create))
-                    {
-                        await model.ImageFile.CopyToAsync(stream);
-                    }
-
-                    path = $"~/images/clients/{file}";
+                    path = await _imageHelper.UploadImageAsync(model.ImageFile, "clients");
                 }
 
-                var client = this.ToClient(model, path);
+                var client = _converterHelper.ToClient(model, path, true);
 
                 // TODO: Modificar para o user que tiver logado
                 client.User = await _userHelper.GetUserByUserNameAsync("andre@admin");
@@ -88,23 +79,6 @@
                 return RedirectToAction(nameof(Index));
             }
             return View(model);
-        }
-
-        private Client ToClient(ClientViewModel model, string path)
-        {
-            return new Client
-            {
-                Id = model.Id,
-                ClientName = model.ClientName,
-                Telephone = model.Telephone,
-                Address = model.Address,
-                PostalCode = model.PostalCode,
-                TIN = model.TIN,
-                Email = model.Email,
-                ImageUrl = path,
-                IsAvailable = model.IsAvailable,
-                User = model.User
-            };
         }
 
         // GET: Clients/Edit/5
@@ -121,25 +95,8 @@
                 return NotFound();
             }
 
-            var model = this.ToClientViewModel(client);
+            var model = _converterHelper.ToClientViewModel(client);
             return View(model);
-        }
-
-        private ClientViewModel ToClientViewModel(Client client)
-        {
-            return new ClientViewModel
-            {
-                Id = client.Id,
-                ClientName = client.ClientName,
-                Telephone = client.Telephone,
-                Address = client.Address,
-                PostalCode = client.PostalCode,
-                TIN = client.TIN,
-                Email = client.Email,
-                ImageUrl = client.ImageUrl,
-                IsAvailable = client.IsAvailable,
-                User = client.User
-            };
         }
 
         // POST: Clients/Edit/5
@@ -157,23 +114,10 @@
 
                     if(model.ImageFile != null && model.ImageFile.Length > 0)
                     {
-                        var guid = Guid.NewGuid().ToString();
-                        var file = $"{guid}.png";
-
-                        path = Path.Combine(
-                            Directory.GetCurrentDirectory(),
-                            "wwwroot\\images\\clients",
-                            file);
-
-                        using(var stream = new FileStream(path, FileMode.Create))
-                        {
-                            await model.ImageFile.CopyToAsync(stream);
-                        }
-
-                        path = $"~/images/clients/{file}";
+                        path = await _imageHelper.UploadImageAsync(model.ImageFile, "clients");
                     }
 
-                    var client = this.ToClient(model, path);
+                    var client = _converterHelper.ToClient(model, path, false);
 
                     // TODO: Modificar para o user que tiver logado
                     client.User = await _userHelper.GetUserByUserNameAsync("andre@admin");
