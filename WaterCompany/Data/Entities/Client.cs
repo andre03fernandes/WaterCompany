@@ -37,6 +37,22 @@ namespace WaterCompany.Data.Entities
         [Display(Name = "Available")]
         public bool IsAvailable { get; set; }
 
+        [Display(Name = "Image")]
+        public string ImageUrl { get; set; }
+
         public User User { get; set; }
+
+        public string ImageFullPath
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(ImageUrl))
+                {
+                    return null;
+                }
+
+                return $"https://localhost:44343{ImageUrl.Substring(1)}";
+            }
+        }
     }
 }

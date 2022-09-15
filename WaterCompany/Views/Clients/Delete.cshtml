@@ -19,8 +19,17 @@
 </div>
 <br />
 <div class="row col align-self-center">
-    <div class="col-md-8">
-        <dl class="row data_table">
+    <div class="col-md-12">
+        <dl class="row data_table" style="padding-left: 45px;">
+            <dt class="col-3">
+                @Html.DisplayNameFor(model => model.ImageUrl)
+            </dt>
+            <dd class="col-9">
+                @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                {
+                    <img class="user-avatar-md rounded-circle" src="@Url.Content(Model.ImageUrl)" alt="Image" style="width: auto; height: 100px;" />
+                }
+            </dd>
             <dt class="col-3">
                 @Html.DisplayNameFor(model => model.ClientName)
             </dt>

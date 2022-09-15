@@ -1,4 +1,4 @@
-﻿@model WaterCompany.Data.Entities.Client
+﻿@model WaterCompany.Models.ClientViewModel
 
 @{
     ViewData["Title"] = "Create";
@@ -11,7 +11,7 @@
 <br />
 <div class="row centerform">
     <div class="col-md-12">
-        <form asp-action="Create">
+        <form asp-action="Create" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="ClientName" class="control-label"></label>
@@ -42,6 +42,11 @@
                 <label asp-for="Email" class="control-label"></label>
                 <input asp-for="Email" class="form-control" />
                 <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ImageFile" class="control-label"></label>
+                <input asp-for="ImageFile" class="form-control" type="file" placeholder="" />
+                <span asp-validation-for="ImageFile" class="text-danger"></span>
                 <br />
             </div>
             <div class="form-group form-check">
