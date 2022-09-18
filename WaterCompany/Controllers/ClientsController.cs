@@ -1,13 +1,11 @@
 ﻿namespace WaterCompany.Controllers
 {
     using System;
-    using System.IO;
     using System.Linq;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
     using WaterCompany.Data;
-    using WaterCompany.Data.Entities;
     using WaterCompany.Helpers;
     using WaterCompany.Models;
 
@@ -15,14 +13,14 @@
     {
         private readonly IClientRepository _clientRepository;
         private readonly IUserHelper _userHelper;
-        private readonly IImageHelper _imageHelper;
+        private readonly IBlobHelper _blobHelper;
         private readonly IConverterHelper _converterHelper;
 
-        public ClientsController(IClientRepository clientRepository, IUserHelper userHelper, IImageHelper imageHelper, IConverterHelper converterHelper)
+        public ClientsController(IClientRepository clientRepository, IUserHelper userHelper, IBlobHelper blobHelper, IConverterHelper converterHelper)
         {
             _clientRepository = clientRepository;
             _userHelper = userHelper;
-            _imageHelper = imageHelper;
+            _blobHelper = blobHelper;
             _converterHelper = converterHelper;
         }
 
@@ -64,14 +62,14 @@
         {
             if (ModelState.IsValid)
             {
-                var path = string.Empty;
+                Guid imageId = Guid.Empty;
 
-                if(model.ImageFile != null && model.ImageFile.Length > 0)
+                if (model.ImageFile != null && model.ImageFile.Length > 0)
                 {
-                    path = await _imageHelper.UploadImageAsync(model.ImageFile, "clients");
+                    imageId = await _blobHelper.UploadBlobAsync(model.ImageFile, "clients");
                 }
 
-                var client = _converterHelper.ToClient(model, path, true);
+                var client = _converterHelper.ToClient(model, imageId, true);
 
                 // TODO: Modificar para o user que tiver logado
                 client.User = await _userHelper.GetUserByUserNameAsync("andre@admin");
@@ -110,14 +108,14 @@
             {
                 try
                 {
-                    var path = model.ImageUrl;
+                    Guid imageId = Guid.Empty;
 
-                    if(model.ImageFile != null && model.ImageFile.Length > 0)
+                    if (model.ImageFile != null && model.ImageFile.Length > 0)
                     {
-                        path = await _imageHelper.UploadImageAsync(model.ImageFile, "clients");
+                        imageId = await _blobHelper.UploadBlobAsync(model.ImageFile, "clients");
                     }
 
-                    var client = _converterHelper.ToClient(model, path, false);
+                    var client = _converterHelper.ToClient(model, imageId, false);
 
                     // TODO: Modificar para o user que tiver logado
                     client.User = await _userHelper.GetUserByUserNameAsync("andre@admin");

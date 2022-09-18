@@ -14,12 +14,9 @@
         <form asp-action="Edit" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
-            <input type="hidden" asp-for="ImageUrl" />
+            <input type="hidden" asp-for="ImageId" />
             <div class="form-group">
-                @if (!string.IsNullOrEmpty(Model.ImageUrl))
-                {
-                    <img class="user-avatar-md rounded-circle" src="@Url.Content(Model.ImageUrl)" alt="Image" style="width: auto; height: 100px;" />
-                }
+                <img class="user-avatar-md" src="@Url.Content(Model.ImageFullPath)" alt="Image" style="width: auto; height: 70px;" />
             </div>
             <br />
             <div class="form-group">

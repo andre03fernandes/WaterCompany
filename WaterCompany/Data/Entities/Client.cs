@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace WaterCompany.Data.Entities
 {
@@ -38,21 +39,13 @@ namespace WaterCompany.Data.Entities
         public bool IsAvailable { get; set; }
 
         [Display(Name = "Image")]
-        public string ImageUrl { get; set; }
+        public Guid ImageId { get; set; }
 
         public User User { get; set; }
 
-        public string ImageFullPath
-        {
-            get
-            {
-                if (string.IsNullOrEmpty(ImageUrl))
-                {
-                    return null;
-                }
-
-                return $"https://localhost:44343{ImageUrl.Substring(1)}";
-            }
-        }
+        [Display(Name = "Image")]
+        public string ImageFullPath => ImageId == Guid.Empty
+            ? $"https://nextlevel25853.blob.core.windows.net/images/noimage.png"
+            : $"https://nextlevel25853.blob.core.windows.net/clients/{ImageId}";
     }
 }

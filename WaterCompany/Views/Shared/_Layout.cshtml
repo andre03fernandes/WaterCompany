@@ -7,13 +7,16 @@
     <link rel="stylesheet" href="~/lib/font-awesome/css/all.min.css" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+    <link href="~/images/water-drop.ico" rel="shortcut icon" type="image/x-icon" />
+    <link href="https://stackpath.bootstrappcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/css/dark-mode.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" style="color: #007bff;" >The Next Level&nbsp;</a>
+                <a class="navbar-brand" style="color: #007bff;">The Next Level&nbsp;</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -56,21 +59,7 @@
                                             <a class="connection-item" asp-controller="Home" asp-action="Privacy"><img src="~/images/privacy.png" alt=""> <span>Privacy</span></a>
                                         </div>
                                     </div>
-                                    @*<div class="row">
-                                    <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 ">
-                                    <a href="#" class="connection-item"><img src="" alt=""> <span></span></a>
-                                    </div>
-                                    <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 ">
-                                    <a href="#" class="connection-item"><img src="" alt=""><span></span></a>
-                                    </div>
-                                    <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 ">
-                                    <a href="#" class="connection-item"><img src="" alt=""> <span></span></a>
-                                    </div>
-                                    </div>*@
                                 </li>
-                                @*<li>
-                                <div class="conntection-footer" style="background-color:#007bff;"><a href="#">More</a></div>
-                                </li>*@
                             </ul>
                         </li>
                         <li class="nav-item dropdown nav-user">
@@ -83,6 +72,17 @@
                                 <a class="dropdown-item" href="#"><i class="fas fa-cog mr-2"></i>Settings</a>
                                 <a class="dropdown-item" href="#"><i class="fas fa-power-off mr-2"></i>Login</a>
                             </div>
+                        </li>
+                        <li class="navbar">
+                            <h3 class="navbar-brand mr-auto"></h3>
+                            <nav class="navbar-nav">
+                                <div class="nav-link">
+                                    <div class="custom-control custom-switch">
+                                        <input type="checkbox" class="custom-control-input" id="darkSwitch" />
+                                        <label class="custom-control-label" for="darkSwitch"></label>
+                                    </div>
+                                </div>
+                            </nav>
                         </li>
                     </ul>
                 </div>
@@ -138,7 +138,7 @@
             </section>
         </div>
         <div class="text-center text-dark p-3 col100 footer2" style="background-color: white">
-            <a class="text-dark">&copy; @DateTime.Now.Year - André Fernandes. All rights reserved. Enjoy it!</a>
+            <a class="text-dark backg">&copy; @DateTime.Now.Year - André Fernandes. All rights reserved. Enjoy it!</a>
         </div>
     </footer>
 
@@ -146,18 +146,19 @@
         <span class="loader"><span class="loader-inner"></span></span>
     </div>
 
-    <div class="scrollTop" onclick="scrollToTop();"><img src="~/images/up-arrow.png"/></div>
+    <div class="scrollTop" onclick="scrollToTop();"><img src="~/images/up-arrow.png" /></div>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/lib/bootstrap/js/dark-mode-switch.min.js"></script>
     <script>
-        window.addEventListener('scroll', function(){
+        window.addEventListener('scroll', function () {
             var scroll = document.querySelector('.scrollTop');
             scroll.classList.toggle("active", window.scrollY > 500)
         })
 
-        function scrollToTop(){
+        function scrollToTop() {
             window.scrollTo({
                 top: 0,
                 behavior: 'smooth'
@@ -165,20 +166,20 @@
         }
     </script>
     <script>
-        $(window).on("load", function(){
+        $(window).on("load", function () {
             $(".loader-wrapper").fadeOut("slow");
         });
     </script>
-    @*<script type="text/javascript" id="cookieinfo"
-            src="//cookieinfoscript.com/js/cookieinfo.min.js"
-            data-bg="#1f4f66"
-            data-fg="#FFFFFF"
-            data-link="#f1d600"
-            data-moreinfo="https://nextlevel.azurewebsites.net/Home/Privacy"
-            data-message="Cookies help us deliver the best experience on our website. By using our website, you agree to the use of cookies."
-            data-text-align="center"
-            data-close-text="Got it!"
-            data-cookie="CookieInfoScript">
+    @*   <script type="text/javascript" id="cookieinfo"
+    src="//cookieinfoscript.com/js/cookieinfo.min.js"
+    data-bg="#1f4f66"
+    data-fg="#FFFFFF"
+    data-link="#f1d600"
+    data-moreinfo="https://nextlevel25853.azurewebsites.net/Home/Privacy"
+    data-message="Cookies help us deliver the best experience on our website. By using our website, you agree to the use of cookies."
+    data-text-align="center"
+    data-close-text="Got it!"
+    @*data-cookie="CookieInfoScript">
     </script>*@
     @await RenderSectionAsync("Scripts", required: false)
 </body>

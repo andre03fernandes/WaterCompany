@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using WaterCompany.Data.Entities;
 using WaterCompany.Models;
 
@@ -6,7 +7,7 @@ namespace WaterCompany.Helpers
 {
     public class ConverterHelper : IConverterHelper
     {
-        public Client ToClient(ClientViewModel model, string path, bool isNew)
+        public Client ToClient(ClientViewModel model, Guid imageId, bool isNew)
         {
             return new Client
             {
@@ -17,7 +18,7 @@ namespace WaterCompany.Helpers
                 PostalCode = model.PostalCode,
                 TIN = model.TIN,
                 Email = model.Email,
-                ImageUrl = path,
+                ImageId = imageId,
                 IsAvailable = model.IsAvailable,
                 User = model.User
             };
@@ -34,7 +35,7 @@ namespace WaterCompany.Helpers
                 PostalCode = client.PostalCode,
                 TIN = client.TIN,
                 Email = client.Email,
-                ImageUrl = client.ImageUrl,
+                ImageId = client.ImageId,
                 IsAvailable = client.IsAvailable,
                 User = client.User
             };

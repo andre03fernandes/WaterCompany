@@ -35,7 +35,7 @@
                     @Html.DisplayNameFor(model => model.Email)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.ImageUrl)
+                    @Html.DisplayNameFor(model => model.ImageFullPath)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.IsAvailable)
@@ -66,9 +66,9 @@
                         @Html.DisplayFor(modelItem => item.Email)
                     </td>
                     <td>
-                        @if (!string.IsNullOrEmpty(item.ImageUrl))
+                        @if (!string.IsNullOrEmpty(item.ImageFullPath))
                         {
-                            <img class="user-avatar-md rounded-circle" src="@Url.Content(item.ImageUrl)" alt="Image" style="width: auto; height: 65px;" />
+                            <img class="user-avatar-md" src="@Url.Content(item.ImageFullPath)" alt="Image" style="width: auto; height: 50px;" />
                         }
                     </td>
                     <td>
@@ -103,7 +103,7 @@
                     @Html.DisplayNameFor(model => model.Email)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.ImageUrl)
+                    @Html.DisplayNameFor(model => model.ImageFullPath)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.IsAvailable)

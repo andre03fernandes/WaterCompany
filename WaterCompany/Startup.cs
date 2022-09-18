@@ -48,8 +48,9 @@ namespace WaterCompany
 
             services.AddTransient<SeedDb>();
             services.AddScoped<IUserHelper, UserHelper>();
-            services.AddScoped<IImageHelper, ImageHelper>();
+            services.AddScoped<IBlobHelper, BlobHelper>();
             services.AddScoped<IConverterHelper, ConverterHelper>();
+
             services.AddScoped<IClientRepository, ClientRepository>();
             services.AddControllersWithViews();
         }

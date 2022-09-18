@@ -85,7 +85,7 @@ a {
 .btn {
     display: inline-block;
     color: #fff !important;
-    background-color: var(--mainColor);
+    background-color: #007bff;
     border-radius: 16px;
     text-transform: capitalize;
     transition: 0.3s;
