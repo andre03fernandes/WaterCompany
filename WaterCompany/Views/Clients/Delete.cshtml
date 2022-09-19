@@ -21,54 +21,9 @@
 <div class="row col align-self-center">
     <div class="col-md-12">
         <dl class="row data_table" style="padding-left: 45px;">
-            <dt class="col-3">
-                @Html.DisplayNameFor(model => model.ImageFullPath)
-            </dt>
-            <dd class="col-9">
-                <img class="user-avatar-md" src="@Url.Content(Model.ImageFullPath)" alt="Image" style="width: auto; height: 70px;" />
-            </dd>
-            <dt class="col-3">
-                @Html.DisplayNameFor(model => model.ClientName)
-            </dt>
-            <dd class="col-9">
-                @Html.DisplayFor(model => model.ClientName)
-            </dd>
-            <dt class="col-3">
-                @Html.DisplayNameFor(model => model.Telephone)
-            </dt>
-            <dd class="col-9">
-                @Html.DisplayFor(model => model.Telephone)
-            </dd>
-            <dt class="col-3">
-                @Html.DisplayNameFor(model => model.Address)
-            </dt>
-            <dd class="col-9">
-                @Html.DisplayFor(model => model.Address)
-            </dd>
-            <dt class="col-3">
-                @Html.DisplayNameFor(model => model.PostalCode)
-            </dt>
-            <dd class="col-9">
-                @Html.DisplayFor(model => model.PostalCode)
-            </dd>
-            <dt class="col-3">
-                @Html.DisplayNameFor(model => model.TIN)
-            </dt>
-            <dd class="col-9">
-                @Html.DisplayFor(model => model.TIN)
-            </dd>
-            <dt class="col-3">
-                @Html.DisplayNameFor(model => model.Email)
-            </dt>
-            <dd class="col-9">
-                @Html.DisplayFor(model => model.Email)
-            </dd>
-            <dt class="col-3">
-                @Html.DisplayNameFor(model => model.IsAvailable)
-            </dt>
-            <dd class="col-9">
-                @Html.DisplayFor(model => model.IsAvailable)
-            </dd>
+            
+            <partial name="_DetailsDelete_Clients" />
+
         </dl>
     </div>
 </div>
