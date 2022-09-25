@@ -3,6 +3,7 @@
     using System;
     using System.Linq;
     using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
     using WaterCompany.Data;
@@ -31,6 +32,7 @@
         }
 
         // GET: Clients/Details/5
+        [Authorize]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -48,6 +50,7 @@
         }
 
         // GET: Clients/Create
+        [Authorize]
         public IActionResult Create()
         {
             return View();
@@ -72,7 +75,7 @@
                 var client = _converterHelper.ToClient(model, imageId, true);
 
                 // TODO: Modificar para o user que tiver logado
-                client.User = await _userHelper.GetUserByUserNameAsync("andre@admin");
+                client.User = await _userHelper.GetUserByUserNameAsync(this.User.Identity.Name);
                 await _clientRepository.CreateAsync(client);
                 return RedirectToAction(nameof(Index));
             }
@@ -80,6 +83,7 @@
         }
 
         // GET: Clients/Edit/5
+        [Authorize]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -138,6 +142,7 @@
         }
 
         // GET: Clients/Delete/5
+        [Authorize]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)

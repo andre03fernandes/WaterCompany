@@ -1,0 +1,50 @@
+﻿@model WaterCompany.Models.LoginViewModel
+
+@{
+    ViewData["Title"] = "Login";
+}
+<br />
+<br />
+<h1 style="text-align:center;">Login</h1>
+<hr />
+<br />
+    <div class="container py-5 h-100">
+        <div class="row d-flex align-items-center justify-content-center h-100">
+            <div class="col-md-8 col-lg-7 col-xl-6">
+                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.svg"
+                     class="img-fluid" alt="Phone image">
+            </div>
+            <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
+                <form method="post">
+                    <div asp-validation-summary="ModelOnly"></div>
+                    <div class="form-outline mb-4">
+                        <label asp-for="Username">Username</label>
+                        <input asp-for="Username" class="form-control form-control-lg" />
+                    <span asp-validation-for="Username" class="form-label text-danger"></span>
+                    </div>
+                    <div class="form-outline mb-4">
+                        <label asp-for="Password">Password</label>
+                        <input asp-for="Password" type="password" class="form-control" />
+                    <span asp-validation-for="Password" class="form-label text-danger"></span>
+                    </div>
+                    <div class="form-outline mb-4">
+                        <div class="form-check">
+                            <input asp-for="RememberMe" type="checkbox" class="form-check-input" />
+                            <label asp-for="RememberMe" class="form-check-label">Remember Me?</label>
+                        </div>
+                    <span asp-validation-for="RememberMe" class="text-danger"></span>
+                    </div>
+                    <div class="form-outline mb-4">
+                    <button type="submit" value="Login" class="btn btn-primary btn-lg btn-block">Login</button><br />
+                        <a asp-action="RecoverPassword" class="btn btn-link" target="_blank">Forgot your password?</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <br /><br />
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }

@@ -2,6 +2,7 @@
 {
     using System;
     using System.Linq;
+    using System.Security.Policy;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
@@ -30,11 +31,10 @@
             {
                 user = new User
                 {
-                    FirstName = "André",
-                    LastName = "Fernandes",
+                    Name = "André Fernandes",
                     Email = "andre2411adm@gmail.com",
                     UserName = "andre@admin",
-                    PhoneNumber = "927690241"
+                    PhoneNumber = "927690241",
                 };
 
                 var result = await _userHelper.AddUserAsync(user, "123456");
