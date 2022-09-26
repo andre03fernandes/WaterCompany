@@ -15,9 +15,14 @@
                             <form method="post" class="text-center mx-1 mx-md-4">
                                 <div asp-validation-summary="ModelOnly"></div>
                                 <div class="text-center form-outline flex-fill mb-0" style="padding-right: 25px;">
-                                    <label class="form-label" asp-for="Name">Name</label>
-                                    <input asp-for="Name" class="form-control" />
-                                    <span asp-validation-for="Name" class="text-danger"></span>
+                                    <label class="form-label" asp-for="FirstName">First Name</label>
+                                    <input asp-for="FirstName" class="form-control" />
+                                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                                </div>
+                                <div class="text-center form-outline flex-fill mb-0" style="padding-right: 25px;">
+                                    <label class="form-label" asp-for="LastName">Last Name</label>
+                                    <input asp-for="LastName" class="form-control" />
+                                    <span asp-validation-for="LastName" class="text-danger"></span>
                                 </div>
                                 <div class="form-outline flex-fill mb-0" style="padding-right: 25px;">
                                     <label class="form-label" asp-for="Username">Username</label>
@@ -38,11 +43,6 @@
                                     <label class="form-label" asp-for="Confirm">Confirm</label>
                                     <input asp-for="Confirm" type="password" class="form-control" />
                                     <span asp-validation-for="Confirm" class="text-danger"></span>
-                                </div>
-                                <div class="form-outline flex-fill mb-0" style="padding-right: 25px;">
-                                    <label class="form-label" asp-for="ImageFile">Image</label>
-                                    <input asp-for="ImageFile" type="file" class="form-control" />
-                                    <span asp-validation-for="ImageFile" class="text-danger"></span>
                                 </div>
                                 <br />
                                 <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4" style="padding-right: 25px;">

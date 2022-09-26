@@ -9,8 +9,16 @@ namespace WaterCompany.Data.Entities
 
         [Required]
         [MaxLength(50, ErrorMessage = "The field {0} only can contain {1} characters lenght.")]
+        [Display(Name = "First Name")]
+        public string FirstName { get; set; }
+
+        [Required]
+        [MaxLength(50, ErrorMessage = "The field {0} only can contain {1} characters lenght.")]
+        [Display(Name = "Last Name")]
+        public string LastName { get; set; }
+
         [Display(Name = "Name")]
-        public string ClientName { get; set; }
+        public string Name => $"{FirstName} {LastName}";
 
         [MinLength(9, ErrorMessage = "Not a valide phone number!")]
         [MaxLength(9, ErrorMessage = "Not a valide phone number!")]

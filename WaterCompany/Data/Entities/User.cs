@@ -8,14 +8,10 @@ namespace WaterCompany.Data.Entities
 {
     public class User : IdentityUser
     {
-        public string Name { get; set; }
+        [MaxLength(50, ErrorMessage = "The field {0} only can contain {1} characters lenght.")]
+        public string FirstName { get; set; }
 
-        [Display(Name = "Image")]
-        public Guid ImageId { get; set; }
-
-        [Display(Name = "Image")]
-        public string ImageFullPath => ImageId == Guid.Empty
-            ? $"https://nextlevel25853.blob.core.windows.net/images/noimage.png"
-            : $"https://nextlevel25853.blob.core.windows.net/users/{ImageId}";
+        [MaxLength(50, ErrorMessage = "The field {0} only can contain {1} characters lenght.")]
+        public string LastName { get; set; }
     }
 }

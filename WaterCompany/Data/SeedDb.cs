@@ -31,10 +31,11 @@
             {
                 user = new User
                 {
-                    Name = "André Fernandes",
+                    FirstName = "André",
+                    LastName = "Fernandes",
                     Email = "andre2411adm@gmail.com",
                     UserName = "andre@admin",
-                    PhoneNumber = "927690241",
+                    PhoneNumber = "927690241"
                 };
 
                 var result = await _userHelper.AddUserAsync(user, "123456");
@@ -46,18 +47,19 @@
 
             if (!_context.Clients.Any())
             {
-                AddClient("Client 1", user);
-                AddClient("Client 2", user);
-                AddClient("Client 3", user);
+                AddClient("Client", "1", user);
+                AddClient("Client", "2", user);
+                AddClient("Client", "3", user);
                 await _context.SaveChangesAsync();
             }
         }
 
-        private void AddClient(string name, User user)
+        private void AddClient(string firstname, string lastname, User user)
         {
             _context.Clients.Add(new Client
             {
-                ClientName = name,
+                FirstName = firstname,
+                LastName = lastname,
                 Telephone = Convert.ToString(_random.Next(930000000, 939999999)),
                 Address = "Rua xpto " + Convert.ToString(_random.Next(000, 999)),
                 PostalCode = "1950-" + Convert.ToString(_random.Next(100, 999)),

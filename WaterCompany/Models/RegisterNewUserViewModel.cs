@@ -9,7 +9,12 @@ namespace WaterCompany.Models
     public class RegisterNewUserViewModel
     {
         [Required]
-        public string Name { get; set; }
+        [Display(Name = "First Name")]
+        public string FirstName { get; set; }
+
+        [Required]
+        [Display(Name = "Last Name")]
+        public string LastName { get; set; }
 
         [Required]
         public string Username { get; set; }
@@ -25,8 +30,5 @@ namespace WaterCompany.Models
         [Required]
         [Compare("Password")]
         public string Confirm { get; set; }
-
-        [Display(Name = "Image")]
-        public IFormFile ImageFile { get; set; }
     }
 }

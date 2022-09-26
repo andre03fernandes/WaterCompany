@@ -12,7 +12,8 @@ namespace WaterCompany.Helpers
             return new Client
             {
                 Id = isNew ? 0 : model.Id,
-                ClientName = model.ClientName,
+                FirstName = model.FirstName,
+                LastName = model.LastName,
                 Telephone = model.Telephone,
                 Address = model.Address,
                 PostalCode = model.PostalCode,
@@ -29,7 +30,8 @@ namespace WaterCompany.Helpers
             return new ClientViewModel
             {
                 Id = client.Id,
-                ClientName = client.ClientName,
+                FirstName = client.FirstName,
+                LastName = client.LastName,
                 Telephone = client.Telephone,
                 Address = client.Address,
                 PostalCode = client.PostalCode,

@@ -66,11 +66,11 @@
                         @if (this.User.Identity.IsAuthenticated)
                         {
                             <li class="nav-item dropdown nav-user">
-                                <a class="nav-link nav-user-img" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="" alt="" class="user-avatar-md rounded-circle"></a>
+                                <a class="nav-link nav-user-img" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-tasks"></i></a>
                                 <div class="dropdown-menu dropdown-menu-right nav-user-dropdown" aria-labelledby="navbarDropdownMenuLink2">
                                     <div class="nav-user-info" style="background-color:#007bff;">
-                                        <a class="mb-0 text-white nav-user-name" asp-controller="Account" asp-action="ChangeUser" style="background-color:#007bff; font-size: 11px;">&ensp;@this.User.Identity.Name</a>
-                                    </div>
+                                <a class="mb-0 text-white nav-user-name" asp-controller="Account" asp-action="ChangeUser" style="background-color:#007bff; font-size: 11px;">&ensp;@this.User.Identity.Name</a>
+                                </div>
                                     <a class="dropdown-item" href="#"><i class="fas fa-user mr-2"></i>Account</a>
                                     <a class="dropdown-item" href="#"><i class="fas fa-cog mr-2"></i>Settings</a>
                                     <a class="dropdown-item" asp-controller="Account" asp-action="Logout"><i class="fas fa-power-off mr-2"></i> Logout</a>
@@ -80,7 +80,7 @@
                         else
                         {
                             <li class="nav-item dropdown nav-user">
-                                <a class="nav-link nav-user-img" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="~/images/user.png" alt="" class="user-avatar-md rounded-circle"></a>
+                                <a class="nav-link nav-user-img" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-tasks"></i></a>
                                 <div class="dropdown-menu dropdown-menu-right nav-user-dropdown" aria-labelledby="navbarDropdownMenuLink2">
                                     <a class="dropdown-item" href="#"><i class="fas fa-user mr-2"></i>Account</a>
                                     <a class="dropdown-item" href="#"><i class="fas fa-cog mr-2"></i>Settings</a>

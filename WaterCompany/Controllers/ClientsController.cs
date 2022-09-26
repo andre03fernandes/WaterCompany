@@ -28,7 +28,7 @@
         // GET: Clients
         public IActionResult Index()
         {
-            return View(_clientRepository.GetAll().OrderBy(p => p.ClientName));
+            return View(_clientRepository.GetAll().OrderBy(p => p.FirstName));
         }
 
         // GET: Clients/Details/5

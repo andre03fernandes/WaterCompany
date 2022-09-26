@@ -7,10 +7,16 @@
     <img class="user-avatar-md" src="@Url.Content(Model.ImageFullPath)" alt="Image" style="width: auto; height: 70px;" />
 </dd>
 <dt class="col-3">
-    @Html.DisplayNameFor(model => model.ClientName)
+    @Html.DisplayNameFor(model => model.FirstName)
 </dt>
 <dd class="col-9">
-    @Html.DisplayFor(model => model.ClientName)
+    @Html.DisplayFor(model => model.FirstName)
+</dd>
+<dt class="col-3">
+    @Html.DisplayNameFor(model => model.LastName)
+</dt>
+<dd class="col-9">
+    @Html.DisplayFor(model => model.LastName)
 </dd>
 <dt class="col-3">
     @Html.DisplayNameFor(model => model.Telephone)

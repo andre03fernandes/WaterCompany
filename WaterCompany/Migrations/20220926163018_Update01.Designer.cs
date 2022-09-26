@@ -10,8 +10,8 @@ using WaterCompany.Data;
 namespace WaterCompany.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20220925072224_ModifyUsers")]
-    partial class ModifyUsers
+    [Migration("20220926163018_Update01")]
+    partial class Update01
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -221,17 +221,19 @@ namespace WaterCompany.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<Guid>("ImageId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("FirstName")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("LastName")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
 
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256)

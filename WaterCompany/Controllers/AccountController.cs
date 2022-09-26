@@ -65,22 +65,15 @@ namespace WaterCompany.Controllers
         {
             if (ModelState.IsValid)
             {
-                Guid imageId = Guid.Empty;
-
-                if (model.ImageFile != null && model.ImageFile.Length > 0)
-                {
-                    imageId = await _blobHelper.UploadBlobAsync(model.ImageFile, "users");
-                }
-
                 var user = await _userHelper.GetUserByUserNameAsync(model.Username);
                 if (user == null)
                 {
                     user = new User
                     {
-                        Name = model.Name,
+                        FirstName = model.FirstName,
+                        LastName = model.LastName,
                         Email = model.Email,
-                        UserName = model.Username,
-                        ImageId = imageId
+                        UserName = model.Username
                     };
 
                     var result = await _userHelper.AddUserAsync(user, model.Password);
@@ -107,6 +100,75 @@ namespace WaterCompany.Controllers
                 }
             }
 
+            return View(model);
+        }
+
+        public async Task<IActionResult> ChangeUser()
+        {
+            var user = await _userHelper.GetUserByUserNameAsync(this.User.Identity.Name);
+            var model = new ChangeUserViewModel();
+            if (user != null)
+            {
+                model.FirstName = user.FirstName;
+                model.LastName = user.LastName;
+            }
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ChangeUser(ChangeUserViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await _userHelper.GetUserByUserNameAsync(this.User.Identity.Name);
+                if (user != null)
+                {
+                    user.FirstName = model.FirstName;
+                    user.LastName = model.LastName;
+                    var response = await _userHelper.UpdateUserAsync(user);
+                    if (response.Succeeded)
+                    {
+                        ViewBag.UserMessage = "User updated";
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, response.Errors.FirstOrDefault().Description);
+                    }
+                }
+            }
+            return View(model);
+        }
+
+        public IActionResult ChangePassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ChangePassword(ChangePasswordViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await _userHelper.GetUserByUserNameAsync(this.User.Identity.Name);
+
+                if (user != null)
+                {
+                    var result = await _userHelper.ChangePasswordAsync(user, model.OldPassword, model.NewPassword);
+                    if (result.Succeeded)
+                    {
+                        return this.RedirectToAction("ChangeUser");
+                    }
+                    else
+                    {
+                        this.ModelState.AddModelError(string.Empty, result.Errors.FirstOrDefault().Description);
+                    }
+                }
+                else
+                {
+                    this.ModelState.AddModelError(string.Empty, "User not found");
+                }
+            }
             return View(model);
         }
     }
