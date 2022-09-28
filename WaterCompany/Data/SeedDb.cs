@@ -26,6 +26,10 @@
         {
             await _context.Database.MigrateAsync();
 
+            await _userHelper.CheckRoleAsync("Admin");
+            await _userHelper.CheckRoleAsync("Employee");
+            await _userHelper.CheckRoleAsync("Client");
+
             var user = await _userHelper.GetUserByUserNameAsync("andre@admin");
             if(user == null)
             {
@@ -43,6 +47,14 @@
                 {
                     throw new InvalidOperationException("Could not create the user in seeder!");
                 }
+
+                await _userHelper.AddUserToRoleAsync(user, "Admin");
+            }
+
+            var isInRole = await _userHelper.IsUserInRoleAsync(user, "Admin");
+            if (!isInRole)
+            {
+                await _userHelper.AddUserToRoleAsync(user, "Admin");
             }
 
             if (!_context.Clients.Any())

@@ -1,4 +1,5 @@
 ﻿using Azure;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -21,6 +22,7 @@ namespace WaterCompany.Controllers
             _blobHelper = blobHelper;
         }
 
+        //[Authorize(Roles = "Admin, Employee, Client")]
         public IActionResult Login()
         {
             if (User.Identity.IsAuthenticated)
@@ -55,6 +57,7 @@ namespace WaterCompany.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        [Authorize(Roles = "Admin")]
         public IActionResult Register()
         {
             return View();
@@ -140,6 +143,7 @@ namespace WaterCompany.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = "Admin, Employee, Client")]
         public IActionResult ChangePassword()
         {
             return View();
