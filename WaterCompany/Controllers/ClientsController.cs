@@ -26,6 +26,7 @@
         }
 
         // GET: Clients
+        [Authorize(Roles = "Admin")]
         public IActionResult Index()
         {
             return View(_clientRepository.GetAll().OrderBy(p => p.FirstName));
@@ -37,13 +38,13 @@
         {
             if (id == null)
             {
-                return NotFound();
+                return new NotFoundViewResult("ClientNotFound");
             }
 
             var client = await _clientRepository.GetByIdAsync(id.Value);
             if (client == null)
             {
-                return NotFound();
+                return new NotFoundViewResult("ClientNotFound");
             }
 
             return View(client);
@@ -88,13 +89,13 @@
         {
             if (id == null)
             {
-                return NotFound();
+                return new NotFoundViewResult("ClientNotFound");
             }
 
             var client = await _clientRepository.GetByIdAsync(id.Value);
             if (client == null)
             {
-                return NotFound();
+                return new NotFoundViewResult("ClientNotFound");
             }
 
             var model = _converterHelper.ToClientViewModel(client);
@@ -147,13 +148,13 @@
         {
             if (id == null)
             {
-                return NotFound();
+                return new NotFoundViewResult("ClientNotFound");
             }
 
             var client = await _clientRepository.GetByIdAsync(id.Value);
             if (client == null)
             {
-                return NotFound();
+                return new NotFoundViewResult("ClientNotFound");
             }
 
             return View(client);
@@ -167,6 +168,11 @@
             var client = await _clientRepository.GetByIdAsync(id);
             await _clientRepository.DeleteAsync(client);
             return RedirectToAction(nameof(Index));
+        }
+
+        public IActionResult ClientNotFound()
+        {
+            return View();
         }
     }
 }
