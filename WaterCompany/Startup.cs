@@ -17,6 +17,7 @@ using Microsoft.Extensions.Azure;
 using Azure.Storage.Queues;
 using Azure.Storage.Blobs;
 using Azure.Core.Extensions;
+using Vereyon.Web;
 
 namespace WaterCompany
 {
@@ -54,8 +55,9 @@ namespace WaterCompany
             services.AddScoped<IUserHelper, UserHelper>();
             services.AddScoped<IBlobHelper, BlobHelper>();
             services.AddScoped<IConverterHelper, ConverterHelper>();
-
             services.AddScoped<IClientRepository, ClientRepository>();
+            services.AddScoped<ICountryRepository, CountryRepository>();
+
             services.ConfigureApplicationCookie(options =>
             {
                 options.LoginPath = "/Account/NotAuthorized";

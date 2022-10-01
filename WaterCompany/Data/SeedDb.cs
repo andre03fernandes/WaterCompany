@@ -1,6 +1,7 @@
 ﻿namespace WaterCompany.Data
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Security.Policy;
     using System.Threading.Tasks;
@@ -30,6 +31,22 @@
             await _userHelper.CheckRoleAsync("Employee");
             await _userHelper.CheckRoleAsync("Client");
 
+            if (!_context.Countries.Any())
+            {
+                var cities = new List<City>();
+                cities.Add(new City { Name = "Lisboa" });
+                cities.Add(new City { Name = "Porto" });
+                cities.Add(new City { Name = "Faro" });
+
+                _context.Countries.Add(new Country
+                {
+                    Cities = cities,
+                    Name = "Portugal"
+                });
+
+                await _context.SaveChangesAsync();
+            }
+
             var user = await _userHelper.GetUserByUserNameAsync("andre@admin");
             if(user == null)
             {
@@ -39,7 +56,10 @@
                     LastName = "Fernandes",
                     Email = "andre2411adm@gmail.com",
                     UserName = "andre@admin",
-                    PhoneNumber = "927690241"
+                    PhoneNumber = "927690241",
+                    Address = "Rua Vale Formoso 113",
+                    CityId = _context.Countries.FirstOrDefault().Cities.FirstOrDefault().Id,
+                    City = _context.Countries.FirstOrDefault().Cities.FirstOrDefault()
                 };
 
                 var result = await _userHelper.AddUserAsync(user, "123456");

@@ -1,0 +1,31 @@
+﻿@model WaterCompany.Models.CityViewModel
+
+<br />
+<h1 style="font-family: 'Lucida Handwriting'; text-align: center">Add City</h1>
+<hr />
+<br />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="AddCity">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="CountryId" />
+
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i></button>
+                <a asp-action="Index" class="btn btn-success"><i class="fa fa-chevron-left"></i></a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }
