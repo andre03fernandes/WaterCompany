@@ -1,10 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using WaterCompany.Data;
 
 namespace WaterCompany.Controllers.API
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)] // Bloqueia a api e só entra quem tiver acesso ao token (JwtBearer)
     public class ClientsController : Controller
     {
         private readonly IClientRepository _clientRepository;

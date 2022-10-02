@@ -9,6 +9,8 @@ namespace WaterCompany.Helpers
     {
         Task<User> GetUserByUserNameAsync(string username);
 
+        Task<User> GetUserByEmailAsync(string email);
+
         Task<IdentityResult> AddUserAsync(User user, string password);
 
         Task<SignInResult> LoginAsync(LoginViewModel model);
@@ -24,5 +26,7 @@ namespace WaterCompany.Helpers
         Task AddUserToRoleAsync(User user, string roleName);
 
         Task<bool> IsUserInRoleAsync(User user, string roleName);
+
+        Task<SignInResult> ValidatePasswordAsync(User user, string password);
     }
 }
