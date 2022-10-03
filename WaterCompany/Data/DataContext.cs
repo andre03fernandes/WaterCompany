@@ -12,6 +12,8 @@ namespace WaterCompany.Data
 
         public DbSet<City> Cities { get; set; }
 
+        public DbSet<Employee> Employees { get; set; }
+
         public DataContext(DbContextOptions<DataContext> options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -1,0 +1,38 @@
+﻿@model WaterCompany.Data.Entities.Employee
+
+@{
+    ViewData["Title"] = "Edit";
+}
+<br />
+<br />
+
+<h1 style="text-align:center;">Edit Employee</h1>
+<hr />
+<br />
+<div class="row centerform">
+    <div class="col-md-12">
+        <form asp-action="Edit" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="ImageId" />
+            <div class="form-group">
+                <img class="user-avatar-md" src="@Url.Content(Model.ImageFullPath)" alt="Image" style="width: auto; height: 70px;" />
+            </div>
+            <br />
+
+            <partial name="_CreateEdit_Employees" />
+
+            <div class="form-group">
+                <br />
+                <button type="submit" value="Save" class="btn btn-outline-primary"><i class="fas fa-save"></i></button>
+                <a class="btn btn-outline-primary" asp-action="Index"><i class="fas fa-backward"></i></a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }

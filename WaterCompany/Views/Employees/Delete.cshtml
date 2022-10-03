@@ -1,0 +1,30 @@
+﻿@model WaterCompany.Data.Entities.Employee
+
+@{
+    ViewData["Title"] = "Delete";
+}
+<br />
+<br />
+
+<h1 style="text-align:center;">Delete Employee</h1>
+<br />
+<h3 style="text-align:center;"><b>Are you sure you want to delete this employee?</b></h3>
+<hr />
+<br />
+<div class="centerform">
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <button type="submit" class="btn btn-outline-primary"><i class="fas fa-trash-alt"></i></button>
+        <a class="btn btn-outline-primary" asp-action="Index"><i class="fas fa-backward"></i></a>
+    </form>
+</div>
+<br />
+<div class="row col align-self-center">
+    <div class="col-md-12">
+        <dl class="row data_table" style="padding-left: 45px;">
+
+            <partial name="_DetailsDelete_Employees" />
+
+        </dl>
+    </div>
+</div>

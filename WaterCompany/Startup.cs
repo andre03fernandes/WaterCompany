@@ -75,6 +75,7 @@ namespace WaterCompany
             services.AddScoped<IBlobHelper, BlobHelper>();
             services.AddScoped<IConverterHelper, ConverterHelper>();
             services.AddScoped<IClientRepository, ClientRepository>();
+            services.AddScoped<IEmployeeRepository, EmployeeRepository>();
             services.AddScoped<ICountryRepository, CountryRepository>();
             services.AddScoped<IMailHelper, MailHelper>();
 

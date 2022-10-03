@@ -17,7 +17,10 @@
         private readonly IBlobHelper _blobHelper;
         private readonly IConverterHelper _converterHelper;
 
-        public ClientsController(IClientRepository clientRepository, IUserHelper userHelper, IBlobHelper blobHelper, IConverterHelper converterHelper)
+        public ClientsController(IClientRepository clientRepository, 
+            IUserHelper userHelper, 
+            IBlobHelper blobHelper, 
+            IConverterHelper converterHelper)
         {
             _clientRepository = clientRepository;
             _userHelper = userHelper;
@@ -29,7 +32,7 @@
         [Authorize(Roles = "Admin")]
         public IActionResult Index()
         {
-            return View(_clientRepository.GetAll().OrderBy(p => p.FirstName));
+            return View(_clientRepository.GetAllWithUsers());
         }
 
         // GET: Clients/Details/5
@@ -123,7 +126,7 @@
                     var client = _converterHelper.ToClient(model, imageId, false);
 
                     // TODO: Modificar para o user que tiver logado
-                    client.User = await _userHelper.GetUserByUserNameAsync("andre@admin");
+                    client.User = await _userHelper.GetUserByUserNameAsync(this.User.Identity.Name);
                     await _clientRepository.UpdateAsync(client);
                 }
                 catch (DbUpdateConcurrencyException)

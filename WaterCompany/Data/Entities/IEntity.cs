@@ -1,4 +1,6 @@
-﻿namespace WaterCompany.Data.Entities
+﻿using System;
+
+namespace WaterCompany.Data.Entities
 {
     public interface IEntity
     {

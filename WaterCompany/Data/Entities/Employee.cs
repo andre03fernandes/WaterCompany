@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace WaterCompany.Data.Entities
 {
-    public class Client : IEntity
+    public class Employee : IEntity
     {
         public int Id { get; set; }
 
@@ -51,6 +51,6 @@ namespace WaterCompany.Data.Entities
         [Display(Name = "Image")]
         public string ImageFullPath => ImageId == Guid.Empty
             ? $"https://nextlevel25853.blob.core.windows.net/images/noimage.png"
-            : $"https://nextlevel25853.blob.core.windows.net/clients/{ImageId}";
+            : $"https://nextlevel25853.blob.core.windows.net/employees/{ImageId}";
     }
 }

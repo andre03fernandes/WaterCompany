@@ -7,16 +7,18 @@
     <link rel="stylesheet" href="~/lib/font-awesome/css/all.min.css" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
-    <link href="~/images/water-drop.ico" rel="shortcut icon" type="image/x-icon" />
+    <link href="~/images/drops.ico" rel="shortcut icon" type="image/x-icon" />
     <link href="https://stackpath.bootstrappcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" />
     <link href="~/css/dark-mode.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <!-- Syncfusion ASP.NET Core controls styles -->
+    <link rel="stylesheet" href="https://cdn.syncfusion.com/ej2/20.3.47/fluent.css" />
 </head>
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" style="color: #007bff;">The Next Level&nbsp;</a>
+                <a class="navbar-brand"><img style="paddig-left: 0px;" src="~/images/Logo1.png" height="65px" width="auto" /></a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -26,13 +28,13 @@
                         <li class="nav-item ">
                             <a class="nav-link text-dark" asp-controller="Home" asp-action="Index"><i class="fas fa-home"></i></a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-controller="#" asp-action="Index"><i class="far fa-newspaper"></i></a>
+                        </li>
                         @if (this.User.Identity.IsAuthenticated && this.User.IsInRole("Admin"))
                         {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="Clients" asp-action="Index">Clients</a>
-                            </li>
                             <li class="nav-item dropdown nav-user">
-                                <a style="color: #343a40;" class="dropdown-toggle nav-link nav-user-img" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Back Office</a>
+                                <a style="color: #343a40;" class="dropdown-toggle nav-link nav-user-img" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-briefcase"></i></a>
                                 <div class="dropdown-menu dropdown-menu-right nav-user-dropdown" aria-labelledby="navbarDropdownMenuLink2">
                                     <a class="dropdown-item" asp-controller="Account" asp-action="Register"><i class="fas fa-user-plus"></i> Register</a>
                                     <a class="dropdown-item" href="#"><i class="fas fa-user"></i> Users</a>
@@ -41,10 +43,13 @@
                                     <a class="dropdown-item" asp-controller="Countries" asp-action="Index"><i class="fas fa-globe-europe"></i> Countries and Cities</a>
                                 </div>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-controller="Clients" asp-action="Index">Clients</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-controller="Employees" asp-action="Index">Employees</a>
+                            </li>
                         }
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="#" asp-action="Index">Offers</a>
-                        </li>
                     </ul>
                 </div>
                 <div class="collapse navbar-collapse " id="navbarSupportedContent">
@@ -119,6 +124,9 @@
         </main>
     </div>
 
+    <!-- Syncfusion ASP.NET Core Script Manager -->
+    <ejs-scripts></ejs-scripts>
+
     <footer class="text-center text-dark col100 footer2">
         <div class="container pt-4">
             <section class="mb-4">
@@ -175,6 +183,8 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/lib/bootstrap/js/dark-mode-switch.min.js"></script>
+    <!-- Syncfusion ASP.NET Core controls scripts -->
+    <script src="https://cdn.syncfusion.com/ej2/20.3.47/dist/ej2.min.js"></script>
     <script>
         window.addEventListener('scroll', function () {
             var scroll = document.querySelector('.scrollTop');

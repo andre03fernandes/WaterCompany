@@ -1,0 +1,34 @@
+﻿@model WaterCompany.Data.Entities.Employee
+
+@{
+    ViewData["Title"] = "Create";
+}
+<br />
+<br />
+
+<h1 style="text-align:center;">New Employee</h1>
+<hr />
+<br />
+<div class="row centerform">
+    <div class="col-md-12">
+        <form asp-action="Create" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <partial name="_CreateEdit_Employees" />
+
+            <div class="form-group">
+                <br />
+                <button type="submit" value="Create" class="btn btn-outline-primary"><i class="far fa-plus-square"></i></button>
+                <a class="btn btn-outline-primary" asp-action="Index"><i class="fas fa-backward"></i></a>
+            </div>
+        </form>
+    </div>
+</div>
+<br />
+<br />
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }
