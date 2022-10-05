@@ -25,13 +25,13 @@
 
         public async Task SeedAsync()
         {
-            await _context.Database.MigrateAsync();
+            await _context.Database.EnsureCreatedAsync();
 
             await _userHelper.CheckRoleAsync("Admin");
             await _userHelper.CheckRoleAsync("Employee");
             await _userHelper.CheckRoleAsync("Client");
 
-            if (!_context.Countries.Any())
+            if(!_context.Countries.Any())
             {
                 var cities = new List<City>();
                 cities.Add(new City { Name = "Lisboa" });
@@ -57,13 +57,12 @@
                     Email = "andre2411adm@gmail.com",
                     UserName = "andre@admin",
                     PhoneNumber = "927690241",
-                    Address = "Rua Vale Formoso 113",
                     CityId = _context.Countries.FirstOrDefault().Cities.FirstOrDefault().Id,
                     City = _context.Countries.FirstOrDefault().Cities.FirstOrDefault()
                 };
 
                 var result = await _userHelper.AddUserAsync(user, "123456");
-                if(result != IdentityResult.Success)
+                if (result != IdentityResult.Success)
                 {
                     throw new InvalidOperationException("Could not create the user in seeder!");
                 }
@@ -74,19 +73,13 @@
             }
 
             var isInRole = await _userHelper.IsUserInRoleAsync(user, "Admin");
-            if (!isInRole)
+            if(!isInRole)
             {
                 await _userHelper.AddUserToRoleAsync(user, "Admin");
             }
 
-            if (!_context.Clients.Any())
-            {
-                AddClient("Paulo", "Borges", user);
-                await _context.SaveChangesAsync();
-            }
-
             var user1 = await _userHelper.GetUserByUserNameAsync("staff@employee");
-            if (user1 == null)
+            if(user1 == null)
             {
                 user1 = new User
                 {
@@ -94,8 +87,7 @@
                     LastName = "Employee",
                     Email = "staff@yopmail.com",
                     UserName = "staff@employee",
-                    PhoneNumber = "937690241",
-                    Address = "Rua Vale Não Formoso 115",
+                    PhoneNumber = "927690241",
                     CityId = _context.Countries.FirstOrDefault().Cities.FirstOrDefault().Id,
                     City = _context.Countries.FirstOrDefault().Cities.FirstOrDefault()
                 };
@@ -119,37 +111,67 @@
 
             if (!_context.Employees.Any())
             {
-                AddEmployee("Ricardo", "Simão", user1);
+                AddEmployee(user1);
                 await _context.SaveChangesAsync();
             }
+
+            var user2 = await _userHelper.GetUserByUserNameAsync("roberto@client");
+            if (user2 == null)
+            {
+                user2 = new User
+                {
+                    FirstName = "Roberto",
+                    LastName = "Client",
+                    Email = "client@yopmail.com",
+                    UserName = "roberto@client",
+                    PhoneNumber = "934567890",
+                    CityId = _context.Countries.FirstOrDefault().Cities.FirstOrDefault().Id,
+                    City = _context.Countries.FirstOrDefault().Cities.FirstOrDefault()
+                };
+
+                var result2 = await _userHelper.AddUserAsync(user2, "123456");
+                if (result2 != IdentityResult.Success)
+                {
+                    throw new InvalidOperationException("Could not create the user in seeder!");
+                }
+
+                await _userHelper.AddUserToRoleAsync(user2, "Client");
+                var token2 = await _userHelper.GenerateEmailConfirmationTokenAsync(user2);
+                await _userHelper.ConfirmEmailAsync(user2, token2);
+            }
+
+            var isInRole2 = await _userHelper.IsUserInRoleAsync(user2, "Client");
+            if (!isInRole2)
+            {
+                await _userHelper.AddUserToRoleAsync(user2, "Client");
+            }
+
+            if (!_context.Clients.Any())
+            {
+                AddClient(user2);
+                await _context.SaveChangesAsync();
+            }
+
         }
 
-        private void AddEmployee(string firstname, string lastname, User user1)
+        private void AddEmployee(User user1)
         {
             _context.Employees.Add(new Employee
             {
-                FirstName = firstname,
-                LastName = lastname,
-                Telephone = Convert.ToString(_random.Next(930000000, 939999999)),
                 Address = "Rua otpx " + Convert.ToString(_random.Next(000, 999)),
                 PostalCode = "2370-" + Convert.ToString(_random.Next(100, 999)),
                 TIN = Convert.ToString(_random.Next(100000000, 999999999)),
-                Email = "tset" + Convert.ToString(_random.Next(000, 999)) + "@gmail.com",
                 User = user1
             });
         }
 
-        private void AddClient(string firstname, string lastname, User user)
+        private void AddClient(User user)
         {
             _context.Clients.Add(new Client
             {
-                FirstName = firstname,
-                LastName = lastname,
-                Telephone = Convert.ToString(_random.Next(930000000, 939999999)),
                 Address = "Rua xpto " + Convert.ToString(_random.Next(000, 999)),
                 PostalCode = "1950-" + Convert.ToString(_random.Next(100, 999)),
                 TIN = Convert.ToString(_random.Next(100000000, 999999999)),
-                Email = "test" + Convert.ToString(_random.Next(000, 999)) + "@gmail.com",
                 User = user
             });
         }

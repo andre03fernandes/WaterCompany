@@ -12,13 +12,9 @@ namespace WaterCompany.Helpers
             return new Client
             {
                 Id = isNew ? 0 : model.Id,
-                FirstName = model.FirstName,
-                LastName = model.LastName,
-                Telephone = model.Telephone,
                 Address = model.Address,
                 PostalCode = model.PostalCode,
                 TIN = model.TIN,
-                Email = model.Email,
                 ImageId = imageId,
                 User = model.User
             };
@@ -29,13 +25,9 @@ namespace WaterCompany.Helpers
             return new ClientViewModel
             {
                 Id = client.Id,
-                FirstName = client.FirstName,
-                LastName = client.LastName,
-                Telephone = client.Telephone,
                 Address = client.Address,
                 PostalCode = client.PostalCode,
                 TIN = client.TIN,
-                Email = client.Email,
                 ImageId = client.ImageId,
                 User = client.User
             };
@@ -46,13 +38,9 @@ namespace WaterCompany.Helpers
             return new Employee
             {
                 Id = isNew ? 0 : model.Id,
-                FirstName = model.FirstName,
-                LastName = model.LastName,
-                Telephone = model.Telephone,
                 Address = model.Address,
                 PostalCode = model.PostalCode,
                 TIN = model.TIN,
-                Email = model.Email,
                 ImageId = imageId,
                 User = model.User
             };
@@ -63,13 +51,9 @@ namespace WaterCompany.Helpers
             return new EmployeeViewModel
             {
                 Id = employee.Id,
-                FirstName = employee.FirstName,
-                LastName = employee.LastName,
-                Telephone = employee.Telephone,
                 Address = employee.Address,
                 PostalCode = employee.PostalCode,
                 TIN = employee.TIN,
-                Email = employee.Email,
                 ImageId = employee.ImageId,
                 User = employee.User
             };

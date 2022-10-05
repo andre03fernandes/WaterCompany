@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using System.Linq;
 using System.Threading.Tasks;
 using WaterCompany.Data.Entities;
 using WaterCompany.Models;
@@ -7,7 +8,9 @@ namespace WaterCompany.Helpers
 {
     public interface IUserHelper
     {
-        Task<User> GetUserByUserNameAsync(string username);
+        public IQueryable GetAllUsers();
+
+        Task<User> GetUserByUserNameAsync(string userName);
 
         Task<User> GetUserByEmailAsync(string email);
 

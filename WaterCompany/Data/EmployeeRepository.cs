@@ -15,7 +15,7 @@ namespace WaterCompany.Data
 
         public IQueryable GetAllWithUsers()
         {
-            return _context.Employees.Include(p => p.User).OrderBy(p => p.FirstName);
+            return _context.Employees.Include(p => p.User).OrderBy(p => p.Id);
         }
     }
 }

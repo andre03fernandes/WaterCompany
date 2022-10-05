@@ -1,32 +1,205 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-<br />
-    <main>
-        <div class="big-wrapper light">
-            <div class="showcase-area">
-                <div class="container">
-                    <div class="left">
-                        <div class="big-title1">
-                            <h1>Drink Water,</h1>
-                            <h1>Is Good.</h1>
-                        </div>
-                        <p class="text">
-                            &nbsp; Water is an essential nutrient for life. About 60% of the human body is water. We depend on water consumption to survive. <br />
-                            &nbsp; That's why drinking water is essential and maintaining a good state of hydration is a recommendation in all situations.
-                        </p>
-                        <div class="cta">
-                            <a href="#" class="btn" style="padding: 0.9rem 1.9rem;"> <i class="fa-solid fa-house"></i>Get started</a> <!-- Mandar para a página Login-->
-                        </div>
+<main>
+    <div class="big-wrapper light">
+        <div class="showcase-area">
+            <div class="container">
+                <div class="left">
+                    <div class="big-title1">
+                        @if (this.User.Identity.IsAuthenticated && this.User.IsInRole("Admin"))
+                        {
+                            <h1>Hello, @this.User.Identity.Name!</h1>
+                            <h1>Welcome back <b>Boss</b>.</h1>
+                        }
+                        @if (this.User.Identity.IsAuthenticated && !(this.User.IsInRole("Admin")))
+                        {
+                            <h1>Hello, @this.User.Identity.Name!</h1>
+                            <h1>Welcome back to Next Level.</h1>
+                        }
+                        @if (!(this.User.Identity.IsAuthenticated))
+                        {
+                            <h1>Hello!</h1>
+                            <h1>Welcome to Next Level.</h1>
+                        }
                     </div>
+                    <p class="text">
+                        &nbsp; Water is an essential nutrient for life. About 60% of the human body is water. We depend on water consumption to survive.
+                        That's why drinking water is essential and maintaining a good state of hydration is a recommendation in all situations.
+                    </p>
+                    <div class="cta">
+                        <a asp-controller="Home" asp-action="Offers" class="btn" style="padding: 0.9rem 1.9rem;"> <i class="fa-solid fa-house"></i>Get started</a>
+                    </div>
+                </div>
 
-                    <div class="right">
-                        <img src="~/images/water.png" alt="Water Image" class="person"/>
-                    </div>
+                <div class="right">
+                    <img src="~/images/water.png" alt="Water Image" class="person" />
                 </div>
             </div>
         </div>
-    </main>
-<br /><br />
+    </div>
+    <div class="container my-5 centerform">
+        <hr class="my-5">
+        <br />
+        <h1 class="text-center big-title1">See Some Of Our Offers</h1><br />
+        <div id="multi-item-example" class="carousel slide carousel-multi-item" data-ride="carousel">
+            <div class="controls-top">
+                <a class="btn-floating" href="#multi-item-example" data-slide="prev"><i class="fas fa-chevron-left"></i></a>
+                <a class="btn-floating" href="#multi-item-example" data-slide="next">
+                    <i class="fas fa-chevron-right"></i>
+                </a>
+            </div>
+            
+            <div class="carousel-inner" role="listbox">
+                <br /><br />
+                <div class="carousel-item active">
+                    <div class="col-md-3" style="float:left">
+                        <div class="card mb-2">
+                            <img class="card-img-top"
+                                 src="~/images/cards/card1.png" alt="Card image cap">
+                            <div class="card-body">
+                                <h4 class="card-title">Contracts</h4>
+                                <p class="card-text">
+                                    Here you can find the best contracts on the market, in terms of quality, price
+                                    and more.
+                                </p>
+                                <a asp-controller="Home" asp-action="Offers">View More</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3" style="float:left">
+                        <div class="card mb-2">
+                            <img class="card-img-top"
+                                 src="~/images/cards/card2.png" alt="Card image cap">
+                            <div class="card-body">
+                                <h4 class="card-title">1st Echelon</h4>
+                                <p class="card-text">
+                                    Here you have a variety of consumptions, one of them is the 1st echelon, know more in
+                                  our offers section.
+                                </p>
+                                <a asp-controller="Home" asp-action="Offers">View More</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3" style="float:left">
+                        <div class="card mb-2">
+                            <img class="card-img-top"
+                                 src="~/images/cards/card3.png" alt="Card image cap">
+                            <div class="card-body">
+                                <h4 class="card-title">2nd Echelon</h4>
+                                <p class="card-text">
+                                    Another type of consumption that our company can offer to you is the 2nd echelon.
+                                </p>
+                                <a asp-controller="Home" asp-action="Offers">View More</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3" style="float:left">
+                        <div class="card mb-2">
+                            <img class="card-img-top"
+                                 src="~/images/cards/card4.png" alt="Card image cap">
+                            <div class="card-body">
+                                <h4 class="card-title">Invoices</h4>
+                                <p class="card-text">
+                                    Here you can check your invoice history without any problem.
+                                </p>
+                                <a asp-controller="#" asp-action="#">View More</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!--/.First slide-->
+                <!--Second slide-->
+                <div class="carousel-item">
+
+                    <div class="col-md-3" style="float:left">
+                        <div class="card mb-2">
+                            <img class="card-img-top"
+                                 src="~/images/cards/card5.png" alt="Card image cap">
+                            <div class="card-body">
+                                <h4 class="card-title">Privacy</h4>
+                                <p class="card-text">
+                                    At our company, we take our customer's privacy very seriously.
+                                </p>
+                                <a asp-controller="Home" asp-action="Privacy">View More</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3" style="float:left">
+                        <div class="card mb-2">
+                            <img class="card-img-top"
+                                 src="~/images/cards/card6.png" alt="Card image cap">
+                            <div class="card-body">
+                                <h4 class="card-title">Company</h4>
+                                <p class="card-text">
+                                    Our company offers you the best conditions on the market, here you are safe!
+                                </p>
+                                <a asp-controller="Home" asp-action="About">View More</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3" style="float:left">
+                        <div class="card mb-2">
+                            <img class="card-img-top"
+                                 src="~/images/cards/card7.png" alt="Card image cap">
+                            <div class="card-body">
+                                <h4 class="card-title">Contact Us</h4>
+                                <p class="card-text">
+                                    Our company provides you with a contact form, where you can express your doubts.
+                                </p>
+                                <a asp-controller="Home" asp-action="ContactUs">View More</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3" style="float:left">
+                        <div class="card mb-2">
+                            <img class="card-img-top"
+                                 src="~/images/cards/card8.png" alt="Card image cap">
+                            <div class="card-body">
+                                <h4 class="card-title">Offers</h4>
+                                <p class="card-text">
+                                    Here you can find our products, the best offers on the market.
+                                </p>
+                                <a asp-controller="Home" asp-action="Offers">View More</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br /><br />
+            <ol class="carousel-indicators">
+                <li data-target="#multi-item-example" data-slide-to="0" class="active" style="background-color: #0366d6"></li>
+                <li data-target="#multi-item-example" data-slide-to="1" class="active" style="background-color: #0366d6"></li>
+            </ol>
+        </div>
+    </div>
+<br />
+<hr class="my-5">
+<br />
+<br />
+    <div class="newsletter-subscribe centerform">
+        <div class="container">
+            <div class="intro">
+                <h1 class="text-center big-title1">Subscribe For Our Newsletter</h1><br />
+                <p class="text-center">To stay up to date with our news, subscribe to our newsletter! </p>
+            </div>
+            <form class="text-center" method="post">
+                <div class="form-group"><input class="form-control" type="email" name="email" placeholder="Your Email"></div>
+                <div class="form-group"><button class="btn btn-primary" type="submit">Subscribe </button></div>
+            </form>
+        </div>
+    </div>
+</main>
+<br />
+<br />
+<br />
+<br />
+<br />
 <link rel="stylesheet" href="~/css/style.css" />
 <link rel="stylesheet" href="~/css/dark-mode.css" />

@@ -39,5 +39,15 @@ namespace WaterCompany.Controllers
         {
             return View();
         }
+
+        public IActionResult Offers()
+        {
+            return View();
+        }
+
+        public IActionResult ContactUs()
+        {
+            return View();
+        }
     }
 }

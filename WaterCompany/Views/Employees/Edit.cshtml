@@ -1,4 +1,4 @@
-﻿@model WaterCompany.Data.Entities.Employee
+﻿@model WaterCompany.Models.EmployeeViewModel
 
 @{
     ViewData["Title"] = "Edit";
@@ -19,8 +19,47 @@
                 <img class="user-avatar-md" src="@Url.Content(Model.ImageFullPath)" alt="Image" style="width: auto; height: 70px;" />
             </div>
             <br />
-
-            <partial name="_CreateEdit_Employees" />
+            <div class="form-group">
+                <label asp-for="User.FirstName" class="control-label"></label>
+                <input asp-for="User.FirstName" class="form-control" />
+                <span asp-validation-for="User.FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="User.LastName" class="control-label"></label>
+                <input asp-for="User.LastName" class="form-control" />
+                <span asp-validation-for="User.LastName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="User.PhoneNumber" class="control-label"></label>
+                <input asp-for="User.PhoneNumber" class="form-control" />
+                <span asp-validation-for="User.PhoneNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Address" class="control-label"></label>
+                <input asp-for="Address" class="form-control" />
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PostalCode" class="control-label"></label>
+                <input asp-for="PostalCode" class="form-control" />
+                <span asp-validation-for="PostalCode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TIN" class="control-label"></label>
+                <input asp-for="TIN" class="form-control" />
+                <span asp-validation-for="TIN" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="User.Email" class="control-label"></label>
+                <input asp-for="User.Email" class="form-control" />
+                <span asp-validation-for="User.Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ImageFile" class="control-label"></label>
+                <input asp-for="ImageFile" class="form-control" type="file" placeholder="" />
+                <span asp-validation-for="ImageFile" class="text-danger"></span>
+                <br />
+            </div>
 
             <div class="form-group">
                 <br />

@@ -1,5 +1,6 @@
 ﻿namespace WaterCompany.Helpers
 {
+    using System.Linq;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Identity;
     using WaterCompany.Data.Entities;
@@ -18,14 +19,19 @@
             _roleManager = roleManager;
         }
 
+        public IQueryable GetAllUsers()
+        {
+            return _userManager.Users;
+        }
+
         public async Task<IdentityResult> AddUserAsync(User user, string password)
         {
             return await _userManager.CreateAsync(user, password);
         }
 
-        public async Task<User> GetUserByUserNameAsync(string username)
+        public async Task<User> GetUserByUserNameAsync(string userName)
         {
-            return await _userManager.FindByNameAsync(username);
+            return await _userManager.FindByNameAsync(userName);
         }
 
         public async Task<User> GetUserByEmailAsync(string email)

@@ -23,10 +23,9 @@ namespace WaterCompany.Models
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
 
-        [MaxLength(100, ErrorMessage = "The field {0} only can contain {1} characters length.")]
-        public string Address { get; set; }
-
-        [MaxLength(20, ErrorMessage = "The field {0} only can contain {1} characters length.")]
+        [MaxLength(9, ErrorMessage = "The field {0} only can contain {1} characters length.")]
+        [MinLength(9)]
+        [Display(Name = "Phone Number")]
         public string PhoneNumber { get; set; }
 
         [Display(Name = "City")]

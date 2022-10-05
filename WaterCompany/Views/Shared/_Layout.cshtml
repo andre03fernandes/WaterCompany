@@ -18,7 +18,7 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand"><img style="paddig-left: 0px;" src="~/images/Logo1.png" height="65px" width="auto" /></a>
+                <a class="navbar-brand"><img style="paddig-top: 50px;" src="~/images/Logo1.png" height="65px" width="auto" /></a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -29,25 +29,27 @@
                             <a class="nav-link text-dark" asp-controller="Home" asp-action="Index"><i class="fas fa-home"></i></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="#" asp-action="Index"><i class="far fa-newspaper"></i></a>
+                            <a class="nav-link text-dark" asp-controller="Home" asp-action="Offers"><i class="far fa-newspaper"></i> Offers</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-controller="Home" asp-action="ContactUs"><i class="fas fa-envelope"></i> Contact Us</a>
                         </li>
                         @if (this.User.Identity.IsAuthenticated && this.User.IsInRole("Admin"))
                         {
                             <li class="nav-item dropdown nav-user">
-                                <a style="color: #343a40;" class="dropdown-toggle nav-link nav-user-img" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-briefcase"></i></a>
-                                <div class="dropdown-menu dropdown-menu-right nav-user-dropdown" aria-labelledby="navbarDropdownMenuLink2">
+                                <a style="color: #343a40; cursor: pointer;" class="dropdown-toggle nav-link nav-user-img" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-briefcase"></i> Backoffice</a>
+                                <div class="dropdown-menu dropdown-menu-left nav-user-dropdown" aria-labelledby="navbarDropdownMenuLink2">
                                     <a class="dropdown-item" asp-controller="Account" asp-action="Register"><i class="fas fa-user-plus"></i> Register</a>
-                                    <a class="dropdown-item" href="#"><i class="fas fa-user"></i> Users</a>
-                                    <a class="dropdown-item" href="#"><i class="fas fa-book"></i> Roles</a>
-                                    <a class="dropdown-item" href="#"><i class="fas fa-address-book"></i> User Roles</a>
+                                    <a class="dropdown-item" asp-controller="Users" asp-action="Index"><i class="fas fa-user"></i> Users</a>
+                                    <a class="dropdown-item" asp-controller="Roles" asp-action="Index"><i class="fas fa-book"></i> Roles</a>
                                     <a class="dropdown-item" asp-controller="Countries" asp-action="Index"><i class="fas fa-globe-europe"></i> Countries and Cities</a>
                                 </div>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="Clients" asp-action="Index">Clients</a>
+                                <a class="nav-link text-dark" asp-controller="Clients" asp-action="Index"><i class="fas fa-users"></i> Clients</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="Employees" asp-action="Index">Employees</a>
+                                <a class="nav-link text-dark" asp-controller="Employees" asp-action="Index"><i class="fas fa-user-secret"></i> Employees</a>
                             </li>
                         }
                     </ul>
@@ -56,11 +58,6 @@
                     <ul class="navbar-nav ml-auto navbar-right-top">
                         @if (this.User.Identity.IsAuthenticated)
                         {
-                            <li class="nav-item nav-user">
-                                <div>
-                                    <a class="nav-link text-dark" asp-controller="Account" asp-action="ChangeUser">&ensp;@this.User.Identity.Name</a>
-                                </div>
-                            </li>
                             <li class="nav-item dropdown nav-user">
                                 <a class="nav-link nav-user-img" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-tasks"></i></a>
                                 <div class="dropdown-menu dropdown-menu-right nav-user-dropdown" aria-labelledby="navbarDropdownMenuLink2">
@@ -92,7 +89,7 @@
                                             <a href="#" class="connection-item"><img src="~/images/aboutUs.png" alt=""> <span>About</span></a>
                                         </div>
                                         <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 ">
-                                            <a href="#" class="connection-item"><img src="~/images/offers.png" alt=""> <span>Offers</span></a>
+                                            <a asp-controller="Home" asp-action="Offers" class="connection-item"><img src="~/images/offers.png" alt=""> <span>Offers</span></a>
                                         </div>
                                         <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 ">
                                             <a class="connection-item" asp-controller="Home" asp-action="Privacy"><img src="~/images/privacy.png" alt=""> <span>Privacy</span></a>

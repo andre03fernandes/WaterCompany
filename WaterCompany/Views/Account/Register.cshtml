@@ -34,6 +34,11 @@
                                     <input asp-for="Email" class="form-control" />
                                     <span asp-validation-for="Email" class="text-danger"></span>
                                 </div>
+                                <div class="form-outline flex-fill mb-0" style="padding-right: 25px;">
+                                    <label class="form-label" asp-for="PhoneNumber">Phone Number</label>
+                                    <input asp-for="PhoneNumber" class="form-control" />
+                                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                                </div>
                                  <div class="form-outline flex-fill mb-0" style="padding-right: 25px;">
                                     <label class="form-label" asp-for="CountryId" class="control-label"></label>
                                     <select asp-for="CountryId" asp-items="Model.Countries" class="form-control text-center"></select>
@@ -43,16 +48,6 @@
                                     <label class="form-label" asp-for="CityId" class="control-label"></label>
                                     <select asp-for="CityId" asp-items="Model.Cities" class="form-control text-center"></select>
                                     <span asp-validation-for="CityId" class="text-danger"></span>
-                                </div>
-                                <div class="form-outline flex-fill mb-0" style="padding-right: 25px;">
-                                    <label class="form-label" asp-for="Address">Address</label>
-                                    <input asp-for="Address" class="form-control" />
-                                    <span asp-validation-for="Address" class="text-danger"></span>
-                                </div>
-                                <div class="form-outline flex-fill mb-0" style="padding-right: 25px;">
-                                    <label class="form-label" asp-for="PhoneNumber">Phone Number</label>
-                                    <input asp-for="PhoneNumber" class="form-control" />
-                                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
                                 </div>
                                 <div class="form-outline flex-fill mb-0" style="padding-right: 25px;">
                                     <label class="form-label" asp-for="Password">Password</label>
@@ -66,7 +61,7 @@
                                 </div>
                                 <br />
                                 <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4" style="padding-right: 25px;">
-                                    <button type="submit" value="Register New User" class="btn btn-primary btn-lg"><i class="fas fa-user"></i> Register</button>
+                                    <button type="submit" value="Register New User" class="btn btn-outline-primary btn-lg"><i class="fas fa-folder-plus"></i></button>
                                 </div>
                             </form>
                         </div>

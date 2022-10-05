@@ -54,6 +54,34 @@
         color: white !important;
     }
 
+    [data-theme="dark"] hr {
+        background-color: white !important;
+    }
+
     [data-theme="dark"] table {
         color: white !important;
+    }
+
+    [data-theme="dark"] .card-body {
+        background-color: #212121 !important;
+    }
+
+    [data-theme="dark"] .newsletter-subscribe {
+        background-color: #212121 !important;
+    }
+
+    [data-theme="dark"] .text-center {
+        color: white !important;
+    }
+
+    [data-theme="dark"] .row {
+        background-color: #212121 !important;
+    }
+
+    [data-theme="dark"]  .card-header  {
+        background-color: #212121 !important;
+    }
+
+    [data-theme="dark"] .card-footer {
+        background-color: #212121 !important;
     }

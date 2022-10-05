@@ -98,7 +98,6 @@ namespace WaterCompany.Controllers
                         LastName = model.LastName,
                         Email = model.Email,
                         UserName = model.Username,
-                        Address = model.Address,
                         PhoneNumber = model.PhoneNumber,
                         CityId = model.CityId,
                         City = city
@@ -144,7 +143,6 @@ namespace WaterCompany.Controllers
             {
                 model.FirstName = user.FirstName;
                 model.LastName = user.LastName;
-                model.Address = user.Address;
                 model.PhoneNumber = user.PhoneNumber;
 
                 var city = await _countryRepository.GetCityAsync(user.CityId);
@@ -178,7 +176,6 @@ namespace WaterCompany.Controllers
 
                     user.FirstName = model.FirstName;
                     user.LastName = model.LastName;
-                    user.Address = model.Address;
                     user.PhoneNumber = model.PhoneNumber;
                     user.CityId = model.CityId;
                     user.City = city;

@@ -19,7 +19,54 @@
     <div class="col-md-12">
         <dl class="row data_table" style="padding-left: 35px;">
 
-            <partial name="_DetailsDelete_Employees" />
+            <dt class="col-3">
+                @Html.DisplayNameFor(model => model.ImageFullPath)
+            </dt>
+            <dd class="col-9">
+                <img class="user-avatar-md" src="@Url.Content(Model.ImageFullPath)" alt="Image" style="width: auto; height: 70px;" />
+            </dd>
+            <dt class="col-3">
+                @Html.DisplayNameFor(model => model.User.FirstName)
+            </dt>
+            <dd class="col-9">
+                @Html.DisplayFor(model => model.User.FirstName)
+            </dd>
+            <dt class="col-3">
+                @Html.DisplayNameFor(model => model.User.LastName)
+            </dt>
+            <dd class="col-9">
+                @Html.DisplayFor(model => model.User.LastName)
+            </dd>
+            <dt class="col-3">
+                @Html.DisplayNameFor(model => model.User.PhoneNumber)
+            </dt>
+            <dd class="col-9">
+                @Html.DisplayFor(model => model.User.PhoneNumber)
+            </dd>
+            <dt class="col-3">
+                @Html.DisplayNameFor(model => model.Address)
+            </dt>
+            <dd class="col-9">
+                @Html.DisplayFor(model => model.Address)
+            </dd>
+            <dt class="col-3">
+                @Html.DisplayNameFor(model => model.PostalCode)
+            </dt>
+            <dd class="col-9">
+                @Html.DisplayFor(model => model.PostalCode)
+            </dd>
+            <dt class="col-3">
+                @Html.DisplayNameFor(model => model.TIN)
+            </dt>
+            <dd class="col-9">
+                @Html.DisplayFor(model => model.TIN)
+            </dd>
+            <dt class="col-3">
+                @Html.DisplayNameFor(model => model.User.Email)
+            </dt>
+            <dd class="col-9">
+                @Html.DisplayFor(model => model.User.Email)
+            </dd>
 
         </dl>
     </div>

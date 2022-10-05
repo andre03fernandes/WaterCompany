@@ -79,7 +79,7 @@
                 var client = _converterHelper.ToClient(model, imageId, true);
 
                 // TODO: Modificar para o user que tiver logado
-                client.User = await _userHelper.GetUserByUserNameAsync(this.User.Identity.Name);
+                client.User = await _userHelper.GetUserByIdAsync(User.Identity.Name);
                 await _clientRepository.CreateAsync(client);
                 return RedirectToAction(nameof(Index));
             }
@@ -126,7 +126,7 @@
                     var client = _converterHelper.ToClient(model, imageId, false);
 
                     // TODO: Modificar para o user que tiver logado
-                    client.User = await _userHelper.GetUserByUserNameAsync(this.User.Identity.Name);
+                    client.User = await _userHelper.GetUserByUserNameAsync(User.Identity.Name);
                     await _clientRepository.UpdateAsync(client);
                 }
                 catch (DbUpdateConcurrencyException)
