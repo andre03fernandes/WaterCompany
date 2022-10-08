@@ -10,8 +10,8 @@ using WaterCompany.Data;
 namespace WaterCompany.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20221003215051_AddContracts")]
-    partial class AddContracts
+    [Migration("20221007210447_Update0710")]
+    partial class Update0710
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -203,16 +203,17 @@ namespace WaterCompany.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasMaxLength(9)
+                        .HasColumnType("nvarchar(9)");
+
                     b.Property<string>("PostalCode")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TIN")
                         .IsRequired()
-                        .HasMaxLength(9)
-                        .HasColumnType("nvarchar(9)");
-
-                    b.Property<string>("Telephone")
                         .HasMaxLength(9)
                         .HasColumnType("nvarchar(9)");
 
@@ -224,43 +225,6 @@ namespace WaterCompany.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Clients");
-                });
-
-            modelBuilder.Entity("WaterCompany.Data.Entities.Contract", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<int?>("ClientId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("ContractDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("ContractType")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PaymentType")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PostalCode")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ClientId");
-
-                    b.ToTable("Contracts");
                 });
 
             modelBuilder.Entity("WaterCompany.Data.Entities.Country", b =>
@@ -312,16 +276,17 @@ namespace WaterCompany.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasMaxLength(9)
+                        .HasColumnType("nvarchar(9)");
+
                     b.Property<string>("PostalCode")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TIN")
                         .IsRequired()
-                        .HasMaxLength(9)
-                        .HasColumnType("nvarchar(9)");
-
-                    b.Property<string>("Telephone")
                         .HasMaxLength(9)
                         .HasColumnType("nvarchar(9)");
 
@@ -343,10 +308,6 @@ namespace WaterCompany.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
-                    b.Property<string>("Address")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
                     b.Property<int>("CityId")
                         .HasColumnType("int");
 
@@ -362,10 +323,12 @@ namespace WaterCompany.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("FirstName")
+                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("LastName")
+                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
@@ -482,15 +445,6 @@ namespace WaterCompany.Migrations
                         .HasForeignKey("UserId");
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("WaterCompany.Data.Entities.Contract", b =>
-                {
-                    b.HasOne("WaterCompany.Data.Entities.Client", "Client")
-                        .WithMany()
-                        .HasForeignKey("ClientId");
-
-                    b.Navigation("Client");
                 });
 
             modelBuilder.Entity("WaterCompany.Data.Entities.Employee", b =>

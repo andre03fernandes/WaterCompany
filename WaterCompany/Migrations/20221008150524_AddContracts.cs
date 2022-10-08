@@ -7,16 +7,6 @@ namespace WaterCompany.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AlterColumn<string>(
-                name: "Telephone",
-                table: "Clients",
-                type: "nvarchar(9)",
-                maxLength: 9,
-                nullable: true,
-                oldClrType: typeof(string),
-                oldType: "nvarchar(max)",
-                oldNullable: true);
-
             migrationBuilder.CreateTable(
                 name: "Contracts",
                 columns: table => new

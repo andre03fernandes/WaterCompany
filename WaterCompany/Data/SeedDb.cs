@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Runtime.Intrinsics.X86;
     using System.Security.Policy;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Identity;
@@ -158,6 +159,10 @@
         {
             _context.Employees.Add(new Employee
             {
+                FirstName = user1.FirstName,
+                LastName = user1.LastName,
+                PhoneNumber = user1.PhoneNumber,
+                Email = user1.Email,
                 Address = "Rua otpx " + Convert.ToString(_random.Next(000, 999)),
                 PostalCode = "2370-" + Convert.ToString(_random.Next(100, 999)),
                 TIN = Convert.ToString(_random.Next(100000000, 999999999)),
@@ -169,6 +174,10 @@
         {
             _context.Clients.Add(new Client
             {
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                PhoneNumber = user.PhoneNumber,
+                Email = user.Email,
                 Address = "Rua xpto " + Convert.ToString(_random.Next(000, 999)),
                 PostalCode = "1950-" + Convert.ToString(_random.Next(100, 999)),
                 TIN = Convert.ToString(_random.Next(100000000, 999999999)),

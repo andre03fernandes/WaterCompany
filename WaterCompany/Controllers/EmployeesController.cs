@@ -64,7 +64,7 @@ namespace WaterCompany.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(EmployeeViewModel model)
+        public async Task<IActionResult> Create(EmployeeViewModel model, User user)
         {
             if (ModelState.IsValid)
             {
@@ -75,7 +75,7 @@ namespace WaterCompany.Controllers
                     imageId = await _blobHelper.UploadBlobAsync(model.ImageFile, "employees");
                 }
 
-                var employee = _converterHelper.ToEmployee(model, imageId, true);
+                var employee = _converterHelper.ToEmployee(user, model, imageId, true);
 
                 // TODO: Modificar para o user que tiver logado
                 employee.User = await _userHelper.GetUserByUserNameAsync(this.User.Identity.Name);
@@ -108,8 +108,13 @@ namespace WaterCompany.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(EmployeeViewModel model)
+        public async Task<IActionResult> Edit(int id, EmployeeViewModel model, User user)
         {
+            if (id != model.Id)
+            {
+                return new NotFoundViewResult("EmployeeNotFound");
+            }
+
             if (ModelState.IsValid)
             {
                 try
@@ -121,7 +126,7 @@ namespace WaterCompany.Controllers
                         imageId = await _blobHelper.UploadBlobAsync(model.ImageFile, "employees");
                     }
 
-                    var employee = _converterHelper.ToEmployee(model, imageId, false);
+                    var employee = _converterHelper.ToEmployee(user, model, imageId, false);
 
                     // TODO: Modificar para o user que tiver logado
                     employee.User = await _userHelper.GetUserByUserNameAsync(this.User.Identity.Name);

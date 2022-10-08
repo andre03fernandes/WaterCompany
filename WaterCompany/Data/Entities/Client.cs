@@ -8,6 +8,27 @@ namespace WaterCompany.Data.Entities
         public int Id { get; set; }
 
         [Required]
+        [MaxLength(50, ErrorMessage = "The field {0} only can contain {1} characters lenght.")]
+        public string FirstName { get; set; }
+
+        [Required]
+        [MaxLength(50, ErrorMessage = "The field {0} only can contain {1} characters lenght.")]
+        public string LastName { get; set; }
+
+        [Display(Name = "Full Name")]
+        public string FullName => $"{FirstName} {LastName}";
+
+        [Required]
+        [EmailAddress]
+        public string Email { get; set; }
+
+        [Required]
+        [MinLength(9)]
+        [MaxLength(9)]
+        [Display(Name = "Phone Number")]
+        public string PhoneNumber { get; set; }
+
+        [Required]
         [MaxLength(100, ErrorMessage = "The field {0} only can contain {1} characters lenght.")]
         public string Address { get; set; }
 

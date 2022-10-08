@@ -7,6 +7,7 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
     using WaterCompany.Data;
+    using WaterCompany.Data.Entities;
     using WaterCompany.Helpers;
     using WaterCompany.Models;
 
@@ -65,7 +66,7 @@
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(ClientViewModel model)
+        public async Task<IActionResult> Create(ClientViewModel model, User user)
         {
             if (ModelState.IsValid)
             {
@@ -76,7 +77,7 @@
                     imageId = await _blobHelper.UploadBlobAsync(model.ImageFile, "clients");
                 }
 
-                var client = _converterHelper.ToClient(model, imageId, true);
+                var client = _converterHelper.ToClient(user, model, imageId, true);
 
                 // TODO: Modificar para o user que tiver logado
                 client.User = await _userHelper.GetUserByIdAsync(User.Identity.Name);
@@ -110,8 +111,14 @@
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(ClientViewModel model)
+        public async Task<IActionResult> Edit(int id, ClientViewModel model, User user)
         {
+            if (id != model.Id)
+            {
+                return new NotFoundViewResult("ClientNotFound");
+
+            }
+
             if (ModelState.IsValid)
             {
                 try
@@ -123,10 +130,15 @@
                         imageId = await _blobHelper.UploadBlobAsync(model.ImageFile, "clients");
                     }
 
-                    var client = _converterHelper.ToClient(model, imageId, false);
+                    var client = _converterHelper.ToClient(user, model, imageId, false);
 
                     // TODO: Modificar para o user que tiver logado
                     client.User = await _userHelper.GetUserByUserNameAsync(User.Identity.Name);
+                    if(client.User != null)
+                    {
+                        user.FirstName = client.FirstName;
+                    }
+                    await _userHelper.UpdateUserAsync(user);
                     await _clientRepository.UpdateAsync(client);
                 }
                 catch (DbUpdateConcurrencyException)

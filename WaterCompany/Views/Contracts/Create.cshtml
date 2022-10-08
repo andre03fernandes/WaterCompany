@@ -1,0 +1,55 @@
+﻿@model WaterCompany.Models.ContractViewModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Contract</h4>
+<hr />
+<div class="row centerform">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group" align="center">
+                <label asp-for="ClientId" class="control-label"></label>
+                <select asp-for="ClientId" asp-items="Model.Clients" class=" form-control text-center"></select>
+                <span asp-validation-for="ClientId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Address" class="control-label"></label>
+                <input asp-for="Address" class="form-control" />
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PostalCode" class="control-label"></label>
+                <input asp-for="PostalCode" class="form-control" />
+                <span asp-validation-for="PostalCode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ContractDate" class="control-label"></label>
+                <input asp-for="ContractDate" class="form-control" />
+                <span asp-validation-for="ContractDate" class="text-danger"></span>
+            </div>
+           @* <div class="form-group">
+                <label asp-for="ContractTypeId" class="control-label"></label>
+                <select asp-for="ContractTypeId" asp-items="Model.ContractTypes" class="form-control text-center"></select>
+                <span asp-validation-for="ContractTypeId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PaymentTypeId" class="control-label"></label>
+                <select asp-for="PaymentTypeId" asp-items="Model.PaymentTypes" class="form-control text-center"></select>
+                <span asp-validation-for="PaymentTypeId" class="text-danger"></span>
+            </div>*@
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
