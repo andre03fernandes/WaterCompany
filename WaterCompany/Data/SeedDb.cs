@@ -153,6 +153,25 @@
                 await _context.SaveChangesAsync();
             }
 
+            if (!_context.Offers.Any())
+            {
+                AddOffer("1st Echelon", "Up to 5m³", user);
+                AddOffer("2nd Echelon", "More than 5m³ and up to 15m³", user);
+                AddOffer("3rd Echelon", "More than 15m³ and up to 25m³", user);
+                AddOffer("4th Echelon", "More than 25m³", user);
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        private void AddOffer(string name, string echelon, User user)
+        {
+            _context.Offers.Add(new Offers
+            {
+                Name = name,
+                Echelon = echelon,
+                IsAvailable = true,
+                User = user
+            });
         }
 
         private void AddEmployee(User user1)

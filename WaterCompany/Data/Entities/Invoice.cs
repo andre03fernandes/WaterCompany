@@ -22,5 +22,8 @@ namespace WaterCompany.Data.Entities
 
         [Display(Name = "Is Paid")]
         public bool IsPaid { get; set; }
+
+        [Display(Name = "Consumption")]
+        public Consumption Consumption { get; set; }
     }
 }
