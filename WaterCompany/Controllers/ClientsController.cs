@@ -18,9 +18,9 @@
         private readonly IBlobHelper _blobHelper;
         private readonly IConverterHelper _converterHelper;
 
-        public ClientsController(IClientRepository clientRepository, 
-            IUserHelper userHelper, 
-            IBlobHelper blobHelper, 
+        public ClientsController(IClientRepository clientRepository,
+            IUserHelper userHelper,
+            IBlobHelper blobHelper,
             IConverterHelper converterHelper)
         {
             _clientRepository = clientRepository;
@@ -132,14 +132,20 @@
 
                     var client = _converterHelper.ToClient(user, model, imageId, false);
 
+                    var clienteAntigo = await _clientRepository.GetByIdAsync(id);
+                    var user1 = await _userHelper.GetUserByEmailAsync(clienteAntigo.Email);
+
                     // TODO: Modificar para o user que tiver logado
-                    client.User = await _userHelper.GetUserByUserNameAsync(User.Identity.Name);
-                    if(client.User != null)
-                    {
-                        user.FirstName = client.FirstName;
-                    }
+                    //client.User = await _userHelper.GetUserByUserNameAsync(User.Identity.Name);
+                    //if(client.User != null)
+                    //{
+                    user1.FirstName = model.FirstName;
+                    user1.LastName = model.LastName;
+                    user1.Email = model.Email;
+                    user1.PhoneNumber = model.PhoneNumber;
+                    //}
                     await _userHelper.UpdateUserAsync(user);
-                    await _clientRepository.UpdateAsync(client);
+                    await _clientRepository.UpdateAsync(model);
                 }
                 catch (DbUpdateConcurrencyException)
                 {

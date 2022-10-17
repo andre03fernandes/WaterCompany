@@ -40,7 +40,7 @@
                                 <a style="color: #343a40; cursor: pointer;" class="dropdown-toggle nav-link nav-user-img" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-briefcase"></i> Backoffice</a>
                                 <div class="dropdown-menu dropdown-menu-left nav-user-dropdown" aria-labelledby="navbarDropdownMenuLink2">
                                     <a class="dropdown-item" asp-controller="Account" asp-action="Register"><i class="fas fa-user-plus"></i> Register</a>
-                                    @*<a class="dropdown-item" asp-controller="Users" asp-action="Index"><i class="fas fa-user"></i> Users</a>*@
+                                    <a class="dropdown-item" asp-controller="Users" asp-action="Index"><i class="fas fa-user"></i> Users</a>
                                     <a class="dropdown-item" asp-controller="Roles" asp-action="Index"><i class="fas fa-book"></i> Roles</a>
                                     <a class="dropdown-item" asp-controller="Countries" asp-action="Index"><i class="fas fa-globe-europe"></i> Countries and Cities</a>
                                 </div>
@@ -90,7 +90,7 @@
                                 <li class="connection-list">
                                     <div class="row">
                                         <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 ">
-                                            <a href="#" class="connection-item"><img src="~/images/aboutUs.png" alt=""> <span>About</span></a>
+                                            <a asp-controller="Home" asp-action="About" class="connection-item"><img src="~/images/aboutUs.png" alt=""> <span>About</span></a>
                                         </div>
                                         <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 ">
                                             <a asp-controller="Home" asp-action="Offers" class="connection-item"><img src="~/images/offers.png" alt=""> <span>Offers</span></a>
