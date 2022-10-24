@@ -22,6 +22,8 @@ namespace WaterCompany.Data
 
         public DbSet<Offers> Offers { get; set; }
 
+        public DbSet<Subscriber> Subscribers { get; set; }
+
         public DataContext(DbContextOptions<DataContext> options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
