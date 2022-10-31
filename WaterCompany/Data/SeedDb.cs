@@ -165,7 +165,7 @@
 
         private void AddOffer(string name, string echelon, User user)
         {
-            _context.Offers.Add(new Offers
+            _context.Offers.Add(new Offer
             {
                 Name = name,
                 Echelon = echelon,

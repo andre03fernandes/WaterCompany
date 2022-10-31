@@ -20,9 +20,15 @@ namespace WaterCompany.Data
 
         public DbSet<Consumption> Consumptions { get; set; }
 
-        public DbSet<Offers> Offers { get; set; }
+        public DbSet<Offer> Offers { get; set; }
 
         public DbSet<Subscriber> Subscribers { get; set; }
+
+        public DbSet<Order> Orders { get; set; }
+
+        public DbSet<OrderDetail> OrderDetails { get; set; }
+
+        public DbSet<OrderDetailTemp> OrderDetailsTemp { get; set; }
 
         public DataContext(DbContextOptions<DataContext> options) : base(options) { }
 

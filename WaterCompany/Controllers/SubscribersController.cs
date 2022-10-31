@@ -54,13 +54,13 @@ namespace WaterCompany.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Email")] Subscriber subscriber)
+        public async Task<IActionResult> Create(Subscriber subscriber)
         {
             if (ModelState.IsValid)
             {
                 _context.Add(subscriber);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "Home");
             }
             return View(subscriber);
         }

@@ -354,5 +354,32 @@ label {
 }
 
 .card{
-    height: 395px;
+    height: 499px;
 }
+
+
+hr {
+    border: 0;
+    height: 1px;
+    width: 30%;
+    position: relative;
+    margin: 30px auto;
+}
+
+.center-ball {
+    background-color: #007bff;
+}
+
+    .center-ball:before {
+        content: "";
+        width: 10px;
+        height: 10px;
+        background: #007bff;
+        display: inline-block;
+        border: 2px solid #007bff;
+        border-radius: 50%;
+        position: absolute;
+        top: -4px;
+        left: 50%;
+        margin: 0 0 0 -3px;
+    }

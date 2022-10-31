@@ -1,10 +1,10 @@
 ﻿namespace WaterCompany.Data.Entities
 {
-    public class Offers
+    public class Offer
     {
         public int Id { get; set; }
 
-        public string Name { get; set; }    
+        public string Name { get; set; }
 
         public string Echelon { get; set; }
 

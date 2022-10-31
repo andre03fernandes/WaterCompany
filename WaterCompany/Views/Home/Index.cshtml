@@ -1,4 +1,6 @@
-﻿@{
+﻿@model WaterCompany.Data.Entities.Subscriber
+
+@{
     ViewData["Title"] = "Home Page";
 }
 <main>
@@ -39,7 +41,7 @@
         </div>
     </div>
     <div class="container my-5 centerform">
-        <hr class="my-5">
+        <hr class="center-ball" />
         <br />
         <h1 class="text-center big-title1">See Some Of Our Offers</h1><br />
         <div id="multi-item-example" class="carousel slide carousel-multi-item" data-ride="carousel">
@@ -180,7 +182,7 @@
         </div>
     </div>
     <br />
-    <hr class="my-5">
+    <hr class="center-ball" />
     <br />
     <br />
     <div class="newsletter-subscribe centerform">
@@ -189,9 +191,12 @@
                 <h1 class="text-center big-title1">Subscribe For Our Newsletter</h1><br />
                 <p class="text-center">To stay up to date with our news, subscribe to our newsletter! </p>
             </div>
-            <form class="text-center" method="post">
-                <div class="form-group"><input class="form-control" type="email" name="email" placeholder="Your Email"></div>
-                <div class="form-group"><button class="btn btn-primary" type="submit">Subscribe </button></div>
+            <form class="text-center form123" method="post">
+                <div class="form-group">
+                    <input asp-for="Email" class="form-control" type="email" name="email" placeholder="Your Email"><br />
+                    <button asp-controller="Subscribers" asp-action="Create" class="btn btn-primary" type="submit">Subscribe </button>
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
             </form>
         </div>
     </div>

@@ -55,6 +55,10 @@
     }
 
     [data-theme="dark"] hr {
+        background-color: #007bff !important;
+    }
+
+    [data-theme="dark"] .navbar-toggler {
         background-color: white !important;
     }
 

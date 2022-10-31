@@ -5,7 +5,7 @@ using WaterCompany.Data.Entities;
 
 namespace WaterCompany.Models
 {
-    public class ChangeUserViewModel
+    public class ChangeUserViewModel : Client
     {
         [Required]
         [Display(Name = "First Name")]
