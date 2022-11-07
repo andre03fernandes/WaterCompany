@@ -41,6 +41,7 @@ namespace WaterCompany.Controllers
                 model.Roles = await GetUserRoles(user);
                 userRoles.Add(model);
             }
+
             return View(userRoles);
 
         }

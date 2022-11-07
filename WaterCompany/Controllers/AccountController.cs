@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -25,14 +26,23 @@ namespace WaterCompany.Controllers
         private readonly IConfiguration _configuration;
         private readonly IMailHelper _mailHelper;
         private readonly IBlobHelper _blobHelper;
+        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly IClientRepository _clientRepository;
+        private readonly IEmployeeRepository _employeeRepository;
 
-        public AccountController(IUserHelper userHelper, ICountryRepository countryRepository, IConfiguration configuration, IMailHelper mailHelper, IBlobHelper blobHelper)
+        public AccountController(IUserHelper userHelper, ICountryRepository countryRepository,
+            IConfiguration configuration, IMailHelper mailHelper, IBlobHelper blobHelper,
+            RoleManager<IdentityRole> roleManager,
+            IClientRepository clientRepository, IEmployeeRepository employeeRepository)
         {
             _userHelper = userHelper;
             _countryRepository = countryRepository;
             _configuration = configuration;
             _mailHelper = mailHelper;
             _blobHelper = blobHelper;
+            _roleManager = roleManager;
+            _clientRepository = clientRepository;
+            _employeeRepository = employeeRepository;
         }
 
         //[Authorize(Roles = "Admin, Employee, Client")]
@@ -73,8 +83,21 @@ namespace WaterCompany.Controllers
         [Authorize(Roles = "Admin")]
         public IActionResult Register()
         {
+            var list = _roleManager.Roles.Select(c => new SelectListItem
+            {
+                Text = c.Name,
+                Value = c.Id.ToString()
+            }).OrderBy(l => l.Text).ToList();
+
+            list.Insert(0, new SelectListItem
+            {
+                Text = "Select a role!",
+                Value = "0"
+            });
+
             var model = new RegisterNewUserViewModel
             {
+                Roles = list,
                 Countries = _countryRepository.GetComboCountries(),
                 Cities = _countryRepository.GetComboCities(0),
             };
@@ -110,26 +133,69 @@ namespace WaterCompany.Controllers
                         return View(model);
                     }
 
-                    string myToken = await _userHelper.GenerateEmailConfirmationTokenAsync(user);
-                    string tokenLink = Url.Action("ConfirmEmail", "Account", new
+                    var role = await _roleManager.FindByIdAsync(model.AccountRole);
+                    if (role.Name == "Client")
                     {
-                        userid = user.Id,
-                        token = myToken
-                    }, protocol: HttpContext.Request.Scheme);
+                        Client client = new Client
+                        {
+                            FirstName = model.FirstName,
+                            LastName = model.LastName,
+                            Email = model.Email,
+                            Address = "To be filled in by the client",
+                            PhoneNumber = model.PhoneNumber,
+                            PostalCode = "0000-000",
+                            TIN = "000000000",
+                            ImageId = new Guid()
+                        };
 
-                    Response response = _mailHelper.SendEmail(model.Email, "Email confirmation", $"<h1>Email Confirmation</h1>" +
-                        $"To allow the user, " +
-                        $"plase click in this link:</br></br><a href = \"{tokenLink}\"><b>Confirm Email</b></a>");
+                        await _clientRepository.CreateAsync(client);
 
-
-                    if (response.IsSuccess)
+                    }
+                    else if(role.Name == "Employee")
                     {
-                        ViewBag.Message = "The instructions to allow you user has been sent to email";
-                        return View(model);
+                        Employee employee = new Employee
+                        {
+                            FirstName = model.FirstName,
+                            LastName = model.LastName,
+                            Email = model.Email,
+                            Address = "To be filled in by the employee",
+                            PhoneNumber = model.PhoneNumber,
+                            PostalCode = "0000-000",
+                            TIN = "000000000",
+                            ImageId = new Guid()
+                        };
+
+                        await _employeeRepository.CreateAsync(employee);
                     }
 
-                    ModelState.AddModelError(string.Empty, "The user couldn't be logged.");
+
+                    await _userHelper.AddUserToRoleAsync(user, role.Name);
+
                 }
+
+                //ViewBag.Message = "User successfully created";
+
+                //return RedirectToAction("Index", "Users");
+
+                string myToken = await _userHelper.GenerateEmailConfirmationTokenAsync(user);
+                string tokenLink = Url.Action("ConfirmEmail", "Account", new
+                {
+                    userid = user.Id,
+                    token = myToken
+                }, protocol: HttpContext.Request.Scheme);
+
+                Response response = _mailHelper.SendEmail(model.Email, "Email confirmation", $"<h1>Email Confirmation</h1>" +
+                    $"To allow the user, " +
+                    $"plase click in this link:</br></br><a href = \"{tokenLink}\"><b>Confirm Email</b></a>");
+
+
+                if (response.IsSuccess)
+                {
+                    ViewBag.Message = "The instructions to allow you user has been sent to email";
+                    return View(model);
+                }
+
+                ModelState.AddModelError(string.Empty, "The user couldn't be logged.");
             }
 
             return View(model);

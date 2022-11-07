@@ -1,0 +1,127 @@
+﻿@model IEnumerable<WaterCompany.Data.Entities.OrderDetailTemp>
+@{
+    ViewData["Title"] = "Create";
+}
+<br />
+<br />
+<p class="centerform">
+    <h1 class="big-title">
+        New Orders<br /><hr class="center-ball" /><br />
+        <a asp-action="AddOffer" class="btn btn-outline-success"><i class="fas fa-cart-plus"></i></a>
+        <a asp-action="ConfirmOrder" class="btn btn-outline-primary" id="btnConfirm"><i class="fas fa-clipboard-check"></i></a>
+    </h1>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Offer.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UnitaryValue)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Value)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td style="vertical-align: middle">
+                    @Html.DisplayFor(modelItem => item.Offer.Name)
+                </td>
+                <td style="vertical-align: middle">
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td style="vertical-align: middle">
+                    @Html.DisplayFor(modelItem => item.UnitaryValue)
+                </td>
+                <td style="vertical-align: middle">
+                    @Html.DisplayFor(modelItem => item.Value)
+                </td>
+                <td style="vertical-align: middle" id="@item.Id">
+                    <a asp-action="Increase" asp-route-id="@item.Id" class="btn btn-warning"><i class="fas fa-plus"></i></a>
+                    <a asp-action="Decrease" asp-route-id="@item.Id" class="btn btn-info"><i class="fas fa-minus"></i></a>
+                    <a asp-action="DeleteItem" asp-route-id="@item.Id" class="btn btn-danger" id="btnDeleteItem"><i class="fa-solid fa-trash-can"></i></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<br />
+<br />
+<div id="confirmDialog" class="modal fade">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Confirm Order</h4>
+                <button type="button" class="close" data-dismiss="modal"><i class="fas fa-circle-xmark"></i></button>
+            </div>
+            <div class="modal-body">
+                <p>Do you want to confirm the order ?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" id="btnYesConfirm"><i class="fas fa-circle-check"></i></button>
+                <button type="button" class="btn btn-success" id="btnNoConfirm"><i class="fas fa-circle-minus"></i></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="deleteDialog" class="modal fade">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Delete</h4>
+                <button type="button" class="close" data-dismiss="modal"><i class="fas fa-circle-xmark"></i></button>
+            </div>
+            <div class="modal-body">
+                <p>Do you want to delete product from order ?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" id="btnYesDelete"><i class="fas fa-circle-check"></i></button>
+                <button type="button" class="btn btn-success" id="btnNoDelete"><i class="fas fa-circle-minus"></i></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var id = 0;
+            $("#btnConfirm").click(function () {
+                $("#confirmDialog").modal("show");
+                return false;
+            });
+            $("#btnNoConfirm").click(function () {
+                $("#confirmDialog").modal("hide");
+                return false;
+            });
+            $("#btnYesConfirm").click(function () {
+                window.location.href = "/Orders/ConfirmOrder";
+            });
+            $("a[id*=btnDeleteItem]").click(function () {
+                debugger;
+                id = $(this).parent()[0].id;
+                $("#deleteDialog").modal("show");
+                return false;
+            });
+            $("#btnNoDelete").click(function () {
+                $("#deleteDialog").modal("hide");
+                return false;
+            });
+            $("#btnYesDelete").click(function () {
+                window.location.href = "/Orders/DeleteItem/" + id;
+            });
+        });
+    </script>
+}

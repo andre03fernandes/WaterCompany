@@ -40,5 +40,19 @@ namespace WaterCompany.Data
                 .Where(o => o.User == user)
                 .OrderByDescending(o => o.OrderDate);
         }
+
+        public async Task<IQueryable<OrderDetailTemp>> GetDetailTempsAsync(string userName)
+        {
+            var user = await _userHelper.GetUserByUserNameAsync(userName);
+            if (user == null)
+            {
+                return null;
+            }
+
+            return _context.OrderDetailsTemp
+                .Include(p => p.Offer)
+                .Where(o => o.User == user)
+                .OrderBy(o => o.Offer.Name);
+        }
     }
 }

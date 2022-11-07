@@ -24,5 +24,13 @@ namespace WaterCompany.Data.Entities
         public int CityId { get; set; }
 
         public City City { get; set; }
+
+        [Display(Name = "Image")]
+        public Guid ImageId { get; set; }
+
+        [Display(Name = "Image")]
+        public string ImageFullPath => ImageId == Guid.Empty
+            ? $"https://nextlevel25853.blob.core.windows.net/images/noimage.png"
+            : $"https://nextlevel25853.blob.core.windows.net/users/{ImageId}";
     }
 }
