@@ -123,6 +123,9 @@ namespace WaterCompany.Controllers
                         UserName = model.Username,
                         PhoneNumber = model.PhoneNumber,
                         CityId = model.CityId,
+                        Address = model.Address,
+                        TIN = model.TIN,
+                        PostalCode = model.PostalCode,
                         City = city
                     };
 
@@ -151,7 +154,7 @@ namespace WaterCompany.Controllers
                         await _clientRepository.CreateAsync(client);
 
                     }
-                    else if(role.Name == "Employee")
+                    else if (role.Name == "Employee")
                     {
                         Employee employee = new Employee
                         {
@@ -170,6 +173,7 @@ namespace WaterCompany.Controllers
 
 
                     await _userHelper.AddUserToRoleAsync(user, role.Name);
+                    await _userHelper.UpdateUserAsync(user);
 
                 }
 
@@ -205,11 +209,17 @@ namespace WaterCompany.Controllers
         {
             var user = await _userHelper.GetUserByUserNameAsync(this.User.Identity.Name);
             var model = new ChangeUserViewModel();
+
             if (user != null)
             {
                 model.FirstName = user.FirstName;
                 model.LastName = user.LastName;
                 model.PhoneNumber = user.PhoneNumber;
+                model.Email = user.Email;
+                model.Address = user.Address;
+                model.ImageId = user.ImageId;
+                model.TIN = user.TIN;
+                model.PostalCode = user.PostalCode;
 
                 var city = await _countryRepository.GetCityAsync(user.CityId);
                 if (city != null)
@@ -236,6 +246,7 @@ namespace WaterCompany.Controllers
             if (ModelState.IsValid)
             {
                 var user = await _userHelper.GetUserByUserNameAsync(this.User.Identity.Name);
+
                 if (user != null)
                 {
                     var city = await _countryRepository.GetCityAsync(model.CityId);
@@ -245,6 +256,11 @@ namespace WaterCompany.Controllers
                     user.PhoneNumber = model.PhoneNumber;
                     user.CityId = model.CityId;
                     user.City = city;
+                    user.Email = model.Email;
+                    user.Address = model.Address;
+                    user.ImageId = model.ImageId;
+                    user.TIN = model.TIN;
+                    user.PostalCode = model.PostalCode;
 
                     var response = await _userHelper.UpdateUserAsync(user);
                     if (response.Succeeded)
@@ -255,6 +271,9 @@ namespace WaterCompany.Controllers
                     {
                         ModelState.AddModelError(string.Empty, response.Errors.FirstOrDefault().Description);
                     }
+
+                    await _userHelper.UpdateUserAsync(user);
+                    
                 }
             }
             return View(model);

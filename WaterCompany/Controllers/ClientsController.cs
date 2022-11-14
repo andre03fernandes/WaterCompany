@@ -182,11 +182,32 @@
         // POST: Clients/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int? id)
         {
-            var client = await _clientRepository.GetByIdAsync(id);
-            await _clientRepository.DeleteAsync(client);
-            return RedirectToAction(nameof(Index));
+            var client = await _clientRepository.GetByIdAsync(id.Value);
+            try
+            {
+                await _clientRepository.DeleteAsync(client);
+                return RedirectToAction(nameof(Index));
+            }
+            catch(DbUpdateException ex)
+            {
+                if(id == null)
+                {
+                    return new NotFoundViewResult("ClientNotFound");
+                }
+                if(client == null)
+                {
+                    return new NotFoundViewResult("ClientNotFound");
+                }
+                if(ex.InnerException != null & ex.InnerException.Message.Contains("DELETE"))
+                {
+                    ViewBag.ErrorTitle = $"The client {client.FullName} has at least one associated contract";
+                    ViewBag.ErrorMessage = $"The client <b>{client.FullName}</b> cannot be erased because it has at least one associated contract. <br /><br />" +
+                        $"If you want to delete this client you must first delete all the contracts associated with it and then try again to delete it.";
+                }
+                return View("Error");
+            }
         }
 
         public IActionResult ClientNotFound()

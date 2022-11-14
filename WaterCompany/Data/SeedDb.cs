@@ -59,7 +59,10 @@
                     UserName = "andre@admin",
                     PhoneNumber = "927690241",
                     CityId = _context.Countries.FirstOrDefault().Cities.FirstOrDefault().Id,
-                    City = _context.Countries.FirstOrDefault().Cities.FirstOrDefault()
+                    City = _context.Countries.FirstOrDefault().Cities.FirstOrDefault(),
+                    Address = "Rua Vale Formoso de Cima 113 5ºD",
+                    PostalCode = "1950-266",
+                    TIN = "245960368"
                 };
 
                 var result = await _userHelper.AddUserAsync(user, "123456");
@@ -90,7 +93,10 @@
                     UserName = "staff@employee",
                     PhoneNumber = "927690241",
                     CityId = _context.Countries.FirstOrDefault().Cities.FirstOrDefault().Id,
-                    City = _context.Countries.FirstOrDefault().Cities.FirstOrDefault()
+                    City = _context.Countries.FirstOrDefault().Cities.FirstOrDefault(),
+                    Address = "Rua xpto 1",
+                    PostalCode = "1970-456",
+                    TIN = "123435675"
                 };
 
                 var result1 = await _userHelper.AddUserAsync(user1, "123456");
@@ -127,7 +133,10 @@
                     UserName = "roberto@client",
                     PhoneNumber = "934567890",
                     CityId = _context.Countries.FirstOrDefault().Cities.FirstOrDefault().Id,
-                    City = _context.Countries.FirstOrDefault().Cities.FirstOrDefault()
+                    City = _context.Countries.FirstOrDefault().Cities.FirstOrDefault(),
+                    Address = "Rua xpto 2",
+                    PostalCode = "2456-345",
+                    TIN = "678567345"
                 };
 
                 var result2 = await _userHelper.AddUserAsync(user2, "123456");
@@ -182,9 +191,9 @@
                 LastName = user1.LastName,
                 PhoneNumber = user1.PhoneNumber,
                 Email = user1.Email,
-                Address = "Rua otpx " + Convert.ToString(_random.Next(000, 999)),
-                PostalCode = "2370-" + Convert.ToString(_random.Next(100, 999)),
-                TIN = Convert.ToString(_random.Next(100000000, 999999999)),
+                Address = user1.Address,
+                PostalCode = user1.PostalCode,
+                TIN = user1.TIN,
                 User = user1
             });
         }
@@ -197,9 +206,9 @@
                 LastName = user.LastName,
                 PhoneNumber = user.PhoneNumber,
                 Email = user.Email,
-                Address = "Rua xpto " + Convert.ToString(_random.Next(000, 999)),
-                PostalCode = "1950-" + Convert.ToString(_random.Next(100, 999)),
-                TIN = Convert.ToString(_random.Next(100000000, 999999999)),
+                Address = user.Address,
+                PostalCode = user.PostalCode,
+                TIN = user.TIN,
                 User = user
             });
         }

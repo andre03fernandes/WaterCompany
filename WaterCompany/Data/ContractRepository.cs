@@ -133,6 +133,14 @@ namespace WaterCompany.Data
             return list;
         }
 
+        public async Task<Contract> GetContractWithClients(int id)
+        {
+            return await _context.Contracts
+                .Include(p => p.Client)
+                .Where(p => p.Id == id)
+                .FirstOrDefaultAsync();
+        }
+
         public async Task DeleteContractAsync(int id)
         {
             var contract = await _context.Contracts.FindAsync(id);

@@ -3,7 +3,100 @@
     ViewData["Title"] = "Error";
 }
 
-<h1 class="text-danger">Error.</h1>
+<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+<script src="~/js/site.js" type="text/javascript"></script>
+<link href="~/css/error.css" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css?family=Encode+Sans+Semi+Condensed:100,200,300,400" rel="stylesheet">
+
+@if (ViewBag.ErrorTitle == null)
+{
+    <body class="loading">
+        <br>
+        <br>
+        <br>
+        <h2>Error.</h2>
+        <h2>An error occurred while processing your request.</h2>
+        <br>
+        <br>
+        <br>
+        <div class="gears">
+            <div class="gear one">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
+            <div class="gear two">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
+            <div class="gear three">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
+        </div>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+    </body>
+}
+else
+{
+    <body class="loading">
+        <br>
+        <br>
+        <br>
+        <h2 class="text-center"><b>@ViewBag.ErrorTitle</b></h2>
+        <br />
+        <h2 class="text-center">@Html.Raw(ViewBag.ErrorMessage)</h2>
+        <br>
+        <br>
+        <br>
+        <div class="gears">
+            <div class="gear one">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
+            <div class="gear two">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
+            <div class="gear three">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
+        </div>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+    </body>
+}
+
+@*<h1 class="text-danger">Error.</h1>
 <h2 class="text-danger">An error occurred while processing your request.</h2>
 
 @if (Model.ShowRequestId)
@@ -22,4 +115,4 @@
     It can result in displaying sensitive information from exceptions to end users.
     For local debugging, enable the <strong>Development</strong> environment by setting the <strong>ASPNETCORE_ENVIRONMENT</strong> environment variable to <strong>Development</strong>
     and restarting the app.
-</p>
+</p>*@

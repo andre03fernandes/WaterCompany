@@ -19,7 +19,7 @@ namespace WaterCompany.Data.Entities
         public string PostalCode { get; set; }
 
         [DataType(DataType.Date)]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy/MM/dd}")]
         [Display(Name = "Contract Date")]
         public DateTime ContractDate { get; set; }
 

@@ -23,5 +23,6 @@ namespace WaterCompany.Data
 
         Task DeleteContractAsync(int id);
 
+        public Task<Contract> GetContractWithClients(int id);
     }
 }
