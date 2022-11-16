@@ -34,16 +34,16 @@
         color: white !important;
     }
 
-    [data-theme="dark"] .nav-item a:hover {
-        color: dimgrey !important;
-    }
+        [data-theme="dark"] .nav-item a:hover {
+            color: white !important;
+        }
 
     [data-theme="dark"] .text {
-        color: whitesmoke !important;
+        color: white !important;
     }
 
     [data-theme="dark"] .backg {
-        color: whitesmoke !important;
+        color: white !important;
     }
 
     [data-theme="dark"] h2 {
@@ -87,5 +87,21 @@
     }
 
     [data-theme="dark"] .card-footer {
+        background-color: #212121 !important;
+    }
+
+    [data-theme="dark"] select {
+        background-color: #212121 !important;
+    }
+
+    [data-theme="dark"] input {
+        background-color: #212121 !important;
+    }
+
+    [data-theme="dark"] input::placeholder {
+        background-color: white !important;
+    }
+
+    [data-theme="dark"] label {
         background-color: #212121 !important;
     }

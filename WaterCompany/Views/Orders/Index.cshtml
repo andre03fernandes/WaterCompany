@@ -10,7 +10,7 @@
 <br />
 <br />
 <br />
-<h1 class="big-title">Orders <br /><hr class="center-ball" /><br /><a asp-action="Create" asp-controller="Orders" class="btn btn-outline-primary"><i class="far fa-plus-square"></i></a></h1>
+<h1 class="big-title"><i class="fas fa-truck"></i> Orders <br /><hr class="center-ball" /><br /><a asp-action="Create" asp-controller="Orders" class="btn btn-outline-primary"><i class="far fa-plus-square"></i> New Order</a></h1>
 
 
 <div class="table-responsive-sm">
@@ -20,25 +20,25 @@
                 @if (this.User.IsInRole("Admin"))
                 {
                     <th>
-                        @Html.DisplayNameFor(model => model.User.FullName)
+                        <i class="fas fa-user"></i> @Html.DisplayNameFor(model => model.User.FullName)
                     </th>
                 }
                 <th>
-                    @Html.DisplayNameFor(model => model.OrderDate)
+                    <i class="fas fa-clock"></i> @Html.DisplayNameFor(model => model.OrderDate)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.DeliveryDate)
-                </th>
-                @*<th>
-                @Html.DisplayNameFor(model => model.Lines)
-                </th>*@
-                <th>
-                    @Html.DisplayNameFor(model => model.UnitaryValue)
+                    <i class="fas fa-clock"></i> @Html.DisplayNameFor(model => model.DeliveryDate)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Value)
+                    <i class="fas fa-grip-lines"></i> @Html.DisplayNameFor(model => model.Lines)
                 </th>
-                <th></th>
+                <th>
+                    <i class="fas fa-hand-holding-usd"></i> @Html.DisplayNameFor(model => model.UnitaryValue)
+                </th>
+                <th>
+                    <i class="fas fa-hand-holding-usd"></i> @Html.DisplayNameFor(model => model.Value)
+                </th>
+                <th><i class="fas fa-filter"></i> Options</th>
             </tr>
         </thead>
         <tbody>
@@ -57,9 +57,9 @@
                     <td style="vertical-align: middle">
                         @Html.DisplayFor(modelItem => item.DeliveryDate)
                     </td>
-                    @*<td style="vertical-align: middle">
-                @Html.DisplayFor(modelItem => item.Lines)
-                </td>*@
+                    <td style="vertical-align: middle">
+                        @Html.DisplayFor(modelItem => item.Lines)
+                    </td>
                     <td style="vertical-align: middle">
                         @Html.DisplayFor(modelItem => item.UnitaryValue)
                     </td>
@@ -67,8 +67,8 @@
                         @Html.DisplayFor(modelItem => item.Value)
                     </td>
                     <td style="vertical-align: middle">
-                        <a asp-action="Deliver" asp-route-id="@item.Id" class="btn btn-outline-info" id="btnDeliver"><i class="fas fa-truck"></i></a>
-                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger" id="btnDelete"><i class="fas fa-trash-can"></i></a>
+                        <a asp-action="Deliver" asp-route-id="@item.Id" class="btn btn-outline-info" id="btnDeliver"><i class="fas fa-truck"></i> Deliver</a>
+                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger" id="btnDelete"><i class="fas fa-trash-alt"></i> Delete</a>
                     </td>
                 </tr>
             }
@@ -78,25 +78,25 @@
                 @if (this.User.IsInRole("Admin"))
                 {
                     <th>
-                        @Html.DisplayNameFor(model => model.User.FullName)
+                        <i class="fas fa-user"></i> @Html.DisplayNameFor(model => model.User.FullName)
                     </th>
                 }
                 <th>
-                    @Html.DisplayNameFor(model => model.OrderDateLocal)
+                    <i class="fas fa-clock"></i> @Html.DisplayNameFor(model => model.OrderDateLocal)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.DeliveryDate)
-                </th>
-                @*<th>
-                @Html.DisplayNameFor(model => model.Lines)
-                </th>*@
-                <th>
-                    @Html.DisplayNameFor(model => model.UnitaryValue)
+                    <i class="fas fa-clock"></i> @Html.DisplayNameFor(model => model.DeliveryDate)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Value)
+                    <i class="fas fa-grip-lines"></i> @Html.DisplayNameFor(model => model.Lines)
                 </th>
-                <th></th>
+                <th>
+                    <i class="fas fa-hand-holding-usd"></i> @Html.DisplayNameFor(model => model.UnitaryValue)
+                </th>
+                <th>
+                    <i class="fas fa-hand-holding-usd"></i> @Html.DisplayNameFor(model => model.Value)
+                </th>
+                <th><i class="fas fa-filter"></i> Options</th>
             </tr>
         </tfoot>
     </table>

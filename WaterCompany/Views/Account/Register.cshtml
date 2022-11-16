@@ -54,14 +54,21 @@
                 </div>
                 <div class="col-sm">
                     <div class="text-center form-outline flex-fill mb-0">
+                        <label class="form-label" asp-for="TIN">T.I.N.</label>
+                        <input asp-for="TIN" class="form-control" />
+                        <span asp-validation-for="TIN" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="row g-2">
+                <div class="col-sm">
+                    <div class="text-center form-outline flex-fill mb-0">
                         <label class="form-label" asp-for="CountryId" class="control-label"></label>
                         <select asp-for="CountryId" asp-items="Model.Countries" class="form-control text-center"></select>
                         <span asp-validation-for="CountryId" class="text-danger"></span>
                     </div>
                 </div>
-            </div>
-            <br />
-            <div class="row g-3">
                 <div class="col-sm">
                     <div class="text-center form-outline flex-fill mb-0">
                         <label class="form-label" asp-for="CityId" class="control-label"></label>
@@ -69,6 +76,33 @@
                         <span asp-validation-for="CityId" class="text-danger"></span>
                     </div>
                 </div>
+            </div>
+            <br />
+            <div class="row g-3">
+                <div class="col-sm">
+                    <div class="text-center form-outline flex-fill mb-0">
+                        <label class="form-label" asp-for="Address">Address</label>
+                        <input asp-for="Address" class="form-control" />
+                        <span asp-validation-for="Address" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-sm">
+                    <div class="text-center form-outline flex-fill mb-0">
+                        <label class="form-label" asp-for="PostalCode">Postal Code</label>
+                        <input asp-for="PostalCode" class="form-control" />
+                        <span asp-validation-for="PostalCode" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-sm">
+                    <div class="text-center form-outline flex-fill mb-0">
+                        <label asp-for="AccountRole" class="control-label"></label>
+                        <select asp-for="AccountRole" asp-items="Model.Roles" class=" form-control text-center"></select>
+                        <span asp-validation-for="AccountRole" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="row g-2">
                 <div class="col-sm">
                     <div class="text-center form-outline flex-fill mb-0">
                         <label class="form-label" asp-for="Password">Password</label>
@@ -85,20 +119,8 @@
                 </div>
             </div>
             <br />
-            <div class="row g-2">
-                <div class="col-sm">
-                    <div class="text-center form-outline flex-fill mb-0">
-                        <label asp-for="AccountRole" class="control-label"></label>
-                        <select asp-for="AccountRole" asp-items="Model.Roles" class=" form-control text-center"></select>
-                        <span asp-validation-for="AccountRole" class="text-danger"></span>
-                    </div>
-                </div>
-                <div class="col-sm">
-                <br />
-                    <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                        <button type="submit" value="Register New User" class="btn btn-outline-primary btn-lg"><i class="fas fa-folder-plus"></i> Add Account</button>
-                    </div>
-                </div>
+            <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                <button type="submit" value="Register New User" class="btn btn-outline-primary btn-lg"><i class="fas fa-folder-plus"></i> Add Account</button>
             </div>
         </div>
     </div>

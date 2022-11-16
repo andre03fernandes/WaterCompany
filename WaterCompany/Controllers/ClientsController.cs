@@ -29,14 +29,12 @@
             _converterHelper = converterHelper;
         }
 
-        // GET: Clients
         [Authorize(Roles = "Admin")]
         public IActionResult Index()
         {
             return View(_clientRepository.GetAllWithUsers());
         }
 
-        // GET: Clients/Details/5
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Details(int? id)
         {
@@ -54,40 +52,6 @@
             return View(client);
         }
 
-        // GET: Clients/Create
-        [Authorize(Roles = "Admin")]
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Clients/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(ClientViewModel model, User user)
-        {
-            if (ModelState.IsValid)
-            {
-                Guid imageId = Guid.Empty;
-
-                if (model.ImageFile != null && model.ImageFile.Length > 0)
-                {
-                    imageId = await _blobHelper.UploadBlobAsync(model.ImageFile, "clients");
-                }
-
-                var client = _converterHelper.ToClient(user, model, imageId, true);
-
-                // TODO: Modificar para o user que tiver logado
-                client.User = await _userHelper.GetUserByIdAsync(User.Identity.Name);
-                await _clientRepository.CreateAsync(client);
-                return RedirectToAction(nameof(Index));
-            }
-            return View(model);
-        }
-
-        // GET: Clients/Edit/5
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int? id)
         {
@@ -106,9 +70,6 @@
             return View(model);
         }
 
-        // POST: Clients/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, ClientViewModel model, User user)
@@ -161,7 +122,6 @@
             return View(model);
         }
 
-        // GET: Clients/Delete/5
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
@@ -179,7 +139,6 @@
             return View(client);
         }
 
-        // POST: Clients/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int? id)

@@ -7,13 +7,14 @@
 <br />
 <br />
 
-<h1 style="text-align:center;">Employee Details</h1>
-<hr class="center-ball" />
+<h1 class="big-title1" style="text-align:center;"><i class="fas fa-newspaper"></i> Employee Details</h1>
+<hr class="center-ball"/>
 <br />
 <div class="centerform">
-    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-primary"><i class="fas fa-pen-square"></i></a>
-    <a class="btn btn-outline-primary" asp-action="Index"><i class="fas fa-backward"></i></a>
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-success"><i class="fas fa-pen-square"></i> Edit</a>
+    <a class="btn btn-outline-info" asp-action="Index"><i class="fas fa-backward"></i> Back to List</a>
 </div>
+<br />
 <br />
 <div class="row col align-self-center">
     <div class="col-md-12">

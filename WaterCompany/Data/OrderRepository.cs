@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WaterCompany.Data.Entities;
@@ -53,6 +55,23 @@ namespace WaterCompany.Data
                 .Include(p => p.Offer)
                 .Where(o => o.User == user)
                 .OrderBy(o => o.Offer.Name);
+        }
+
+        public IEnumerable<SelectListItem> GetComboOffers()
+        {
+            var list = _context.Offers.Select(p => new SelectListItem
+            {
+                Text = p.Name,
+                Value = p.Id.ToString()
+            }).ToList();
+
+            list.Insert(0, new SelectListItem
+            {
+                Text = "Select a offer!",
+                Value = "0"
+            });
+
+            return list;
         }
     }
 }

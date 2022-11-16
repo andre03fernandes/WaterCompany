@@ -25,6 +25,9 @@ namespace WaterCompany.Data.Entities
 
         public IEnumerable<OrderDetail> Items { get; set; }
 
+        [DisplayFormat(DataFormatString = "{0:N0}")]
+        public int Lines => Items == null ? 0 : Items.Count();
+
         [DisplayFormat(DataFormatString = "{0:N2}")]
         public double UnitaryValue => Items == null ? 0 : Items.Sum(i => i.UnitaryValue);
 

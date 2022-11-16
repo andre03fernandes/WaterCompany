@@ -15,7 +15,7 @@ namespace WaterCompany.Data.Entities
         [MaxLength(50, ErrorMessage = "The field {0} only can contain {1} characters lenght.")]
         public string LastName { get; set; }
 
-        [Display(Name = "Full Name")]
+        [Display(Name = "Employee Name")]
         public string FullName => $"{FirstName} {LastName}";
 
         [Required]

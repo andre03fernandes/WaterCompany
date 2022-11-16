@@ -3,40 +3,40 @@
 @{
     ViewData["Title"] = "Index";
 }
-
 <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap4.min.css" />
 
 <br />
 <br />
 <br />
 <br />
-<h1 class="big-title">Employees <br /><hr class="center-ball" /><br /><a asp-action="Create" class="btn btn-outline-primary"><i class="far fa-plus-square"></i></a></h1>
+<h1 class="big-title"><i class="fas fa-users-cog"></i> Employees <br /><hr class="center-ball" /><br /><a asp-action="Register" asp-controller="Account" class="btn btn-outline-primary"><i class="far fa-plus-square"></i> New Employee</a></h1>
+
 <div class="table-responsive-sm">
-    <table id="example" class="table table-striped table-bordered" style="width:100%">
+    <table id="example" class="table table-striped table-bordered" style="width: 100%;">
         <thead>
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.FullName)
+                    <i class="fas fa-user"></i> @Html.DisplayNameFor(model => model.FullName)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.PhoneNumber)
+                    <i class="fas fa-mobile-alt"></i> @Html.DisplayNameFor(model => model.PhoneNumber)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Address)
+                    <i class="fas fa-address-book"></i> @Html.DisplayNameFor(model => model.Address)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.PostalCode)
+                    <i class="fas fa-mail-bulk"></i> @Html.DisplayNameFor(model => model.PostalCode)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.TIN)
+                    <i class="fas fa-sort-numeric-up"></i> @Html.DisplayNameFor(model => model.TIN)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Email)
+                    <i class="fas fa-at"></i> @Html.DisplayNameFor(model => model.Email)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.ImageFullPath)
+                    <i class="fas fa-image"></i> @Html.DisplayNameFor(model => model.ImageFullPath)
                 </th>
-                <th></th>
+                <th><i class="fas fa-filter"></i> Options</th>
             </tr>
         </thead>
         <tbody>
@@ -68,9 +68,9 @@
                         }
                     </td>
                     <td>
-                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-primary"><i class="fas fa-pen-square"></i></a>
-                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-primary"><i class="fas fa-info-circle"></i></a>
-                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-primary"><i class="fas fa-trash-alt"></i></a>
+                        <a style="width: 100px;" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-success"><i class="fas fa-pen-square"></i> Edit</a><br />
+                        <a style="width: 100px;" asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-info"><i class="fas fa-info-circle"></i> Details</a><br />
+                        <a style="width: 100px;" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger"><i class="fas fa-trash-alt"></i> Delete</a>
                     </td>
                 </tr>
             }
@@ -78,27 +78,27 @@
         <tfoot>
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.FullName)
+                    <i class="fas fa-user"></i> @Html.DisplayNameFor(model => model.FullName)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.PhoneNumber)
+                    <i class="fas fa-mobile-alt"></i> @Html.DisplayNameFor(model => model.PhoneNumber)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Address)
+                    <i class="fas fa-address-book"></i> @Html.DisplayNameFor(model => model.Address)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.PostalCode)
+                    <i class="fas fa-mail-bulk"></i> @Html.DisplayNameFor(model => model.PostalCode)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.TIN)
+                    <i class="fas fa-sort-numeric-up"></i> @Html.DisplayNameFor(model => model.TIN)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Email)
+                    <i class="fas fa-at"></i> @Html.DisplayNameFor(model => model.Email)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.ImageFullPath)
+                    <i class="fas fa-image"></i> @Html.DisplayNameFor(model => model.ImageFullPath)
                 </th>
-                <th></th>
+                <th><i class="fas fa-filter"></i> Options</th>
             </tr>
         </tfoot>
     </table>

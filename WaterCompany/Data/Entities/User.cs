@@ -18,7 +18,7 @@ namespace WaterCompany.Data.Entities
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
 
-        [Display(Name = "Full Name")]
+        [Display(Name = "Name")]
         public string FullName => $"{FirstName} {LastName}";
 
         [Required]

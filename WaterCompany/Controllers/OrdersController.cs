@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using WaterCompany.Data;
+using WaterCompany.Models;
 
 namespace WaterCompany.Controllers
 {
@@ -25,6 +26,16 @@ namespace WaterCompany.Controllers
         public async Task<IActionResult> Create()
         {
             var model = await _orderRepository.GetDetailTempsAsync(this.User.Identity.Name);
+            return View(model);
+        }
+
+        public IActionResult AddOrder()
+        {
+            var model = new AddItemViewModel
+            {
+                Offers = _orderRepository.GetComboOffers()
+            };
+
             return View(model);
         }
     }
