@@ -19,5 +19,7 @@ namespace WaterCompany.Data
         Task AddItemToOrderAsync(AddItemViewModel model, string userName);
 
         Task DeleteDetailTempAsync(int id);
-    }
+
+		Task<bool> ConfirmOrderAsync(string userName);
+	}
 }
