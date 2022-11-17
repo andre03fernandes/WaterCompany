@@ -50,8 +50,6 @@
                         @Html.DisplayFor(modelItem => item.Value)
                     </td>
                     <td style="vertical-align: middle" id="@item.Id">
-                        <a asp-action="Increase" asp-route-id="@item.Id" class="btn btn-outline-success"><i class="fas fa-cart-plus"></i> Increase</a>
-                        <a asp-action="Decrease" asp-route-id="@item.Id" class="btn btn-outline-info"><i class="fas fa-folder-minus"></i> Decrease</a>
                         <a asp-action="DeleteItem" asp-route-id="@item.Id" class="btn btn-outline-danger" id="btnDeleteItem"><i class="fas fa-trash-alt"></i> Delete</a>
                     </td>
                 </tr>

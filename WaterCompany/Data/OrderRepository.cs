@@ -128,20 +128,16 @@ namespace WaterCompany.Data
             await _context.SaveChangesAsync();
         }
 
-        public async Task ModifyOrderDetailTempQuantityAsync(int id, double echelon)
+        public async Task DeleteDetailTempAsync(int id)
         {
-            var orderDetailsTemp = await _context.OrderDetailsTemp.FindAsync(id);
-            if (orderDetailsTemp == null)
+            var orderDetailTemp = await _context.OrderDetailsTemp.FindAsync(id);
+            if (orderDetailTemp == null)
             {
                 return;
             }
 
-            orderDetailsTemp.Echelon += echelon;
-            if (orderDetailsTemp.Echelon > 0)
-            {
-                _context.OrderDetailsTemp.Update(orderDetailsTemp);
-                await _context.SaveChangesAsync();
-            }
+            _context.OrderDetailsTemp.Remove(orderDetailTemp);
+            await _context.SaveChangesAsync();
         }
     }
 }

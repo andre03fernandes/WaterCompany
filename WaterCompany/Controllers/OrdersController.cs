@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Vereyon.Web;
 using WaterCompany.Data;
 using WaterCompany.Data.Entities;
+using WaterCompany.Helpers;
 using WaterCompany.Models;
 
 namespace WaterCompany.Controllers
@@ -73,6 +74,16 @@ namespace WaterCompany.Controllers
                 return RedirectToAction("Create");
             }
             return View(model);
+        }
+
+        public async Task<IActionResult> DeleteItem(int? id)
+        {
+            if (id == null)
+            {
+                return new NotFoundViewResult("OrderNotFound");
+            }
+            await _orderRepository.DeleteDetailTempAsync(id.Value);
+            return RedirectToAction("Create");
         }
     }
 }
