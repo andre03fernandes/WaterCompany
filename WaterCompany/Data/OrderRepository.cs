@@ -1,10 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WaterCompany.Data.Entities;
 using WaterCompany.Helpers;
+using WaterCompany.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace WaterCompany.Data
 {
@@ -72,6 +75,73 @@ namespace WaterCompany.Data
             });
 
             return list;
+        }
+
+        public async Task AddItemToOrderAsync(AddItemViewModel model, string userName)
+        {
+            var user = await _userHelper.GetUserByUserNameAsync(userName);
+            if (user == null)
+            {
+                return;
+            }
+
+            var offer = await _context.Offers.FindAsync(model.OfferId);
+            if (offer == null)
+            {
+                return;
+            }
+
+            var orderDetailTemp = await _context.OrderDetailsTemp
+                .Where(odt => odt.User == user && odt.Offer == offer)
+                .FirstOrDefaultAsync();
+
+            if (orderDetailTemp == null)
+            {
+
+                orderDetailTemp = new OrderDetailTemp
+                {
+                    Offer = offer,
+                    UnitaryValue = offer.UnitaryValue,
+                    Echelon = model.Echelon,
+                    User = user,
+                };
+
+                if (orderDetailTemp.Echelon <= 5 && orderDetailTemp.Echelon > 0)
+                {
+                    offer.UnitaryValue = 0.30;
+                }
+                else if (orderDetailTemp.Echelon > 5 && orderDetailTemp.Echelon <= 15)
+                {
+                    offer.UnitaryValue = 0.80;
+                }
+                else if (orderDetailTemp.Echelon > 15 && orderDetailTemp.Echelon <= 25)
+                {
+                    offer.UnitaryValue = 1.20;
+                }
+                else
+                {
+                    offer.UnitaryValue = 1.60;
+                }
+
+                _context.OrderDetailsTemp.Add(orderDetailTemp);
+            }
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task ModifyOrderDetailTempQuantityAsync(int id, double echelon)
+        {
+            var orderDetailsTemp = await _context.OrderDetailsTemp.FindAsync(id);
+            if (orderDetailsTemp == null)
+            {
+                return;
+            }
+
+            orderDetailsTemp.Echelon += echelon;
+            if (orderDetailsTemp.Echelon > 0)
+            {
+                _context.OrderDetailsTemp.Update(orderDetailsTemp);
+                await _context.SaveChangesAsync();
+            }
         }
     }
 }

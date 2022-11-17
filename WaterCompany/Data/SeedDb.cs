@@ -32,7 +32,7 @@
             await _userHelper.CheckRoleAsync("Employee");
             await _userHelper.CheckRoleAsync("Client");
 
-            if(!_context.Countries.Any())
+            if (!_context.Countries.Any())
             {
                 var cities = new List<City>();
                 cities.Add(new City { Name = "Lisboa" });
@@ -49,7 +49,7 @@
             }
 
             var user = await _userHelper.GetUserByUserNameAsync("andre@admin");
-            if(user == null)
+            if (user == null)
             {
                 user = new User
                 {
@@ -77,13 +77,13 @@
             }
 
             var isInRole = await _userHelper.IsUserInRoleAsync(user, "Admin");
-            if(!isInRole)
+            if (!isInRole)
             {
                 await _userHelper.AddUserToRoleAsync(user, "Admin");
             }
 
             var user1 = await _userHelper.GetUserByUserNameAsync("staff@employee");
-            if(user1 == null)
+            if (user1 == null)
             {
                 user1 = new User
                 {
@@ -164,20 +164,21 @@
 
             if (!_context.Offers.Any())
             {
-                AddOffer("4th Echelon", "More than 25m³", user);
-                AddOffer("3rd Echelon", "More than 15m³ and up to 25m³", user);
-                AddOffer("2nd Echelon", "More than 5m³ and up to 15m³", user);
-                AddOffer("1st Echelon", "Up to 5m³", user);
+                AddOffer("4th Echelon", "More than 25m³", 1.60, user);
+                AddOffer("3rd Echelon", "More than 15m³ and up to 25m³", 1.20, user);
+                AddOffer("2nd Echelon", "More than 5m³ and up to 15m³", 0.80, user);
+                AddOffer("1st Echelon", "Up to 5m³", 0.30, user);
                 await _context.SaveChangesAsync();
             }
         }
 
-        private void AddOffer(string name, string echelon, User user)
+        private void AddOffer(string name, string echelonlimit, double unitaryValue, User user)
         {
             _context.Offers.Add(new Offer
             {
                 Name = name,
-                Echelon = echelon,
+                EchelonLimit = echelonlimit,
+                UnitaryValue = unitaryValue,
                 IsAvailable = true,
                 User = user
             });

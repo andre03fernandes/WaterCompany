@@ -1,4 +1,6 @@
-﻿namespace WaterCompany.Data.Entities
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace WaterCompany.Data.Entities
 {
     public class Offer
     {
@@ -6,7 +8,12 @@
 
         public string Name { get; set; }
 
-        public string Echelon { get; set; }
+        [Display(Name = "Echelon Limit")]
+        public string EchelonLimit { get; set; }
+
+        [Display(Name = "Unitary Value")]
+        [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = false)]
+        public double UnitaryValue { get; set; }
 
         public bool IsAvailable { get; set; }
 

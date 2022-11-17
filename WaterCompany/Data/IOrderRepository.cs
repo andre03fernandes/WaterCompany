@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WaterCompany.Data.Entities;
+using WaterCompany.Models;
 
 namespace WaterCompany.Data
 {
@@ -14,5 +15,9 @@ namespace WaterCompany.Data
         Task<IQueryable<OrderDetailTemp>> GetDetailTempsAsync(string userName);
 
         IEnumerable<SelectListItem> GetComboOffers();
+
+        Task AddItemToOrderAsync(AddItemViewModel model, string userName);
+
+        Task ModifyOrderDetailTempQuantityAsync(int id, double echelon);
     }
 }

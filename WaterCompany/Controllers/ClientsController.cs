@@ -4,6 +4,7 @@
     using System.Linq;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
     using WaterCompany.Data;
@@ -17,16 +18,20 @@
         private readonly IUserHelper _userHelper;
         private readonly IBlobHelper _blobHelper;
         private readonly IConverterHelper _converterHelper;
+        private readonly UserManager<User> _userManager;
+        private readonly DataContext _context;
 
         public ClientsController(IClientRepository clientRepository,
             IUserHelper userHelper,
             IBlobHelper blobHelper,
-            IConverterHelper converterHelper)
+            IConverterHelper converterHelper, UserManager<User> userManager, DataContext context)
         {
             _clientRepository = clientRepository;
             _userHelper = userHelper;
             _blobHelper = blobHelper;
             _converterHelper = converterHelper;
+            _userManager = userManager;
+            _context = context;
         }
 
         [Authorize(Roles = "Admin")]
@@ -52,9 +57,14 @@
             return View(client);
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin, Client")]
         public async Task<IActionResult> Edit(int? id)
         {
+            var thisUser = await _userManager.GetUserAsync(HttpContext.User);
+            var userId = thisUser.Id;
+            var clientId = _context.Clients.Include(u => u.User).Where(u => u.User == thisUser).Select(u => u.Id).Single();
+            id = clientId;
+
             if (id == null)
             {
                 return new NotFoundViewResult("ClientNotFound");

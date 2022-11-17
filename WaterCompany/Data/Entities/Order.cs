@@ -28,11 +28,11 @@ namespace WaterCompany.Data.Entities
         [DisplayFormat(DataFormatString = "{0:N0}")]
         public int Lines => Items == null ? 0 : Items.Count();
 
-        [DisplayFormat(DataFormatString = "{0:N2}")]
+        [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = false)]
         public double UnitaryValue => Items == null ? 0 : Items.Sum(i => i.UnitaryValue);
 
         [DisplayFormat(DataFormatString = "{0:C2}")]
-        public decimal Value => Items == null ? 0 : Items.Sum(i => i.Value);
+        public double Value => Items == null ? 0 : Items.Sum(i => i.Value);
 
         [Display(Name = "Order date")]
         [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd HH:mm }", ApplyFormatInEditMode = false)]
