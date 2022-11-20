@@ -2,36 +2,42 @@
 @{
     ViewData["Title"] = "AddOrder";
 }
-
-<h2>Add Offer</h2>
-
-<h4>To Order</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="AddOrder">
+<br />
+<br />
+<h1 style="text-align:center;" class="big-title1"><i class="fas fa-folder-plus"></i> Add Order</h1>
+<hr class="center-ball" />
+<br />
+<div class="row centerform">
+    <div class="col-md-12">
+        <form class="form123" asp-action="AddOrder" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
-            <div class="form-group">
-                <label asp-for="OfferId" class="control-label"></label>
-                <select asp-for="OfferId" asp-items="Model.Offers" class="form-control text-center"></select>
-                <span asp-validation-for="OfferId" class="text-danger"></span>
+            <div class="card text-black" style="border-radius: 5px; box-shadow: rgba(0,0,0,0.35) 0 5px 25px;">
+                <div class="card-body">
+                    <br />
+                    <div class="form-group">
+                        <label asp-for="OfferId" class="control-label"></label>
+                        <select asp-for="OfferId" asp-items="Model.Offers" class="form-control text-center"></select>
+                        <span asp-validation-for="OfferId" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Echelon" class="control-label"></label>
+                        <input asp-for="Echelon" class="form-control text-center" />
+                        <span asp-validation-for="Echelon" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <br />
+                        <button type="submit" value="Create" class="btn btn-outline-primary"><i class="fas fa-cart-plus"></i> Create</button>
+                        <a class="btn btn-outline-info" asp-action="Index"><i class="fas fa-backward"></i> Back to List</a>
+                    </div>
+                </div>
             </div>
 
-            <div class="form-group">
-                <label asp-for="Echelon" class="control-label"></label>
-                <input asp-for="Echelon" class="form-control text-center" />
-                <span asp-validation-for="Echelon" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-                <a asp-action="Index" class="btn btn-success">Back to List</a>
-            </div>
         </form>
     </div>
 </div>
-
+<br />
+<br />
+<br />
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");

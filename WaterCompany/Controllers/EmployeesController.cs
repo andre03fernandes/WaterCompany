@@ -4,6 +4,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -20,17 +21,21 @@ namespace WaterCompany.Controllers
 		private readonly IUserHelper _userHelper;
 		private readonly IBlobHelper _blobHelper;
 		private readonly IConverterHelper _converterHelper;
+        private readonly UserManager<User> _userManager;
+        private readonly DataContext _context;
 
-		public EmployeesController(IEmployeeRepository employeeRepository,
+        public EmployeesController(IEmployeeRepository employeeRepository,
 			IUserHelper userHelper,
 			IBlobHelper blobHelper,
-			IConverterHelper converterHelper)
+			IConverterHelper converterHelper, UserManager<User> userManager, DataContext context)
 		{
 			_employeeRepository = employeeRepository;
 			_userHelper = userHelper;
 			_blobHelper = blobHelper;
 			_converterHelper = converterHelper;
-		}
+            _userManager = userManager;
+            _context = context;
+        }
 
 		[Authorize(Roles = "Admin")]
 		public IActionResult Index()
@@ -55,9 +60,17 @@ namespace WaterCompany.Controllers
 			return View(employee);
 		}
 
-		[Authorize(Roles = "Admin")]
 		public async Task<IActionResult> Edit(int? id)
 		{
+			if (this.User.IsInRole("Employee"))
+			{
+				var thisUser = await _userManager.GetUserAsync(HttpContext.User);
+				var userId = thisUser.Id;
+				var employeeId = _context.Employees.Include(u => u.User).Where(u => u.User == thisUser).Select(u => u.Id).Single();
+				id = employeeId;
+			}
+
+
 			if (id == null)
 			{
 				return new NotFoundViewResult("EmployeeNotFound");

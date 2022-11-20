@@ -9,7 +9,7 @@
     },
     "storage1": {
       "secretStore": "AzureAppSettings",
-      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Storage/storageAccounts/nextlevel25853",
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourcegroups/[parameters('resourceGroupName')]/providers/Microsoft.Storage/storageAccounts/nextlevel25853",
       "type": "storage.azure",
       "connectionId": "Blob:ConnectionString",
       "dynamicId": null

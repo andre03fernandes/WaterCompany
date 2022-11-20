@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WaterCompany.Data;
 
 namespace WaterCompany.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20221120111755_AddClientToConsumption")]
+    partial class AddClientToConsumption
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -247,9 +249,14 @@ namespace WaterCompany.Migrations
                     b.Property<double>("UnitaryValue")
                         .HasColumnType("float");
 
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ClientId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Consumptions");
                 });
@@ -368,6 +375,9 @@ namespace WaterCompany.Migrations
 
                     b.Property<int?>("ConsumptionId")
                         .HasColumnType("int");
+
+                    b.Property<decimal>("ConsumptionValue")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int?>("ContractId")
                         .HasColumnType("int");
@@ -690,7 +700,13 @@ namespace WaterCompany.Migrations
                         .WithMany()
                         .HasForeignKey("ClientId");
 
+                    b.HasOne("WaterCompany.Data.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
                     b.Navigation("Client");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("WaterCompany.Data.Entities.Contract", b =>

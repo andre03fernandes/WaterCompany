@@ -3,7 +3,7 @@ using System;
 
 namespace WaterCompany.Data.Entities
 {
-    public class Consumption
+    public class Consumption : IEntity
     {
         public int Id { get; set; }
 
@@ -16,9 +16,13 @@ namespace WaterCompany.Data.Entities
         public int Echelon { get; set; }
 
         [Display(Name = "Unitary Value")]
-        public decimal UnitaryValue { get; set; }
+        [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = false)]
+        public double UnitaryValue { get; set; }
 
-        [Display(Name = "TotalConsumption")]
-        public decimal TotalConsumption { get; set; }
+        [Display(Name = "Total Consumption")]
+        [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = false)]
+        public double TotalConsumption { get; set; }
+
+        public Client Client { get; set; }
     }
 }

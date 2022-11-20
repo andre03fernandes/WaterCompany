@@ -1,46 +1,72 @@
-﻿@model WaterCompany.Data.Entities.Consumption
+﻿@model WaterCompany.Models.ConsumptionViewModel
 
 @{
     ViewData["Title"] = "Edit";
 }
+<br />
+<br />
 
-<h1>Edit</h1>
-
-<h4>Consumption</h4>
+<h1 class="big-title1" style="text-align:center;"><i class="fas fa-eraser"></i> Edit Consumption</h1>
 <hr class="center-ball" />
-<div class="row">
-    <div class="col-md-4">
-        <form class="form123" asp-action="Edit">
+<br />
+<div class="row centerform">
+    <div class="col-md-12">
+        <form class="form123" asp-action="Edit" method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label asp-for="ConsumptionDate" class="control-label"></label>
-                <input asp-for="ConsumptionDate" class="form-control" />
-                <span asp-validation-for="ConsumptionDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Echelon" class="control-label"></label>
-                <input asp-for="Echelon" class="form-control" />
-                <span asp-validation-for="Echelon" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="UnitaryValue" class="control-label"></label>
-                <input asp-for="UnitaryValue" class="form-control" />
-                <span asp-validation-for="UnitaryValue" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="TotalConsumption" class="control-label"></label>
-                <input asp-for="TotalConsumption" class="form-control" />
-                <span asp-validation-for="TotalConsumption" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+            <div class="card text-black" style="border-radius: 5px; box-shadow: rgba(0,0,0,0.35) 0 5px 25px;">
+                <div class="card-body">
+                    <br />
+                    <div class="form-group">
+                        <label asp-for="ClientId" class="control-label"></label>
+                        <select asp-for="ClientId" asp-items="Model.Clients" class="form-control text-center"></select>
+                        <span asp-validation-for="ClientId" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ConsumptionDate" class="control-label"></label>
+                        <div class="input-group date" data-provide="datepicker">
+                            <input type="text" asp-for="ConsumptionDate" class="form-control">
+                            <div class="input-group-append">
+                                <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+                            </div>
+                            <span asp-validation-for="ConsumptionDate" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Echelon" class="control-label"></label>
+                        <input asp-for="Echelon" class="form-control" />
+                        <span asp-validation-for="Echelon" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-group">
+                            <br />
+                            <button type="submit" value="Save" class="btn btn-outline-primary"><i class="fas fa-save"></i> Save</button>
+                            <a class="btn btn-outline-info" asp-action="Index"><i class="fas fa-backward"></i> Back to List</a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </form>
     </div>
 </div>
+<br />
+<br />
+<br />
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
+        <script type="text/javascript">
+            $(document).ready(function () {
+                var userLang = navigator.language || navigator.userLanguage;
+                console.log(userLang);
+                var options = $.extend({}, // empty object
+                    $.datepicker.regional[pt - Pt], {
+                    dateFormat: "yyyy-MM-dd"
+                } // your custom options
+                );
+                $(".date").datepicker(options);
+            });
+        </script>
+    }
+}

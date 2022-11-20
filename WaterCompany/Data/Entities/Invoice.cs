@@ -14,10 +14,8 @@ namespace WaterCompany.Data.Entities
         [Display(Name = "Invoice Date")]
         public DateTime InvoiceDate { get; set; }
 
-        [Display(Name = "Value")]
-        public decimal ConsumptionValue { get; set; }
-
         [Display(Name = "Total to pay")]
+        [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = false)]
         public decimal Total { get; set; }
 
         [Display(Name = "Is Paid")]
@@ -25,5 +23,9 @@ namespace WaterCompany.Data.Entities
 
         [Display(Name = "Consumption")]
         public Consumption Consumption { get; set; }
+
+        public Client Client { get; set; }
+
+        public User User { get; set; }
     }
 }

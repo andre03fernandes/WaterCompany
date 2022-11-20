@@ -207,7 +207,7 @@ namespace WaterCompany.Controllers
 
         public async Task<IActionResult> ChangeUser()
         {
-            var user = await _userHelper.GetUserByUserNameAsync(this.User.Identity.Name);
+            var user = await _userHelper.GetUserByUserNameAsync("andre@admin");
             var model = new ChangeUserViewModel();
 
             if (user != null)
@@ -266,6 +266,7 @@ namespace WaterCompany.Controllers
                     if (response.Succeeded)
                     {
                         ViewBag.UserMessage = "User updated!";
+                        return View(model);
                     }
                     else
                     {

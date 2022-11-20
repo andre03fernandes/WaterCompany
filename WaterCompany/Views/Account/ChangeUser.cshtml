@@ -9,6 +9,7 @@
 <br />
 <h1 class="big-title1" align="center"><i class="fas fa-exchange-alt"></i> Manage Account</h1>
 <hr class="center-ball" />
+<div class="text-success text-center">@ViewBag.UserMessage</div>
 <form class="centerform" method="post">
     <div asp-validation-summary="ModelOnly"></div>
     <input type="hidden" asp-for="ImageId" />
@@ -74,7 +75,6 @@
             </div>
         </div>
     </div>
-    <div class="text-success">@ViewBag.UserMessage</div>
 </form>
 <br />
 <br />

@@ -3,79 +3,95 @@
 @{
     ViewData["Title"] = "Edit";
 }
+<link href="~/css/changeUser.css" rel="stylesheet" />
+<br />
+<br />
+@if (this.User.IsInRole("Admin"))
+{
+    <h1 style="text-align:center;" class="big-title1"><i class="fas fa-eraser"></i> Edit Client</h1>
+}
+@if (this.User.IsInRole("Employee"))
+{
+    <h1 class="big-title1" align="center"><i class="fas fa-exchange-alt"></i> Manage Account</h1>
+}
+<hr class="center-ball" />
+<form class="centerform" method="post">
+    <div asp-validation-summary="ModelOnly"></div>
+    <input type="hidden" asp-for="ImageId" />
+    <div class="wrapper bg-white mt-sm-5">
+        <b>Profile Photo</b><br />
+        <p style="font-size: 15px; color: gray;" class="text-center card-text centerform">Preferably accepted file type .png</p>
+        <div class="form-group">
+            <input asp-for="ImageFile" class="form-control" type="file" placeholder="" />
+            <span asp-validation-for="ImageFile" class="text-danger"></span>
+        </div>
+        <br />
+        <div class="form-group">
+            <img class="user-avatar-md" src="@Url.Content(Model.ImageFullPath)" alt="Image" style="width: auto; height: 70px;" />
+        </div>
+        <div class="py-2">
+            <div class="row py-2">
+                <div class="col-md-6">
+                    <label asp-for="FirstName" class="control-label"></label>
+                    <input asp-for="FirstName" class="form-control" />
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                </div>
+                <div class="col-md-6 pt-md-0 pt-3">
+                    <label asp-for="LastName" class="control-label"></label>
+                    <input asp-for="LastName" class="form-control" />
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row py-2">
+                <div class="col-md-6">
+                    <label class="form-label" asp-for="PhoneNumber">Phone Number</label>
+                    <input asp-for="PhoneNumber" class="form-control text-center" />
+                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="Address" class="control-label"></label>
+                    <input asp-for="Address" class="form-control text-center" />
+                    <span asp-validation-for="Address" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row py-2">
+                <div class="col-md-6 pt-md-0 pt-3">
+                    <label class="form-label" asp-for="Email">Email</label>
+                    <input asp-for="Email" class="form-control text-center" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="TIN" class="control-label"></label>
+                    <input asp-for="TIN" class="form-control" />
+                    <span asp-validation-for="TIN" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row py-1">
+                <div class="col-md-12 pt-md-0 pt-3">
+                    <label asp-for="PostalCode" class="control-label"></label>
+                    <input asp-for="PostalCode" class="form-control" />
+                </div>
+            </div>
+            <br />
+            <div class="py-3 pb-4 centerform">
+                <button type="submit" value="Save" class="btn btn-outline-primary"><i class="fas fa-save"></i> Save</button>
+                @if (this.User.IsInRole("Admin"))
+                {
+                    <a class="btn btn-outline-info" asp-action="Index"><i class="fas fa-backward"></i> Back to List</a>
+                }
+                @if (this.User.IsInRole("Employee"))
+                {
+                    <a asp-action="ChangePassword" asp-controller="Account" class="btn btn-outline-success"><i class="fas fa-key"></i> Change Password</a>
+                }
+            </div>
+        </div>
+    </div>
+</form>
+<br />
 <br />
 <br />
 
-<h1 style="text-align:center;" class="big-title1"><i class="fas fa-eraser"></i> Edit Employee</h1>
-<hr class="center-ball" />
-<br />
-<div class="row centerform">
-    <div class="col-md-12">
-        <form class="form123" asp-action="Edit" enctype="multipart/form-data">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
-            <input type="hidden" asp-for="ImageId" />
-            <div class="card text-black" style="border-radius: 5px; box-shadow: rgba(0,0,0,0.35) 0 5px 25px;">
-                <div class="card-body">
-                    <br />
-                    <div class="form-group">
-                        <img class="user-avatar-md" src="@Url.Content(Model.ImageFullPath)" alt="Image" style="width: auto; height: 70px;" />
-                    </div>
-                    <br />
-                    <div class="form-group">
-                        <label asp-for="FirstName" class="control-label"></label>
-                        <input asp-for="FirstName" class="form-control" />
-                        <span asp-validation-for="FirstName" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="LastName" class="control-label"></label>
-                        <input asp-for="LastName" class="form-control" />
-                        <span asp-validation-for="LastName" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="PhoneNumber" class="control-label"></label>
-                        <input asp-for="PhoneNumber" class="form-control" />
-                        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="Address" class="control-label"></label>
-                        <input asp-for="Address" class="form-control" />
-                        <span asp-validation-for="Address" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="PostalCode" class="control-label"></label>
-                        <input asp-for="PostalCode" class="form-control" />
-                        <span asp-validation-for="PostalCode" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="TIN" class="control-label"></label>
-                        <input asp-for="TIN" class="form-control" />
-                        <span asp-validation-for="TIN" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="Email" class="control-label"></label>
-                        <input asp-for="Email" class="form-control" />
-                        <span asp-validation-for="Email" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="ImageFile" class="control-label"></label>
-                        <input asp-for="ImageFile" class="form-control" type="file" placeholder="" />
-                        <span asp-validation-for="ImageFile" class="text-danger"></span>
-                        <br />
-                    </div>
-                    <div class="form-group">
-                        <br />
-                        <button type="submit" value="Save" class="btn btn-outline-primary"><i class="fas fa-save"></i> Save</button>
-                        <a class="btn btn-outline-info" asp-action="Index"><i class="fas fa-backward"></i> Back to List</a>
-                    </div>
-                </div>
-            </div>
-        </form>
-    </div>
-</div>
-<br />
-<br />
-<br />
+
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");

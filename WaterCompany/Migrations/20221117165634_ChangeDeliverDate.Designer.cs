@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WaterCompany.Data;
 
 namespace WaterCompany.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20221117165634_ChangeDeliverDate")]
+    partial class ChangeDeliverDate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -232,24 +234,19 @@ namespace WaterCompany.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("ClientId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("ConsumptionDate")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("Echelon")
                         .HasColumnType("int");
 
-                    b.Property<double>("TotalConsumption")
-                        .HasColumnType("float");
+                    b.Property<decimal>("TotalConsumption")
+                        .HasColumnType("decimal(18,2)");
 
-                    b.Property<double>("UnitaryValue")
-                        .HasColumnType("float");
+                    b.Property<decimal>("UnitaryValue")
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ClientId");
 
                     b.ToTable("Consumptions");
                 });
@@ -363,11 +360,11 @@ namespace WaterCompany.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("ClientId")
-                        .HasColumnType("int");
-
                     b.Property<int?>("ConsumptionId")
                         .HasColumnType("int");
+
+                    b.Property<decimal>("ConsumptionValue")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int?>("ContractId")
                         .HasColumnType("int");
@@ -381,18 +378,11 @@ namespace WaterCompany.Migrations
                     b.Property<decimal>("Total")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("ClientId");
 
                     b.HasIndex("ConsumptionId");
 
                     b.HasIndex("ContractId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Invoices");
                 });
@@ -684,15 +674,6 @@ namespace WaterCompany.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("WaterCompany.Data.Entities.Consumption", b =>
-                {
-                    b.HasOne("WaterCompany.Data.Entities.Client", "Client")
-                        .WithMany()
-                        .HasForeignKey("ClientId");
-
-                    b.Navigation("Client");
-                });
-
             modelBuilder.Entity("WaterCompany.Data.Entities.Contract", b =>
                 {
                     b.HasOne("WaterCompany.Data.Entities.Client", "Client")
@@ -713,10 +694,6 @@ namespace WaterCompany.Migrations
 
             modelBuilder.Entity("WaterCompany.Data.Entities.Invoice", b =>
                 {
-                    b.HasOne("WaterCompany.Data.Entities.Client", "Client")
-                        .WithMany()
-                        .HasForeignKey("ClientId");
-
                     b.HasOne("WaterCompany.Data.Entities.Consumption", "Consumption")
                         .WithMany()
                         .HasForeignKey("ConsumptionId");
@@ -725,17 +702,9 @@ namespace WaterCompany.Migrations
                         .WithMany()
                         .HasForeignKey("ContractId");
 
-                    b.HasOne("WaterCompany.Data.Entities.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
-
-                    b.Navigation("Client");
-
                     b.Navigation("Consumption");
 
                     b.Navigation("Contract");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("WaterCompany.Data.Entities.Offer", b =>

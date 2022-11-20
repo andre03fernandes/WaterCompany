@@ -1,40 +1,30 @@
-﻿@model WaterCompany.Models.ConsumptionViewModel
+﻿@model WaterCompany.Models.DeliveryViewModel
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Deliver";
 }
 <br />
 <br />
-<h1 style="text-align:center;" class="big-title1"><i class="fas fa-folder-plus"></i> New Consumption</h1>
+<h1 style="text-align:center;" class="big-title1"><i class="fas fa-truck"></i> Deliver</h1>
 <hr class="center-ball" />
 <br />
 <div class="row centerform">
     <div class="col-md-12">
-        <form class="form123" asp-action="Create" enctype="multipart/form-data">
+        <form class="form123" asp-action="Edit" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="card text-black" style="border-radius: 5px; box-shadow: rgba(0,0,0,0.35) 0 5px 25px;">
                 <div class="card-body">
                     <br />
                     <div class="form-group">
-                        <label asp-for="ClientId" class="control-label"></label>
-                        <select asp-for="ClientId" asp-items="Model.Clients" class=" form-control text-center"></select>
-                        <span asp-validation-for="ClientId" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="ConsumptionDate" class="control-label"></label>
+                        <label asp-for="DeliveryDate" class="control-label"></label>
                         <div class="input-group date" data-provide="datepicker">
-                            <input type="text" asp-for="ConsumptionDate" class="form-control">
+                            <input type="text" asp-for="DeliveryDate" class="form-control">
                             <div class="input-group-append">
                                 <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
                             </div>
-                            <span asp-validation-for="ConsumptionDate" class="text-danger"></span>
+                            <span asp-validation-for="DeliveryDate" class="text-danger"></span>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="Echelon" class="control-label"></label>
-                        <input asp-for="Echelon" class="form-control" />
-                        <span asp-validation-for="Echelon" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <br />

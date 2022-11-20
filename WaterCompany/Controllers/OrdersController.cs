@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Vereyon.Web;
@@ -95,5 +96,38 @@ namespace WaterCompany.Controllers
 			}
 			return RedirectToAction("Create");
 		}
-	}
+
+        public async Task<IActionResult> Deliver(int? id)
+        {
+            if (id == null)
+            {
+                return new NotFoundViewResult("OrderNotFound");
+            }
+
+            var order = await _orderRepository.GetOrderAsync(id.Value);
+            if (order == null)
+            {
+                return new NotFoundViewResult("OrderNotFound");
+            }
+
+            var model = new DeliveryViewModel
+            {
+                Id = order.Id,
+                DeliveryDate = DateTime.Today
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Deliver(DeliveryViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                await _orderRepository.DeliverOrder(model);
+                return RedirectToAction("Index");
+            }
+            return View();
+        }
+    }
 }
