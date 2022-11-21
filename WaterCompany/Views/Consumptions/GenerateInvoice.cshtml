@@ -1,0 +1,72 @@
+﻿@model WaterCompany.Models.ConsumptionViewModel
+@{
+    ViewData["Title"] = "GenerateInvoice";
+}
+<br />
+<br />
+
+<h1 class="big-title1" style="text-align:center;"><i class="fas fa-file-invoice"></i> Generate Invoice</h1>
+<hr class="center-ball" />
+<br />
+<div class="row centerform">
+    <div class="col-md-12">
+        <form class="form123" asp-action="GenerateInvoice" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="card text-black" style="border-radius: 5px; box-shadow: rgba(0,0,0,0.35) 0 5px 25px;">
+                <div class="card-body">
+                    <br />
+                    <div class="form-group">
+                        <label asp-for="ClientId" class="control-label"></label>
+                        <select asp-for="ClientId" asp-items="Model.Clients" class="form-control text-center" disabled="true"></select>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ConsumptionDate" class="control-label"></label>
+                        <div class="input-group date" data-provide="datepicker" disabled="true">
+                            <input type="text" asp-for="ConsumptionDate" class="form-control" disabled="true">
+                            <div class="input-group-append">
+                                <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Echelon" class="control-label"></label>
+                        <input asp-for="Echelon" class="form-control" disabled="true" />
+                    </div>
+                    <div class="form-group">
+                        <div class="form-group">
+                            <br />
+                            <button type="submit" value="Save" class="btn btn-outline-primary"><i class="fas fa-save"></i> Generate Invoice</button><br /><br />
+                            <a class="btn btn-outline-info" asp-action="Index"><i class="fas fa-backward"></i> Back to Consumptions</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<br />
+<br />
+<br />
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+
+        <script type="text/javascript">
+            $(document).ready(function () {
+                var userLang = navigator.language || navigator.userLanguage;
+                console.log(userLang);
+                var options = $.extend({}, // empty object
+                    $.datepicker.regional[pt - Pt], {
+                    dateFormat: "yyyy-MM-dd"
+                } // your custom options
+                );
+                $(".date").datepicker(options);
+            });
+        </script>
+    }
+    @{
+        await Html.RenderPartialAsync("_ValidationCurrencyPartial");
+    }
+}
+

@@ -7,8 +7,6 @@ namespace WaterCompany.Data.Entities
     {
         public int Id { get; set; }
 
-        public Contract Contract { get; set; }
-
         [DataType(DataType.Date)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         [Display(Name = "Invoice Date")]
@@ -16,7 +14,7 @@ namespace WaterCompany.Data.Entities
 
         [Display(Name = "Total to pay")]
         [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = false)]
-        public decimal Total { get; set; }
+        public double Total { get; set; }
 
         [Display(Name = "Is Paid")]
         public bool IsPaid { get; set; }

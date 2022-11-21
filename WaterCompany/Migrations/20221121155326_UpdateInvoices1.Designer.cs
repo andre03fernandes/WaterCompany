@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WaterCompany.Data;
 
 namespace WaterCompany.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20221121155326_UpdateInvoices1")]
+    partial class UpdateInvoices1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -369,6 +371,9 @@ namespace WaterCompany.Migrations
                     b.Property<int?>("ConsumptionId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("ContractId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("InvoiceDate")
                         .HasColumnType("datetime2");
 
@@ -386,6 +391,8 @@ namespace WaterCompany.Migrations
                     b.HasIndex("ClientId");
 
                     b.HasIndex("ConsumptionId");
+
+                    b.HasIndex("ContractId");
 
                     b.HasIndex("UserId");
 
@@ -716,6 +723,10 @@ namespace WaterCompany.Migrations
                         .WithMany()
                         .HasForeignKey("ConsumptionId");
 
+                    b.HasOne("WaterCompany.Data.Entities.Contract", "Contract")
+                        .WithMany()
+                        .HasForeignKey("ContractId");
+
                     b.HasOne("WaterCompany.Data.Entities.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
@@ -723,6 +734,8 @@ namespace WaterCompany.Migrations
                     b.Navigation("Client");
 
                     b.Navigation("Consumption");
+
+                    b.Navigation("Contract");
 
                     b.Navigation("User");
                 });

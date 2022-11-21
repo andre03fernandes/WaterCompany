@@ -19,15 +19,21 @@ namespace WaterCompany.Controllers
         private readonly IUserHelper _userHelper;
         private readonly IConsumptionRepository _consumptionRepository;
         private readonly IInvoiceRepository _invoiceRepository;
+        private readonly IClientRepository _clientRepository;
+        private readonly IContractRepository _contractRepository;
 
         public ConsumptionsController(
                 IUserHelper userHelper,
                 IConsumptionRepository consumptionRepository,
-                IInvoiceRepository invoiceRepository)
+                IInvoiceRepository invoiceRepository,
+                IClientRepository clientRepository,
+                IContractRepository contractRepository)
         {
             _consumptionRepository = consumptionRepository;
             _userHelper = userHelper;
             _invoiceRepository = invoiceRepository;
+            _clientRepository = clientRepository;
+            _contractRepository = contractRepository;
         }
 
         public IActionResult Index()
@@ -219,13 +225,13 @@ namespace WaterCompany.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return new NotFoundViewResult("ConsumptionNotFound");
             }
 
             var consumption = await _consumptionRepository.GetConsumptionWithClients(id.Value);
             if (consumption == null)
             {
-                return NotFound();
+                return new NotFoundViewResult("ConsumptionNotFound");
             }
 
             return View(consumption);
@@ -243,6 +249,82 @@ namespace WaterCompany.Controllers
         public IActionResult ConsumptionNotFound()
         {
             return View();
+        }
+
+        [Authorize(Roles = "Employee")]
+        public async Task<IActionResult> GenerateInvoice(int? id)
+        {
+            var client = await _consumptionRepository.GetClientsAsync(id.Value);
+            var consumptions = await _consumptionRepository.GetConsumptionWithClients(id.Value);
+            var model = new ConsumptionViewModel();
+            if (consumptions == null)
+            {
+                return new NotFoundViewResult("ConsumptionNotFound");
+            }
+            else
+            {
+                model.ClientId = client.Id;
+                model.Clients = _consumptionRepository.GetComboClients();
+                model.UnitaryValue = consumptions.UnitaryValue;
+                model.ConsumptionDate = consumptions.ConsumptionDate;
+                model.TotalConsumption = consumptions.TotalConsumption;
+                model.Echelon = consumptions.Echelon;
+            }
+            model.Clients = _consumptionRepository.GetComboClients();
+            return View(model);
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> GenerateInvoice(int id, ConsumptionViewModel view)
+        {
+            var consumption = await _consumptionRepository.GetConsumptionWithClients(id);
+            var client = await _consumptionRepository.GetClientsAsync(id);
+
+            view.Client = client;
+            view.Clients = _consumptionRepository.GetComboClients();
+            view.ClientId = consumption.Client.Id;
+            view.Echelon = consumption.Echelon;
+            view.ConsumptionDate = consumption.ConsumptionDate;
+            view.UnitaryValue = consumption.UnitaryValue;
+            view.TotalConsumption = consumption.TotalConsumption;
+
+            bool InvoiceExist = await _invoiceRepository.ExistInvoiceConsumptionAsync(id);
+            if (InvoiceExist)
+            {
+                ModelState.AddModelError(string.Empty, "There is already an invoice for this consumption!");
+                return View(view);
+            }
+
+            try
+            {
+                Invoice invoice = new Invoice
+                {
+                    InvoiceDate = DateTime.Now,
+                    Total = view.TotalConsumption
+                };
+
+                await _invoiceRepository.CreateAsync(invoice);
+
+                invoice.Client = client;
+                invoice.Consumption = consumption;
+                invoice.User = await _userHelper.GetUserByUserNameAsync(this.User.Identity.Name);
+
+                await _invoiceRepository.UpdateAsync(invoice);
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!await _consumptionRepository.ExistAsync(view.Id))
+                {
+                    return new NotFoundViewResult("ConsumptionNotFound");
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return RedirectToAction("Index", "Invoices");
         }
     }
 }

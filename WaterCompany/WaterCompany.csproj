@@ -26,7 +26,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Views\Invoices\" />
     <Folder Include="wwwroot\images\clients\" />
   </ItemGroup>
 
