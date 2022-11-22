@@ -90,14 +90,6 @@
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, ClientViewModel model, User user)
         {
-            if (id != model.Id)
-            {
-                return new NotFoundViewResult("ClientNotFound");
-
-            }
-
-            var clientID = await _clientRepository.GetByIdAsync(model.Id);
-
             if (ModelState.IsValid)
             {
                 try
@@ -109,39 +101,43 @@
                         imageId = await _blobHelper.UploadBlobAsync(model.ImageFile, "clients");
                     }
 
-                    var client = _converterHelper.ToClient(user, model, imageId, false);
-                    model.ImageId = imageId;
+                    var client = _converterHelper.ToClient(model, imageId, false);
 
-                    //var clienteAntigo = await _clientRepository.GetByIdAsync();
+                    client.User = await _userHelper.GetUserByEmailAsync(this.User.Identity.Name);
+                    await _clientRepository.UpdateAsync(client);
+
                     user = await _userHelper.GetUserByEmailAsync(model.Email);
 
                     user.FirstName = model.FirstName;
                     user.LastName = model.LastName;
                     user.Email = model.Email;
                     user.PhoneNumber = model.PhoneNumber;
-                    user.ImageId = model.ImageId;
+                    user.PostalCode = model.PostalCode;
+                    user.Address = model.Address;
+                    user.ImageId = imageId;
 
                     await _userHelper.UpdateUserAsync(user);
-                    await _clientRepository.UpdateAsync(model);
+
+                    if (this.User.IsInRole("Admin"))
+                    {
+                        return RedirectToAction(nameof(Index));
+                    }
+                    if (this.User.IsInRole("Client"))
+                    {
+                        ViewBag.ClientMessage = "The information of this client was updated!";
+                        return View(model);
+                    }
                 }
                 catch (DbUpdateConcurrencyException)
                 {
                     if (!await _clientRepository.ExistAsync(model.Id))
                     {
-                        return NotFound();
+                        return new NotFoundViewResult("ClientNotFound");
                     }
                     else
                     {
                         throw;
                     }
-                }
-                if (this.User.IsInRole("Admin"))
-                {
-                    return RedirectToAction(nameof(Index));
-                }
-                if (this.User.IsInRole("Client"))
-                {
-                    ViewBag.ClientMessage = "The information of this client was updated!";
                 }
             }
             return View(model);

@@ -1,77 +1,77 @@
 ﻿@model WaterCompany.Models.ChangeUserViewModel
-
 @{
     ViewData["Title"] = "ChangeUser";
 }
-
 <link href="~/css/changeUser.css" rel="stylesheet" />
 <br />
 <br />
 <h1 class="big-title1" align="center"><i class="fas fa-exchange-alt"></i> Manage Account</h1>
 <hr class="center-ball" />
 <div class="text-success text-center">@ViewBag.UserMessage</div>
-<form class="centerform" method="post">
-    <div asp-validation-summary="ModelOnly"></div>
+<form asp-action="ChangeUser" enctype="multipart/form-data" class="centerform">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="Id" />
     <input type="hidden" asp-for="ImageId" />
     <div class="wrapper bg-white mt-sm-5">
-        <b>Profile Photo</b><br />
-        <p style="font-size: 15px; color: gray;" class="text-center card-text centerform">Preferably accepted file type .png</p>
-        <div class="form-group">
-            <input asp-for="ImageFile" class="form-control text-center" type="file" placeholder="" />
+        <div class="row py-1">
+            <div class="col-md-12 pt-md-0 pt-3">
+                <label style="font-weight: bold; text-align: center;" asp-for="ImageFile" class="control-label text-center"></label><br /><br />
+                <input asp-for="ImageFile" class="form-control" type="file" placeholder="" />
+                <span asp-validation-for="ImageFile" class="text-danger"></span>
+            </div>
         </div>
+        <br />
         <div class="form-group">
-            <img class="user-avatar-md" src="@Url.Content(Model.ImageFullPath)" alt="Image" style="width: auto; height: 70px;" />
+            <img class="user-avatar-md" src="@Url.Content(Model.ImageFullPath)" alt="Image" style="text-align: center; width: auto; height: 70px;" />
         </div>
+        <br />
         <div class="py-2">
             <div class="row py-2">
                 <div class="col-md-6">
-                    <label asp-for="FirstName">First Name</label>
-                    <input asp-for="FirstName" class="form-control text-center" />
+                    <label asp-for="FirstName" class="control-label"></label>
+                    <input asp-for="FirstName" class="form-control" />
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
                 </div>
                 <div class="col-md-6 pt-md-0 pt-3">
-                    <label asp-for="LastName">Last Name</label>
-                    <input asp-for="LastName" class="form-control text-center" />
+                    <label asp-for="LastName" class="control-label"></label>
+                    <input asp-for="LastName" class="form-control" />
+                    <span asp-validation-for="LastName" class="text-danger"></span>
                 </div>
             </div>
             <div class="row py-2">
                 <div class="col-md-6">
                     <label class="form-label" asp-for="PhoneNumber">Phone Number</label>
                     <input asp-for="PhoneNumber" class="form-control text-center" />
+                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
                 </div>
-                <div class="col-md-6 pt-md-0 pt-3">
-                    <label class="form-label" asp-for="CountryId" class="control-label"></label>
-                    <select asp-for="CountryId" asp-items="Model.Countries" class="form-control text-center"></select>
-                </div>
-            </div>
-            <div class="row py-2">
                 <div class="col-md-6">
                     <label asp-for="Address" class="control-label"></label>
                     <input asp-for="Address" class="form-control text-center" />
-                </div>
-                <div class="col-md-6 pt-md-0 pt-3">
-                    <label class="form-label" asp-for="Email">Email</label>
-                    <input asp-for="Email" class="form-control text-center" />
+                    <span asp-validation-for="Address" class="text-danger"></span>
                 </div>
             </div>
             <div class="row py-2">
+                <div class="col-md-6 pt-md-0 pt-3">
+                    <label class="form-label" asp-for="Email">Email</label>
+                    <input asp-for="Email" class="form-control text-center" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
                 <div class="col-md-6">
                     <label asp-for="TIN" class="control-label"></label>
                     <input asp-for="TIN" class="form-control" />
+                    <span asp-validation-for="TIN" class="text-danger"></span>
                 </div>
-                <div class="col-md-6 pt-md-0 pt-3">
+            </div>
+            <div class="row py-1">
+                <div class="col-md-12 pt-md-0 pt-3">
                     <label asp-for="PostalCode" class="control-label"></label>
                     <input asp-for="PostalCode" class="form-control" />
                 </div>
             </div>
             <br />
-            <div class="centerform">
-                <label class="form-label" asp-for="CityId" class="control-label"></label>
-                <select asp-for="CityId" asp-items="Model.Cities" class="form-control text-center"></select>
-            </div>
-            <br />
             <div class="py-3 pb-4 centerform">
-                <button type="submit" value="Update" class="btn btn-outline-primary"><i class="far fa-save"></i> Save Changes</button>
-                <a asp-action="ChangePassword" class="btn btn-outline-success"><i class="fas fa-key"></i> Change Password</a>
+                <button type="submit" value="Save" class="btn btn-outline-primary"><i class="fas fa-save"></i> Save Changes</button>
+                <a asp-action="ChangePassword" asp-controller="Account" class="btn btn-outline-success"><i class="fas fa-key"></i> Change Password</a>
             </div>
         </div>
     </div>
@@ -84,32 +84,4 @@
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $("#CountryId").change(function () {
-                $("#CityId").empty();
-                $.ajax({
-                    url: '@Url.Action("GetCitiesAsync","Account")',
-                    type: 'POST',
-                    dataType: 'json',
-                    data: { countryId: $("#CountryId").val() },
-                    success: function (cities) {
-                        debugger;
-                        $("#CityId").append('<option value="0">Select a city!</option>');
-                        $.each(cities, function (i, city) {
-                            $("#CityId").append('<option value="'
-                                + city.id + '">'
-                                + city.name + '</option>');
-                        });
-                    },
-                    error: function (ex) {
-                        debugger;
-                        alert('Failed to retrieve cities.' + ex);
-                    }
-                });
-                return false;
-            })
-        });
-    </script>
-}
+    }

@@ -35,7 +35,7 @@
                     <i class="fas fa-at"></i> @Html.DisplayNameFor(model => model.Email)
                 </th>
                 <th>
-                    <i class="fas fa-image"></i> @Html.DisplayNameFor(model => model.ImageFullPath)
+                    <i class="fas fa-image"></i> @Html.DisplayNameFor(model => model.ImageId)
                 </th>
                 <th><i class="fas fa-filter"></i> Options</th>
             </tr>
@@ -69,9 +69,9 @@
                         }
                     </td>
                     <td>
-                        <a style="width: 100px;" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-success"><i class="fas fa-pen-square"></i> Edit</a><br />
-                        <a style="width: 100px;" asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-info"><i class="fas fa-info-circle"></i> Details</a><br />
-                        <a style="width: 100px;" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger"><i class="fas fa-trash-alt"></i> Delete</a>
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-success"><i class="fas fa-pen-square"></i> Edit</a>
+                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-info"><i class="fas fa-info-circle"></i> Details</a>
+                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger"><i class="fas fa-trash-alt"></i> Delete</a>
                     </td>
                 </tr>
             }
@@ -97,7 +97,7 @@
                     <i class="fas fa-at"></i> @Html.DisplayNameFor(model => model.Email)
                 </th>
                 <th>
-                    <i class="fas fa-image"></i> @Html.DisplayNameFor(model => model.ImageFullPath)
+                    <i class="fas fa-image"></i> @Html.DisplayNameFor(model => model.ImageId)
                 </th>
                 <th><i class="fas fa-filter"></i> Options</th>
             </tr>

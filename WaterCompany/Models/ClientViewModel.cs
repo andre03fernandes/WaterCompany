@@ -6,7 +6,7 @@
 
     public class ClientViewModel : Client
     {
-        [Display(Name = "Image")]
+        [Display(Name = "Profile Photo")]
         public IFormFile ImageFile { get; set; }
     }
 }

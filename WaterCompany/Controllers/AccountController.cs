@@ -3,11 +3,13 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Runtime.ConstrainedExecution;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,11 +31,12 @@ namespace WaterCompany.Controllers
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IClientRepository _clientRepository;
         private readonly IEmployeeRepository _employeeRepository;
+        private readonly IConverterHelper _converterHelper;
 
         public AccountController(IUserHelper userHelper, ICountryRepository countryRepository,
             IConfiguration configuration, IMailHelper mailHelper, IBlobHelper blobHelper,
             RoleManager<IdentityRole> roleManager,
-            IClientRepository clientRepository, IEmployeeRepository employeeRepository)
+            IClientRepository clientRepository, IEmployeeRepository employeeRepository, IConverterHelper converterHelper)
         {
             _userHelper = userHelper;
             _countryRepository = countryRepository;
@@ -43,6 +46,7 @@ namespace WaterCompany.Controllers
             _roleManager = roleManager;
             _clientRepository = clientRepository;
             _employeeRepository = employeeRepository;
+            _converterHelper = converterHelper;
         }
 
         //[Authorize(Roles = "Admin, Employee, Client")]
@@ -126,7 +130,7 @@ namespace WaterCompany.Controllers
                         Address = model.Address,
                         TIN = model.TIN,
                         PostalCode = model.PostalCode,
-                        City = city
+                        City = city,
                     };
 
                     var result = await _userHelper.AddUserAsync(user, model.Password);
@@ -148,10 +152,17 @@ namespace WaterCompany.Controllers
                             PhoneNumber = model.PhoneNumber,
                             PostalCode = "0000-000",
                             TIN = "000000000",
-                            ImageId = new Guid()
+                            ImageId = new Guid(),
+                            User = user
                         };
-
+                        await _userHelper.AddUserToRoleAsync(user, "Client");
                         await _clientRepository.CreateAsync(client);
+                        await _userHelper.UpdateUserAsync(user);
+                        var isInRole = await _userHelper.IsUserInRoleAsync(user, "Client");
+                        if (!isInRole)
+                        {
+                            await _userHelper.AddUserToRoleAsync(user, "Client");
+                        }
 
                     }
                     else if (role.Name == "Employee")
@@ -165,22 +176,23 @@ namespace WaterCompany.Controllers
                             PhoneNumber = model.PhoneNumber,
                             PostalCode = "0000-000",
                             TIN = "000000000",
-                            ImageId = new Guid()
+                            ImageId = new Guid(),
+                            User = user
                         };
 
+                        await _userHelper.AddUserToRoleAsync(user, "Employee");
                         await _employeeRepository.CreateAsync(employee);
+                        await _userHelper.UpdateUserAsync(user);
+                        var isInRole = await _userHelper.IsUserInRoleAsync(user, "Employee");
+                        if (!isInRole)
+                        {
+                            await _userHelper.AddUserToRoleAsync(user, "Employee");
+                        }
                     }
 
 
-                    await _userHelper.AddUserToRoleAsync(user, role.Name);
-                    await _userHelper.UpdateUserAsync(user);
 
                 }
-
-                //ViewBag.Message = "User successfully created";
-
-                //return RedirectToAction("Index", "Users");
-
                 string myToken = await _userHelper.GenerateEmailConfirmationTokenAsync(user);
                 string tokenLink = Url.Action("ConfirmEmail", "Account", new
                 {
@@ -207,7 +219,7 @@ namespace WaterCompany.Controllers
 
         public async Task<IActionResult> ChangeUser()
         {
-            var user = await _userHelper.GetUserByUserNameAsync("andre@admin");
+            var user = await _userHelper.GetUserByUserNameAsync(this.User.Identity.Name);
             var model = new ChangeUserViewModel();
 
             if (user != null)
@@ -220,61 +232,48 @@ namespace WaterCompany.Controllers
                 model.ImageId = user.ImageId;
                 model.TIN = user.TIN;
                 model.PostalCode = user.PostalCode;
-
-                var city = await _countryRepository.GetCityAsync(user.CityId);
-                if (city != null)
-                {
-                    var country = await _countryRepository.GetCountryAsync(city);
-                    if (country != null)
-                    {
-                        model.CountryId = country.Id;
-                        model.Cities = _countryRepository.GetComboCities(country.Id);
-                        model.Countries = _countryRepository.GetComboCountries();
-                        model.CityId = user.CityId;
-                    }
-                }
             }
 
-            model.Cities = _countryRepository.GetComboCities(model.CountryId);
-            model.Countries = _countryRepository.GetComboCountries();
+            model = _converterHelper.ToUserViewModel(user);
             return View(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> ChangeUser(ChangeUserViewModel model)
+        public async Task<IActionResult> ChangeUser(ChangeUserViewModel model, User user)
         {
             if (ModelState.IsValid)
             {
-                var user = await _userHelper.GetUserByUserNameAsync(this.User.Identity.Name);
-
                 if (user != null)
                 {
-                    var city = await _countryRepository.GetCityAsync(model.CityId);
+                    Guid imageId = Guid.Empty;
+
+                    if (model.ImageFile != null && model.ImageFile.Length > 0)
+                    {
+                        imageId = await _blobHelper.UploadBlobAsync(model.ImageFile, "users");
+                    }
+
+                    user = _converterHelper.ToUser(model, imageId, false);
+                    user = await _userHelper.GetUserByUserNameAsync(this.User.Identity.Name);
 
                     user.FirstName = model.FirstName;
                     user.LastName = model.LastName;
                     user.PhoneNumber = model.PhoneNumber;
-                    user.CityId = model.CityId;
-                    user.City = city;
                     user.Email = model.Email;
                     user.Address = model.Address;
-                    user.ImageId = model.ImageId;
+                    user.ImageId = imageId;
                     user.TIN = model.TIN;
                     user.PostalCode = model.PostalCode;
 
                     var response = await _userHelper.UpdateUserAsync(user);
                     if (response.Succeeded)
                     {
-                        ViewBag.UserMessage = "User updated!";
+                        ViewBag.UserMessage = "The information of the boss was updated!";
                         return View(model);
                     }
                     else
                     {
                         ModelState.AddModelError(string.Empty, response.Errors.FirstOrDefault().Description);
                     }
-
-                    await _userHelper.UpdateUserAsync(user);
-                    
                 }
             }
             return View(model);

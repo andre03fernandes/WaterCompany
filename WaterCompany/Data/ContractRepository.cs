@@ -35,7 +35,7 @@ namespace WaterCompany.Data
         {
             var list = _context.Clients.Select(c => new SelectListItem
             {
-                Text = c.FirstName + " " + c.LastName,
+                Text = $"{c.FirstName} {c.LastName}",
                 Value = c.Id.ToString()
 
             }).OrderBy(l => l.Text).ToList();

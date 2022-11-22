@@ -7,6 +7,11 @@
 <h1 class="text-center big-title1">Sign Up</h1>
 <hr class="center-ball">
 <br />
+<div class="text-success text-center">
+    <p>
+        @ViewBag.Message
+    </p>
+</div>
 <br />
 <form method="post">
     <div asp-validation-summary="ModelOnly"></div>
@@ -37,7 +42,7 @@
                 </div>
             </div>
             <br />
-            <div class="row g-3">
+            <div class="row g-2">
                 <div class="col-sm">
                     <div class="text-center form-outline flex-fill mb-0">
                         <label class="form-label" asp-for="Email">Email</label>
@@ -50,13 +55,6 @@
                         <label class="form-label" asp-for="PhoneNumber">Phone Number</label>
                         <input asp-for="PhoneNumber" class="form-control" />
                         <span asp-validation-for="PhoneNumber" class="text-danger"></span>
-                    </div>
-                </div>
-                <div class="col-sm">
-                    <div class="text-center form-outline flex-fill mb-0">
-                        <label class="form-label" asp-for="TIN">T.I.N.</label>
-                        <input asp-for="TIN" class="form-control" />
-                        <span asp-validation-for="TIN" class="text-danger"></span>
                     </div>
                 </div>
             </div>
@@ -78,21 +76,7 @@
                 </div>
             </div>
             <br />
-            <div class="row g-3">
-                <div class="col-sm">
-                    <div class="text-center form-outline flex-fill mb-0">
-                        <label class="form-label" asp-for="Address">Address</label>
-                        <input asp-for="Address" class="form-control" />
-                        <span asp-validation-for="Address" class="text-danger"></span>
-                    </div>
-                </div>
-                <div class="col-sm">
-                    <div class="text-center form-outline flex-fill mb-0">
-                        <label class="form-label" asp-for="PostalCode">Postal Code</label>
-                        <input asp-for="PostalCode" class="form-control" />
-                        <span asp-validation-for="PostalCode" class="text-danger"></span>
-                    </div>
-                </div>
+            <div class="row g-1">
                 <div class="col-sm">
                     <div class="text-center form-outline flex-fill mb-0">
                         <label asp-for="AccountRole" class="control-label"></label>
@@ -128,11 +112,6 @@
 <br />
 <br />
 <br />
-<div class="text-success">
-    <p>
-        @ViewBag.Message
-    </p>
-</div>
 
 @section Scripts {
     @{

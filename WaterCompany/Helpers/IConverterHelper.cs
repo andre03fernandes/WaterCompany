@@ -6,12 +6,16 @@ namespace WaterCompany.Helpers
 {
     public interface IConverterHelper
     {
-        Client ToClient(User user, ClientViewModel model, Guid imageId, bool isNew);
+        Client ToClient(ClientViewModel model, Guid imageId, bool isNew);
 
         ClientViewModel ToClientViewModel(Client client);
 
-        Employee ToEmployee(User user, EmployeeViewModel model, Guid imageId, bool isNew);
+        Employee ToEmployee(EmployeeViewModel model, Guid imageId, bool isNew);
 
         EmployeeViewModel ToEmployeeViewModel(Employee employee);
+
+        User ToUser(ChangeUserViewModel model, Guid imageId, bool isNew);
+
+        ChangeUserViewModel ToUserViewModel(User user);
     }
 }
