@@ -1,13 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json.Linq;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using WaterCompany.Data.Entities;
-
-namespace WaterCompany.Data
+﻿namespace WaterCompany.Data
 {
+    using Microsoft.AspNetCore.Mvc.Rendering;
+    using Microsoft.EntityFrameworkCore;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using WaterCompany.Data.Entities;
+
     public class ContractRepository : GenericRepository<Contract>, IContractRepository
     {
         private readonly DataContext _context;
@@ -25,17 +24,17 @@ namespace WaterCompany.Data
         {
             return await _context.Clients.FindAsync(id);
         }
+
         public async Task<Contract> GetContractAsync(int id)
         {
             return await _context.Contracts.FindAsync(id);
         }
 
-
         public IEnumerable<SelectListItem> GetComboClients()
         {
             var list = _context.Clients.Select(c => new SelectListItem
             {
-                Text = $"{c.FirstName} {c.LastName}",
+                Text = c.FirstName + " " + c.LastName,
                 Value = c.Id.ToString()
 
             }).OrderBy(l => l.Text).ToList();
@@ -61,7 +60,7 @@ namespace WaterCompany.Data
             list.Insert(0, new SelectListItem
             {
                 Text = "Select a contract type!",
-                Value= "0"
+                Value = "0"
             });
 
             list.Insert(1, new SelectListItem
@@ -144,7 +143,7 @@ namespace WaterCompany.Data
         public async Task DeleteContractAsync(int id)
         {
             var contract = await _context.Contracts.FindAsync(id);
-            if(contract == null)
+            if (contract == null)
             {
                 return;
             }

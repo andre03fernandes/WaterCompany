@@ -1,28 +1,24 @@
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using WaterCompany.Data;
-using WaterCompany.Data.Entities;
-using WaterCompany.Helpers;
-using Microsoft.Extensions.Azure;
-using Azure.Storage.Queues;
-using Azure.Storage.Blobs;
-using Azure.Core.Extensions;
-using Vereyon.Web;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
-
 namespace WaterCompany
 {
+    using System;
+    using System.Text;
+    using Azure.Core.Extensions;
+    using Azure.Storage.Blobs;
+    using Azure.Storage.Queues;
+    using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Azure;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Hosting;
+    using Microsoft.IdentityModel.Tokens;
+    using Vereyon.Web;
+    using WaterCompany.Data;
+    using WaterCompany.Data.Entities;
+    using WaterCompany.Helpers;
+
     public class Startup
     {
         public Startup(IConfiguration configuration)

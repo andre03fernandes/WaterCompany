@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using WaterCompany.Data;
-using WaterCompany.Data.Entities;
-using WaterCompany.Helpers;
-
-namespace WaterCompany.Controllers
+﻿namespace WaterCompany.Controllers
 {
+    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Mvc;
+    using WaterCompany.Data;
+    using WaterCompany.Data.Entities;
+    using WaterCompany.Helpers;
+
     public class InvoicesController : Controller
     {
         private readonly IInvoiceRepository _invoiceRepository;
@@ -30,10 +26,24 @@ namespace WaterCompany.Controllers
             _userHelper = userHelper;
         }
 
+        [Authorize(Roles = "Employee")]
         public IActionResult Index()
         {
             var invoices = _invoiceRepository.GetAllInvoices();
             return View(invoices);
+        }
+
+        public IActionResult InvoiceNotFound()
+        {
+            return View();
+        }
+
+        [Authorize(Roles = "Client")]
+        public async Task<IActionResult> InvoicesClient()
+        {
+            Client client = await _clientRepository.GetClientByUserName(this.User.Identity.Name);
+
+            return View(_invoiceRepository.GetAllByClient(client.Id));
         }
     }
 }

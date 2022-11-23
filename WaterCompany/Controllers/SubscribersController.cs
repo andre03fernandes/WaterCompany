@@ -1,122 +1,48 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using WaterCompany.Data;
-using WaterCompany.Data.Entities;
-
-namespace WaterCompany.Controllers
+﻿namespace WaterCompany.Controllers
 {
+    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.EntityFrameworkCore;
+    using WaterCompany.Data;
+    using WaterCompany.Data.Entities;
+    using WaterCompany.Helpers;
+
     public class SubscribersController : Controller
     {
         private readonly DataContext _context;
+        private readonly IMailHelper _mailHelper;
 
-        public SubscribersController(DataContext context)
+        public SubscribersController(DataContext context, IMailHelper mailHelper)
         {
             _context = context;
+            _mailHelper = mailHelper;
         }
 
-        // GET: Subscribers
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Subscribers.ToListAsync());
         }
 
-        // GET: Subscribers/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var subscriber = await _context.Subscribers
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (subscriber == null)
-            {
-                return NotFound();
-            }
-
-            return View(subscriber);
-        }
-
-        // GET: Subscribers/Create
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Subscribers/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Subscriber subscriber)
+        public async Task<IActionResult> Home(Subscriber subscriber)
         {
             if (ModelState.IsValid)
             {
                 _context.Add(subscriber);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("Index", "Home");
-            }
-            return View(subscriber);
-        }
-
-        // GET: Subscribers/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var subscriber = await _context.Subscribers.FindAsync(id);
-            if (subscriber == null)
-            {
-                return NotFound();
-            }
-            return View(subscriber);
-        }
-
-        // POST: Subscribers/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Email")] Subscriber subscriber)
-        {
-            if (id != subscriber.Id)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
+                Response response = _mailHelper.SendEmail(subscriber.Email, "Newsletter subscription", "Thank you for subscribing our newsletter");
+                if (response.IsSuccess)
                 {
-                    _context.Update(subscriber);
-                    await _context.SaveChangesAsync();
+                    ViewBag.Message = "Thank you for subscribing to our newsletter";
                 }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!SubscriberExists(subscriber.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
             }
-            return View(subscriber);
+            return View("Home");
         }
 
-        // GET: Subscribers/Delete/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -134,7 +60,6 @@ namespace WaterCompany.Controllers
             return View(subscriber);
         }
 
-        // POST: Subscribers/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -143,11 +68,6 @@ namespace WaterCompany.Controllers
             _context.Subscribers.Remove(subscriber);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
-        }
-
-        private bool SubscriberExists(int id)
-        {
-            return _context.Subscribers.Any(e => e.Id == id);
         }
     }
 }

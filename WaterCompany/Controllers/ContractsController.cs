@@ -1,13 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Threading.Tasks;
-using WaterCompany.Data;
-using WaterCompany.Data.Entities;
-using WaterCompany.Helpers;
-using WaterCompany.Models;
-
-namespace WaterCompany.Controllers
+﻿namespace WaterCompany.Controllers
 {
+    using System;
+    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Mvc;
+    using WaterCompany.Data;
+    using WaterCompany.Data.Entities;
+    using WaterCompany.Helpers;
+    using WaterCompany.Models;
+
     public class ContractsController : Controller
     {
         private readonly IContractRepository _contractRepository;
@@ -19,12 +20,14 @@ namespace WaterCompany.Controllers
             _clientRepository = clientRepository;
         }
 
+        [Authorize(Roles = "Employee")]
         public IActionResult Index()
         {
             var contracts = _contractRepository.GetAllWithClients();
             return View(contracts);
         }
 
+        [Authorize(Roles = "Employee")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -41,6 +44,7 @@ namespace WaterCompany.Controllers
             return View(contract);
         }
 
+        [Authorize(Roles = "Employee")]
         public IActionResult Create()
         {
             var model = new ContractViewModel
@@ -79,6 +83,7 @@ namespace WaterCompany.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = "Employee")]
         public async Task<IActionResult> Edit(int? id)
         {
             var contracts = await _contractRepository.GetContractWithClients(id.Value);
@@ -124,6 +129,7 @@ namespace WaterCompany.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = "Employee")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)

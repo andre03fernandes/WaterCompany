@@ -1,9 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.Linq;
-using WaterCompany.Data.Entities;
-
-namespace WaterCompany.Data
+﻿namespace WaterCompany.Data
 {
+    using Microsoft.EntityFrameworkCore;
+    using System.Linq;
+    using WaterCompany.Data.Entities;
+
     public class EmployeeRepository : GenericRepository<Employee>, IEmployeeRepository
     {
         private readonly DataContext _context;

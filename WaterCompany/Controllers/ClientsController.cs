@@ -182,9 +182,9 @@
                 }
                 if (ex.InnerException != null & ex.InnerException.Message.Contains("DELETE"))
                 {
-                    ViewBag.ErrorTitle = $"The client {client.FullName} has at least one associated contract";
-                    ViewBag.ErrorMessage = $"The client <b>{client.FullName}</b> cannot be erased because it has at least one associated contract. <br /><br />" +
-                        $"If you want to delete this client you must first delete all the contracts associated with it and then try again to delete it.";
+                    ViewBag.ErrorTitle = $"The client {client.FullName} has at least one thing associated";
+                    ViewBag.ErrorMessage = $"The client <b>{client.FullName}</b> cannot be erased because it has at least one thing associated. <br /><br />" +
+                        $"If you want to delete this client you must first delete all the things associated with it and then try again to delete it.";
                 }
                 return View("Error");
             }

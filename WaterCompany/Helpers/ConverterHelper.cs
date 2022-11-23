@@ -1,11 +1,9 @@
-﻿using System;
-using System.IO;
-using WaterCompany.Data.Entities;
-using WaterCompany.Models;
-using static System.Net.Mime.MediaTypeNames;
-
-namespace WaterCompany.Helpers
+﻿namespace WaterCompany.Helpers
 {
+    using System;
+    using WaterCompany.Data.Entities;
+    using WaterCompany.Models;
+
     public class ConverterHelper : IConverterHelper
     {
         public Client ToClient(ClientViewModel model, Guid imageId, bool isNew)

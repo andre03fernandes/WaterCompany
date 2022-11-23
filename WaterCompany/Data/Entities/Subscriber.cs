@@ -1,7 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace WaterCompany.Data.Entities
+﻿namespace WaterCompany.Data.Entities
 {
+    using System.ComponentModel.DataAnnotations;
+
     public class Subscriber : IEntity
     {
         public int Id { get; set; }

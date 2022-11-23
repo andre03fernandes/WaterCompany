@@ -1,11 +1,9 @@
-﻿using Microsoft.AspNetCore.Identity;
-using System.ComponentModel.DataAnnotations;
-using System;
-using WaterCompany.Migrations;
-using Microsoft.AspNetCore.Http;
-
-namespace WaterCompany.Data.Entities
+﻿namespace WaterCompany.Data.Entities
 {
+    using System;
+    using System.ComponentModel.DataAnnotations;
+    using Microsoft.AspNetCore.Identity;
+
     public class User : IdentityUser
     {
         [Required]

@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Net;
-
-namespace WaterCompany.Helpers
+﻿namespace WaterCompany.Helpers
 {
+    using System.Net;
+    using Microsoft.AspNetCore.Mvc;
+
     public class NotFoundViewResult : ViewResult
     {
         public NotFoundViewResult(string viewName)

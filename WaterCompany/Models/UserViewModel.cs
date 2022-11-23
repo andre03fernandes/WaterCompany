@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using WaterCompany.Data.Entities;
-
-namespace WaterCompany.Models
+﻿namespace WaterCompany.Models
 {
+    using System.Collections.Generic;
+    using WaterCompany.Data.Entities;
+
     public class UserViewModel : User
     {
         public string UserId { get; set; }

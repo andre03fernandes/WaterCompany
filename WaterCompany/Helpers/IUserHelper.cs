@@ -1,11 +1,11 @@
-﻿using Microsoft.AspNetCore.Identity;
-using System.Linq;
-using System.Threading.Tasks;
-using WaterCompany.Data.Entities;
-using WaterCompany.Models;
-
-namespace WaterCompany.Helpers
+﻿namespace WaterCompany.Helpers
 {
+    using System.Linq;
+    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Identity;
+    using WaterCompany.Data.Entities;
+    using WaterCompany.Models;
+
     public interface IUserHelper
     {
         public IQueryable GetAllUsers();

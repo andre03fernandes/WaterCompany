@@ -1,19 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using WaterCompany.Data;
-using WaterCompany.Data.Entities;
-using WaterCompany.Helpers;
-using WaterCompany.Models;
-
-namespace WaterCompany.Controllers
+﻿namespace WaterCompany.Controllers
 {
+    using System;
+    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.EntityFrameworkCore;
+    using WaterCompany.Data;
+    using WaterCompany.Data.Entities;
+    using WaterCompany.Helpers;
+    using WaterCompany.Models;
+
     public class ConsumptionsController : Controller
     {
         private readonly IUserHelper _userHelper;
@@ -21,27 +17,31 @@ namespace WaterCompany.Controllers
         private readonly IInvoiceRepository _invoiceRepository;
         private readonly IClientRepository _clientRepository;
         private readonly IContractRepository _contractRepository;
+        private readonly IMailHelper _mailHelper;
 
         public ConsumptionsController(
                 IUserHelper userHelper,
                 IConsumptionRepository consumptionRepository,
                 IInvoiceRepository invoiceRepository,
                 IClientRepository clientRepository,
-                IContractRepository contractRepository)
+                IContractRepository contractRepository, IMailHelper mailHelper)
         {
             _consumptionRepository = consumptionRepository;
             _userHelper = userHelper;
             _invoiceRepository = invoiceRepository;
             _clientRepository = clientRepository;
             _contractRepository = contractRepository;
+            _mailHelper = mailHelper;
         }
 
+        [Authorize(Roles = "Employee")]
         public IActionResult Index()
         {
             var consumptions = _consumptionRepository.GetAllWithClients();
             return View(consumptions);
         }
 
+        [Authorize(Roles = "Employee")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -59,7 +59,7 @@ namespace WaterCompany.Controllers
             return View(consumption);
         }
 
-        [Authorize(Roles = "Employee")]
+        [Authorize(Roles = "Employee, Client")] // Permissão para o cliente inserir um consumo durante os últimos 15 dias de cada mês, após isso essa permissão é retirada
         public IActionResult Create()
         {
             var model = new ConsumptionViewModel
@@ -132,6 +132,7 @@ namespace WaterCompany.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = "Employee")]
         public async Task<IActionResult> Edit(int? id)
         {
             var client = await _consumptionRepository.GetClientsAsync(id.Value);
@@ -221,6 +222,7 @@ namespace WaterCompany.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = "Employee")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -274,7 +276,6 @@ namespace WaterCompany.Controllers
             return View(model);
         }
 
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> GenerateInvoice(int id, ConsumptionViewModel view)
@@ -312,6 +313,12 @@ namespace WaterCompany.Controllers
                 invoice.User = await _userHelper.GetUserByUserNameAsync(this.User.Identity.Name);
 
                 await _invoiceRepository.UpdateAsync(invoice);
+
+                Response response = _mailHelper.SendEmail(client.Email, "New Invoice", "A new invoice has been made available");
+                if (response.IsSuccess)
+                {
+                    return RedirectToAction("Index", "Invoices");
+                }
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -324,7 +331,89 @@ namespace WaterCompany.Controllers
                     throw;
                 }
             }
-            return RedirectToAction("Index", "Invoices");
+            return View(view);
+        }
+
+        [Authorize(Roles = "Client")]
+        public async Task<IActionResult> CreateByClient()
+        {
+            Client client = await _clientRepository.GetClientByUserName(this.User.Identity.Name);
+            var model = new ConsumptionViewModel
+            {
+                Client = client,
+                ClientId = client.Id,
+                Clients = _consumptionRepository.GetComboClients()
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        [AutoValidateAntiforgeryToken]
+        public async Task<IActionResult> CreateByClient(ConsumptionViewModel model)
+        {
+            var client = await _consumptionRepository.GetClientsAsync(model.ClientId);
+            var user = await _userHelper.GetUserByUserNameAsync(this.User.Identity.Name);
+            if (ModelState.IsValid)
+            {
+                int echelon = model.Echelon;
+                double unitaryValue = model.UnitaryValue;
+                double totalConsumption = model.TotalConsumption;
+
+                if (echelon >= 5)
+                {
+                    echelon -= 5;
+                    unitaryValue = 0.30;
+                    totalConsumption = 5 * unitaryValue;
+
+                    if (echelon >= 10)
+                    {
+                        echelon -= 10;
+                        unitaryValue = 0.80;
+                        totalConsumption += 10 * unitaryValue;
+
+                        if (echelon >= 10)
+                        {
+                            echelon -= 10;
+                            unitaryValue = 1.20;
+                            totalConsumption += 10 * unitaryValue;
+                            unitaryValue = 1.60;
+                            totalConsumption += echelon * unitaryValue;
+                        }
+                        else
+                        {
+                            unitaryValue = 1.20;
+                            totalConsumption += echelon * unitaryValue;
+                        }
+                    }
+                    else
+                    {
+                        unitaryValue = 0.80;
+                        totalConsumption += echelon * unitaryValue;
+                    }
+                }
+                else
+                {
+                    unitaryValue = 0.30;
+                    totalConsumption = (echelon * unitaryValue);
+                }
+                Consumption consumption = new Consumption
+                {
+                    Client = client,
+                    ConsumptionDate = model.ConsumptionDate,
+                    Echelon = model.Echelon,
+                    UnitaryValue = unitaryValue,
+                    TotalConsumption = totalConsumption
+                };
+                await _consumptionRepository.CreateAsync(consumption);
+                return RedirectToAction(nameof(ClientConsumptions));
+            }
+            return View(model);
+        }
+
+        public async Task<IActionResult> ClientConsumptions()
+        {
+            Client client = await _clientRepository.GetClientByUserName(this.User.Identity.Name);
+            return View(_consumptionRepository.GetAllByClient(client.Id));
         }
     }
 }

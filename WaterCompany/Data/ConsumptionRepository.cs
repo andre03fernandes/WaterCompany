@@ -1,12 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using WaterCompany.Data.Entities;
-
-namespace WaterCompany.Data
+﻿namespace WaterCompany.Data
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Mvc.Rendering;
+    using Microsoft.EntityFrameworkCore;
+    using WaterCompany.Data.Entities;
+
     public class ConsumptionRepository : GenericRepository<Consumption>, IConsumptionRepository
     {
         private readonly DataContext _context;
@@ -62,6 +62,11 @@ namespace WaterCompany.Data
 
             _context.Consumptions.Remove(consumption);
             await _context.SaveChangesAsync();
+        }
+
+        public IQueryable GetAllByClient(int id)
+        {
+            return _context.Consumptions.Where(c => c.Client.Id == id);
         }
     }
 }

@@ -1,12 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
-using Newtonsoft.Json.Linq;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using WaterCompany.Data.Entities;
-
-namespace WaterCompany.Data
+﻿namespace WaterCompany.Data
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Mvc.Rendering;
+    using WaterCompany.Data.Entities;
+
     public interface IContractRepository : IGenericRepository<Contract>
     {
         public IQueryable GetAllWithClients();

@@ -42,6 +42,9 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-controller="Consumptions" asp-action="ClientConsumptions"><i class="fas fa-wallet"></i> Consumptions</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-controller="Invoices" asp-action="InvoicesClient"><i class="fas fa-file-invoice-dollar"></i> Invoices</a>
+                            </li>
                         }
                         else
                         {
@@ -66,6 +69,14 @@
                                     <a class="dropdown-item" asp-controller="Countries" asp-action="Index"><i class="fas fa-globe-europe"></i> Countries and Cities</a>
                                 </div>
                             </li>
+                            <li class="nav-item dropdown nav-user">
+                                <a style="color: #343a40; cursor: pointer;" class="dropdown-toggle nav-link nav-user-img" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-sync"></i> Management</a>
+                                <div class="dropdown-menu dropdown-menu-left nav-user-dropdown" aria-labelledby="navbarDropdownMenuLink2">
+                                    <a class="dropdown-item" asp-controller="Clients" asp-action="Index"><i class="fas fa-users"></i> Clients</a>
+                                    <a class="dropdown-item" asp-controller="Employees" asp-action="Index"><i class="fas fa-user-secret"></i> Employees</a>
+                                    <a class="dropdown-item" asp-controller="Subscribers" asp-action="Index"><i class="fas fa-user-secret"></i> Subscribers</a>
+                                </div>
+                            </li>
                         }
                        @if (this.User.Identity.IsAuthenticated && this.User.IsInRole("Employee"))
                         {
@@ -73,8 +84,6 @@
                                 <a style="color: #343a40; cursor: pointer;" class="dropdown-toggle nav-link nav-user-img" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-sync"></i> Management</a>
                                 <div class="dropdown-menu dropdown-menu-left nav-user-dropdown" aria-labelledby="navbarDropdownMenuLink2">
                                     <a class="dropdown-item" asp-controller="Contracts" asp-action="Index"><i class="fas fa-file-signature"></i> Contracts</a>
-                                    <a class="dropdown-item" asp-controller="Clients" asp-action="Index"><i class="fas fa-users"></i> Clients</a>
-                                    <a class="dropdown-item" asp-controller="Employees" asp-action="Index"><i class="fas fa-user-secret"></i> Employees</a>
                                     <a class="dropdown-item" asp-controller="Invoices" asp-action="Index"><i class="fas fa-file-invoice-dollar"></i> Invoices</a>
                                     <a class="dropdown-item" asp-controller="Consumptions" asp-action="Index"><i class="fas fa-wallet"></i> Consumptions</a>
                                     <a class="dropdown-item" asp-controller="Orders" asp-action="Index"><i class="fas fa-sort-amount-down"></i> Orders</a>
@@ -112,12 +121,6 @@
                         }
                         else
                         {
-                            @*<li class="nav-item dropdown nav-user">
-                        <a class="nav-link nav-user-img" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-tasks"></i></a>
-                        <div class="dropdown-menu dropdown-menu-right nav-user-dropdown" aria-labelledby="navbarDropdownMenuLink2">
-                        <a class="dropdown-item" asp-controller="Account" asp-action="Login"><i class="fas fa-sign-in-alt mr-2"></i>Login</a>
-                        </div>
-                        </li>*@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-controller="Account" asp-action="Login"><i class="fas fa-sign-in-alt mr-2"></i>Login</a>
                             </li>
@@ -237,7 +240,7 @@
             $(".loader-wrapper").fadeOut("slow");
         });
     </script>
-    @*   <script type="text/javascript" id="cookieinfo"
+       <script type="text/javascript" id="cookieinfo"
     src="//cookieinfoscript.com/js/cookieinfo.min.js"
     data-bg="#1f4f66"
     data-fg="#FFFFFF"
@@ -246,8 +249,7 @@
     data-message="Cookies help us deliver the best experience on our website. By using our website, you agree to the use of cookies."
     data-text-align="center"
     data-close-text="Got it!"
-    @*data-cookie="CookieInfoScript">
-    </script>*@
+    data-cookie="CookieInfoScript"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

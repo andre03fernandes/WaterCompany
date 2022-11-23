@@ -1,10 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using WaterCompany.Data.Entities;
-
-namespace WaterCompany.Models
+﻿namespace WaterCompany.Models
 {
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using Microsoft.AspNetCore.Mvc.Rendering;
+    using WaterCompany.Data.Entities;
+
     public class ConsumptionViewModel : Consumption
     {
         [Display(Name = "Client")]

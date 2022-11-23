@@ -1,29 +1,29 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
-using Vereyon.Web;
-using WaterCompany.Data;
-using WaterCompany.Data.Entities;
-using WaterCompany.Helpers;
-using WaterCompany.Models;
-
-namespace WaterCompany.Controllers
+﻿namespace WaterCompany.Controllers
 {
-    [Authorize(Roles = ("Admin, Employee, Client"))]
+    using System;
+    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Mvc;
+    using Vereyon.Web;
+    using WaterCompany.Data;
+    using WaterCompany.Data.Entities;
+    using WaterCompany.Helpers;
+    using WaterCompany.Models;
+
+    [Authorize(Roles = ("Employee, Client"))]
     public class OrdersController : Controller
     {
         private readonly IOrderRepository _orderRepository;
         private readonly DataContext _context;
         private readonly IFlashMessage _flashMessage;
+        private readonly IUserHelper _userHelper;
 
-        public OrdersController(IOrderRepository orderRepository, DataContext context, IFlashMessage flashMessage)
+        public OrdersController(IOrderRepository orderRepository, DataContext context, IFlashMessage flashMessage, IUserHelper userHelper)
         {
             _orderRepository = orderRepository;
             _context = context;
             _flashMessage = flashMessage;
+            _userHelper = userHelper;
         }
 
         public async Task<IActionResult> Index()
@@ -57,7 +57,7 @@ namespace WaterCompany.Controllers
             {
                 ModelState.AddModelError(string.Empty, "The 1st Echelon only allows echelons up to 5m³");
             }
-            else if(offer.Name == "2nd Echelon" && !(orderDetailTemp.Echelon > 5 && orderDetailTemp.Echelon <= 15))
+            else if (offer.Name == "2nd Echelon" && !(orderDetailTemp.Echelon > 5 && orderDetailTemp.Echelon <= 15))
             {
                 ModelState.AddModelError(string.Empty, "The 2nd Echelon only allows echelons more than 5m³ and up to 15m³");
             }
@@ -87,15 +87,25 @@ namespace WaterCompany.Controllers
             return RedirectToAction("Create");
         }
 
-		public async Task<IActionResult> ConfirmOrder()
-		{
-			var response = await _orderRepository.ConfirmOrderAsync(this.User.Identity.Name);
-			if (response)
-			{
-				return RedirectToAction("Index");
-			}
-			return RedirectToAction("Create");
-		}
+        public async Task<IActionResult> DeleteOrder(int? id)
+        {
+            if (id == null)
+            {
+                return new NotFoundViewResult("OrderNotFound");
+            }
+            await _orderRepository.DeleteOrderAsync(id.Value);
+            return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> ConfirmOrder()
+        {
+            var response = await _orderRepository.ConfirmOrderAsync(this.User.Identity.Name);
+            if (response)
+            {
+                return RedirectToAction("Index");
+            }
+            return RedirectToAction("Create");
+        }
 
         public async Task<IActionResult> Deliver(int? id)
         {

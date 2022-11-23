@@ -1,8 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System;
-
-namespace WaterCompany.Models
+﻿namespace WaterCompany.Models
 {
+    using System.ComponentModel.DataAnnotations;
+    using System;
+
     public class DeliveryViewModel
     {
         public int Id { get; set; }

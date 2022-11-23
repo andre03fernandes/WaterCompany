@@ -1,8 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System;
-
-namespace WaterCompany.Data.Entities
+﻿namespace WaterCompany.Data.Entities
 {
+    using System.ComponentModel.DataAnnotations;
+    using System;
+
     public class Invoice : IEntity
     {
         public int Id { get; set; }

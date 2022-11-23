@@ -4,25 +4,26 @@
     ViewData["Title"] = "Index";
 }
 
-<br />
-<h1 style="font-family: 'Lucida Sans'; text-align: center">Countries</h1>
-<hr class="center-ball" />
-<br />
-<p class="create">
-    <a asp-action="Create"><i style="font-size: 35px" class="fas fa-plus"></i></a>
-</p>
-<br />
 
-<table class="table">
-    <thead>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap4.min.css" />
+
+<br />
+<br />
+<br />
+<br />
+<h1 class="big-title"><i class="fas fa-globe-europe"></i> Countries <br /><hr class="center-ball" /><br /><a asp-action="Create" asp-controller="Countries" class="btn btn-outline-primary"><i class="far fa-plus-square"></i> New Country</a></h1>
+
+<div class="table-responsive-sm">
+    <table id="example" class="table table-striped table-bordered" style="width: 100%;">
+        <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                <i class="fas fa-globe-europe"></i> @Html.DisplayNameFor(model => model.Name)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.NumberCities)
+                <i class="fas fa-city"></i> @Html.DisplayNameFor(model => model.NumberCities)
             </th>
-            <th></th>
+            <th><i class="fas fa-filter"></i> Options</th>
         </tr>
     </thead>
     <tbody>
@@ -36,28 +37,47 @@
                     @Html.DisplayFor(modelItem => item.NumberCities)
                 </td>
                 <td id="@item.Id">
-                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning"><i class="far fa-edit"></i></a>
-                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info"><i class="fas fa-list"></i></a>
-                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger" id="btnDelete"><i class="fas fa-trash"></i></a>
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-success"><i class="fas fa-pen-square"></i> Edit</a>
+                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-info"><i class="fas fa-info-circle"></i> Details</a>
+                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger" id="btnDelete"><i class="fas fa-trash-alt"></i> Delete</a>
                 </td>
             </tr>
         }
-    </tbody>
-</table>
+        </tbody>
+        <tfoot>
+            <tr>
+                <th>
+                    <i class="fas fa-globe-europe"></i> @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th>
+                    <i class="fas fa-city"></i> @Html.DisplayNameFor(model => model.NumberCities)
+                </th>
+                <th><i class="fas fa-filter"></i> Options</th>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
 
 <div id="deleteDialog" class="modal fade">
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><i class="fa fa-window-close"></i></button>
                 <h4 class="modal-title">Delete</h4>
             </div>
             <div class="modal-body">
-                <p>Do you want to delete the country?</p>
+                <p><b>Do you want to delete the country?</b></p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" id="btnYesDelete">Delete</button>
-                <button type="button" class="btn btn-success" id="btnNoDelete">No</button>
+                <button type="button" class="btn btn-outline-danger" id="btnYesDelete"><i class="fas fa-thumbs-up"></i></button>
+                <button type="button" class="btn btn-outline-success" id="btnNoDelete"><i class="fas fa-thumbs-down"></i></button>
             </div>
         </div>
     </div>
@@ -86,4 +106,13 @@
             });
         });
     </script>
+    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#MyTable').DataTable();
+        });
+    </script>
+}
 }

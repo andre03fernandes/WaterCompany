@@ -1,18 +1,15 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
-using WaterCompany.Data.Entities;
-using WaterCompany.Helpers;
-using WaterCompany.Models;
-
-namespace WaterCompany.Controllers
+﻿namespace WaterCompany.Controllers
 {
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.EntityFrameworkCore;
+    using WaterCompany.Data.Entities;
+    using WaterCompany.Helpers;
+    using WaterCompany.Models;
+
     [Authorize(Roles = "Admin")]
     public class UsersController : Controller
     {
@@ -26,12 +23,13 @@ namespace WaterCompany.Controllers
             _userHelper = userHelper;
             _userManager = userManager;
         }
+
         public async Task<IActionResult> Index()
         {
             var users = await _userManager.Users.ToListAsync();
             var userRoles = new List<UserViewModel>();
 
-            foreach(User user in users)
+            foreach (User user in users)
             {
                 var model = new UserViewModel();
                 model.UserId = user.Id;

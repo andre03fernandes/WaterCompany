@@ -1,26 +1,22 @@
-﻿using Azure;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
-using System;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Runtime.ConstrainedExecution;
-using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
-using WaterCompany.Data;
-using WaterCompany.Data.Entities;
-using WaterCompany.Helpers;
-using WaterCompany.Models;
-using Response = WaterCompany.Helpers.Response;
-
-namespace WaterCompany.Controllers
+﻿namespace WaterCompany.Controllers
 {
+    using System;
+    using System.IdentityModel.Tokens.Jwt;
+    using System.Linq;
+    using System.Security.Claims;
+    using System.Text;
+    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.Rendering;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.IdentityModel.Tokens;
+    using WaterCompany.Data;
+    using WaterCompany.Data.Entities;
+    using WaterCompany.Helpers;
+    using WaterCompany.Models;
+
     public class AccountController : Controller
     {
         private readonly IUserHelper _userHelper;
@@ -49,7 +45,6 @@ namespace WaterCompany.Controllers
             _converterHelper = converterHelper;
         }
 
-        //[Authorize(Roles = "Admin, Employee, Client")]
         public IActionResult Login()
         {
             if (User.Identity.IsAuthenticated)
@@ -126,10 +121,10 @@ namespace WaterCompany.Controllers
                         Email = model.Email,
                         UserName = model.Username,
                         PhoneNumber = model.PhoneNumber,
+                        PostalCode = "0000-000",
+                        TIN = "000000000",
                         CityId = model.CityId,
                         Address = model.Address,
-                        TIN = model.TIN,
-                        PostalCode = model.PostalCode,
                         City = city,
                     };
 
@@ -200,14 +195,22 @@ namespace WaterCompany.Controllers
                     token = myToken
                 }, protocol: HttpContext.Request.Scheme);
 
-                Response response = _mailHelper.SendEmail(model.Email, "Email confirmation", $"<h1>Email Confirmation</h1>" +
-                    $"To allow the user, " +
-                    $"plase click in this link:</br></br><a href = \"{tokenLink}\"><b>Confirm Email</b></a>");
+                var myToken1 = await _userHelper.GeneratePasswordResetTokenAsync(user); // gera token
+                var link = this.Url.Action( // cria Url para mudar a password
+                    "ResetPassword",
+                    "Account",
+                    new { token = myToken1 }, protocol: HttpContext.Request.Scheme);
+
+                Response response = _mailHelper.SendEmail(model.Email, "Account Created", $"<h1>Confirm Email and Change Password</h1>" +
+                    $"Your account as been created, " +
+                    $"please click in this link to confirm your email:</br></br><a href = \"{tokenLink}\"><b>Confirm Email</b></a><br /><br />" +
+                    $"Change your password to use the account: </br></br><a href = \"{link}\"><b>Change Password</b></a><br /><br />" +
+                    $"Your username: {user.UserName}");
 
 
                 if (response.IsSuccess)
                 {
-                    ViewBag.Message = "The instructions to allow you user has been sent to email";
+                    ViewBag.Message = "The instructions to allow the user has been sent to email";
                     return View(model);
                 }
 
@@ -320,45 +323,44 @@ namespace WaterCompany.Controllers
             return Json(country.Cities.OrderBy(c => c.Name));
         }
 
-        [HttpPost] // Sempre post, não tem sentido fazer através do get
-        public async Task<IActionResult> CreateToken([FromBody] LoginViewModel model) // Recebe um modelo através do body (facultativo)
+        [HttpPost]
+        public async Task<IActionResult> CreateToken([FromBody] LoginViewModel model)
         {
-            if (this.ModelState.IsValid) // se o modelo for válido
+            if (this.ModelState.IsValid)
             {
-                var user = await _userHelper.GetUserByEmailAsync(model.Username); // verificar se o email existe
-                if (user != null) // se o email exisitir, verificamos a password (validação)
+                var user = await _userHelper.GetUserByEmailAsync(model.Username);
+                if (user != null)
                 {
                     var result = await _userHelper.ValidatePasswordAsync(
                         user,
                         model.Password);
 
-                    if (result.Succeeded) // se a password for válida,criamos os claims
+                    if (result.Succeeded)
                     {
-                        var claims = new[] // claims - onde estão as permissões, para criar os tokens, mecanismo que o middleware tem para criar os tokens
+                        var claims = new[]
                         {
-                            new Claim(JwtRegisteredClaimNames.Sub, user.Email), // ao criar o token, ele cria uma zona em que vai registar o email do utilizador
-                            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()) // e cria uma zona com um guid aleatório que fica associado ao email do utilizador criado antes
-                        }; // mecanismo do middleware, conseguindo saber todo o processo da criação
+                            new Claim(JwtRegisteredClaimNames.Sub, user.Email),
+                            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+                        };
 
-                        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Tokens:Key"])); // busca a key que está no "appsettings.json" do projeto e converte para bytes, ou seja, 0 e 1
-                        var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256); // gera credenciais e agarra na key e gera o token, usando o algoritmo "HmacSha256"
-                        var token = new JwtSecurityToken( // Jwt - um tipo de token
-                            _configuration["Tokens:Issuer"], // issuer, audience, claims - parametros de configuração
+                        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Tokens:Key"]));
+                        var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+                        var token = new JwtSecurityToken( 
+                            _configuration["Tokens:Issuer"], 
                             _configuration["Tokens:Audience"],
                             claims,
-                            expires: DateTime.UtcNow.AddDays(30), // quando expira o token - neste caso o token é válido por 30 dias
+                            expires: DateTime.UtcNow.AddDays(30),
                             signingCredentials: credentials);
-                        var results = new // objeto anonimo
+                        var results = new 
                         {
-                            token = new JwtSecurityTokenHandler().WriteToken(token), // escreve o token criado anteriormente
+                            token = new JwtSecurityTokenHandler().WriteToken(token),
                             expiration = token.ValidTo
                         };
-                        return this.Created(string.Empty, results); // depois de criado manda um parametro vazio
+                        return this.Created(string.Empty, results);
                     }
                 }
             }
-
-            return BadRequest(); // se correr mal, manda um bad request
+            return BadRequest();
         }
 
         public async Task<IActionResult> ConfirmEmail(string userId, string token)
@@ -441,7 +443,6 @@ namespace WaterCompany.Controllers
             this.ViewBag.Message = "User not found.";
             return View(model);
         }
-
 
         public IActionResult NotAuthorized()
         {

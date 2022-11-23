@@ -1,13 +1,13 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Configuration;
-using Microsoft.WindowsAzure.Storage.Blob;
-using Microsoft.WindowsAzure.Storage;
-using System.IO;
-using System.Threading.Tasks;
-using System;
-
-namespace WaterCompany.Helpers
+﻿namespace WaterCompany.Helpers
 {
+    using System.IO;
+    using System.Threading.Tasks;
+    using System;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.WindowsAzure.Storage.Blob;
+    using Microsoft.WindowsAzure.Storage;
+
     public class BlobHelper : IBlobHelper
     {
         private readonly CloudBlobClient _blobClient;

@@ -1,5 +1,3 @@
-using System;
-
 namespace WaterCompany.Models
 {
     public class ErrorViewModel

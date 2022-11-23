@@ -1,13 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
-using Newtonsoft.Json.Linq;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using WaterCompany.Data.Entities;
-using WaterCompany.Models;
-
-namespace WaterCompany.Data
+﻿namespace WaterCompany.Data
 {
+    using Microsoft.AspNetCore.Mvc.Rendering;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using WaterCompany.Data.Entities;
+    using WaterCompany.Models;
+
     public interface IOrderRepository : IGenericRepository<Order>
     {
         Task<IQueryable<Order>> GetOrderAsync(string userName);
@@ -20,10 +19,16 @@ namespace WaterCompany.Data
 
         Task DeleteDetailTempAsync(int id);
 
-		Task<bool> ConfirmOrderAsync(string userName);
+        Task<bool> ConfirmOrderAsync(string userName);
 
         Task DeliverOrder(DeliveryViewModel model);
 
         Task<Order> GetOrderAsync(int id);
+
+        public Task<Client> GetClientsAsync(int id);
+
+        public Task<Order> GetConsumptionWithUsers(int id);
+
+        Task DeleteOrderAsync(int id);
     }
 }

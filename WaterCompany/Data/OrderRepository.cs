@@ -1,183 +1,193 @@
-﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using WaterCompany.Data.Entities;
-using WaterCompany.Helpers;
-using WaterCompany.Models;
-using Microsoft.AspNetCore.Mvc;
-using System;
-
-namespace WaterCompany.Data
+﻿namespace WaterCompany.Data
 {
-	public class OrderRepository : GenericRepository<Order>, IOrderRepository
-	{
-		private readonly DataContext _context;
-		private readonly IUserHelper _userHelper;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Mvc.Rendering;
+    using Microsoft.EntityFrameworkCore;
+    using WaterCompany.Data.Entities;
+    using WaterCompany.Helpers;
+    using WaterCompany.Models;
 
-		public OrderRepository(DataContext context, IUserHelper userHelper) : base(context)
-		{
-			_context = context;
-			_userHelper = userHelper;
-		}
+    public class OrderRepository : GenericRepository<Order>, IOrderRepository
+    {
+        private readonly DataContext _context;
+        private readonly IUserHelper _userHelper;
 
-		public async Task<IQueryable<Order>> GetOrderAsync(string userName)
-		{
-			var user = await _userHelper.GetUserByUserNameAsync(userName);
-			if (user == null)
-			{
-				return null;
-			}
+        public OrderRepository(DataContext context, IUserHelper userHelper) : base(context)
+        {
+            _context = context;
+            _userHelper = userHelper;
+        }
 
-			if (await _userHelper.IsUserInRoleAsync(user, "Admin"))
-			{
-				return _context.Orders
-					.Include(o => o.User)
-					.Include(o => o.Items)
-					.ThenInclude(p => p.Offer)
-					.OrderByDescending(o => o.OrderDate);
-			}
+        public async Task<IQueryable<Order>> GetOrderAsync(string userName)
+        {
+            var user = await _userHelper.GetUserByUserNameAsync(userName);
+            if (user == null)
+            {
+                return null;
+            }
 
-			return _context.Orders
-				.Include(o => o.Items)
-				.ThenInclude(p => p.Offer)
-				.Where(o => o.User == user)
-				.OrderByDescending(o => o.OrderDate);
-		}
+            if (await _userHelper.IsUserInRoleAsync(user, "Admin"))
+            {
+                return _context.Orders
+                    .Include(o => o.User)
+                    .Include(o => o.Items)
+                    .ThenInclude(p => p.Offer)
+                    .OrderByDescending(o => o.OrderDate);
+            }
 
-		public async Task<IQueryable<OrderDetailTemp>> GetDetailTempsAsync(string userName)
-		{
-			var user = await _userHelper.GetUserByUserNameAsync(userName);
-			if (user == null)
-			{
-				return null;
-			}
+            return _context.Orders
+                .Include(o => o.Items)
+                .ThenInclude(p => p.Offer)
+                .Where(o => o.User == user)
+                .OrderByDescending(o => o.OrderDate);
+        }
 
-			return _context.OrderDetailsTemp
-				.Include(p => p.Offer)
-				.Where(o => o.User == user)
-				.OrderBy(o => o.Offer.Name);
-		}
+        public async Task<IQueryable<OrderDetailTemp>> GetDetailTempsAsync(string userName)
+        {
+            var user = await _userHelper.GetUserByUserNameAsync(userName);
+            if (user == null)
+            {
+                return null;
+            }
 
-		public IEnumerable<SelectListItem> GetComboOffers()
-		{
-			var list = _context.Offers.Select(p => new SelectListItem
-			{
-				Text = p.Name,
-				Value = p.Id.ToString()
-			}).ToList();
+            return _context.OrderDetailsTemp
+                .Include(p => p.Offer)
+                .Where(o => o.User == user)
+                .OrderBy(o => o.Offer.Name);
+        }
 
-			list.Insert(0, new SelectListItem
-			{
-				Text = "Select a offer!",
-				Value = "0"
-			});
+        public IEnumerable<SelectListItem> GetComboOffers()
+        {
+            var list = _context.Offers.Select(p => new SelectListItem
+            {
+                Text = p.Name,
+                Value = p.Id.ToString()
+            }).ToList();
 
-			return list;
-		}
+            list.Insert(0, new SelectListItem
+            {
+                Text = "Select a offer!",
+                Value = "0"
+            });
 
-		public async Task AddItemToOrderAsync(AddItemViewModel model, string userName)
-		{
-			var user = await _userHelper.GetUserByUserNameAsync(userName);
-			if (user == null)
-			{
-				return;
-			}
+            return list;
+        }
 
-			var offer = await _context.Offers.FindAsync(model.OfferId);
-			if (offer == null)
-			{
-				return;
-			}
+        public async Task AddItemToOrderAsync(AddItemViewModel model, string userName)
+        {
+            var user = await _userHelper.GetUserByUserNameAsync(userName);
+            if (user == null)
+            {
+                return;
+            }
 
-			var orderDetailTemp = await _context.OrderDetailsTemp
-				.Where(odt => odt.User == user && odt.Offer == offer)
-				.FirstOrDefaultAsync();
+            var offer = await _context.Offers.FindAsync(model.OfferId);
+            if (offer == null)
+            {
+                return;
+            }
 
-			if (orderDetailTemp == null)
-			{
+            var orderDetailTemp = await _context.OrderDetailsTemp
+                .Where(odt => odt.User == user && odt.Offer == offer)
+                .FirstOrDefaultAsync();
 
-				orderDetailTemp = new OrderDetailTemp
-				{
-					Offer = offer,
-					UnitaryValue = offer.UnitaryValue,
-					Echelon = model.Echelon,
-					User = user,
-				};
+            if (orderDetailTemp == null)
+            {
 
-				if (orderDetailTemp.Echelon <= 5 && orderDetailTemp.Echelon > 0)
-				{
-					offer.UnitaryValue = 0.30;
-				}
-				else if (orderDetailTemp.Echelon > 5 && orderDetailTemp.Echelon <= 15)
-				{
-					offer.UnitaryValue = 0.80;
-				}
-				else if (orderDetailTemp.Echelon > 15 && orderDetailTemp.Echelon <= 25)
-				{
-					offer.UnitaryValue = 1.20;
-				}
-				else
-				{
-					offer.UnitaryValue = 1.60;
-				}
+                orderDetailTemp = new OrderDetailTemp
+                {
+                    Offer = offer,
+                    UnitaryValue = offer.UnitaryValue,
+                    Echelon = model.Echelon,
+                    User = user,
+                };
 
-				_context.OrderDetailsTemp.Add(orderDetailTemp);
-			}
-			await _context.SaveChangesAsync();
-		}
+                if (orderDetailTemp.Echelon <= 5 && orderDetailTemp.Echelon > 0)
+                {
+                    offer.UnitaryValue = 0.30;
+                }
+                else if (orderDetailTemp.Echelon > 5 && orderDetailTemp.Echelon <= 15)
+                {
+                    offer.UnitaryValue = 0.80;
+                }
+                else if (orderDetailTemp.Echelon > 15 && orderDetailTemp.Echelon <= 25)
+                {
+                    offer.UnitaryValue = 1.20;
+                }
+                else
+                {
+                    offer.UnitaryValue = 1.60;
+                }
 
-		public async Task DeleteDetailTempAsync(int id)
-		{
-			var orderDetailTemp = await _context.OrderDetailsTemp.FindAsync(id);
-			if (orderDetailTemp == null)
-			{
-				return;
-			}
+                _context.OrderDetailsTemp.Add(orderDetailTemp);
+            }
+            await _context.SaveChangesAsync();
+        }
 
-			_context.OrderDetailsTemp.Remove(orderDetailTemp);
-			await _context.SaveChangesAsync();
-		}
+        public async Task DeleteDetailTempAsync(int id)
+        {
+            var orderDetailTemp = await _context.OrderDetailsTemp.FindAsync(id);
+            if (orderDetailTemp == null)
+            {
+                return;
+            }
 
-		public async Task<bool> ConfirmOrderAsync(string userName)
-		{
-			var user = await _userHelper.GetUserByUserNameAsync(userName);
-			if (user == null)
-			{
-				return false;
-			}
+            _context.OrderDetailsTemp.Remove(orderDetailTemp);
+            await _context.SaveChangesAsync();
+        }
 
-			var orderTmps = await _context.OrderDetailsTemp
-				.Include(o => o.Offer)
-				.Where(o => o.User == user)
-				.ToListAsync();
+        public async Task DeleteOrderAsync(int id)
+        {
+            var order = await _context.OrderDetails.FindAsync(id);
+            if (order == null)
+            {
+                return;
+            }
 
-			if (orderTmps == null || orderTmps.Count == 0)
-			{
-				return false;
-			}
+            _context.OrderDetails.Remove(order);
+            await _context.SaveChangesAsync();
+        }
 
-			var details = orderTmps.Select(o => new OrderDetail
-			{
-				Echelon = o.Echelon,
-				UnitaryValue = o.UnitaryValue,
-			}).ToList();
+        public async Task<bool> ConfirmOrderAsync(string userName)
+        {
+            var user = await _userHelper.GetUserByUserNameAsync(userName);
+            if (user == null)
+            {
+                return false;
+            }
 
-			var order = new Order
-			{
-				OrderDate = DateTime.UtcNow,
-				//DeliveryDate = DateTime.UtcNow,
-				User = user,
-				Items = details
-			};
+            var orderTmps = await _context.OrderDetailsTemp
+                .Include(o => o.Offer)
+                .Where(o => o.User == user)
+                .ToListAsync();
 
-			await CreateAsync(order);
-			_context.OrderDetailsTemp.RemoveRange(orderTmps);
-			await _context.SaveChangesAsync();
-			return true;
-		}
+            if (orderTmps == null || orderTmps.Count == 0)
+            {
+                return false;
+            }
+
+            var details = orderTmps.Select(o => new OrderDetail
+            {
+                Echelon = o.Echelon,
+                UnitaryValue = o.UnitaryValue,
+            }).ToList();
+
+            var order = new Order
+            {
+                OrderDate = DateTime.UtcNow,
+                //DeliveryDate = DateTime.UtcNow,
+                User = user,
+                Items = details
+            };
+
+            await CreateAsync(order);
+            _context.OrderDetailsTemp.RemoveRange(orderTmps);
+            await _context.SaveChangesAsync();
+            return true;
+        }
 
         public async Task DeliverOrder(DeliveryViewModel model)
         {
@@ -195,6 +205,19 @@ namespace WaterCompany.Data
         public async Task<Order> GetOrderAsync(int id)
         {
             return await _context.Orders.FindAsync(id);
+        }
+
+        public async Task<Client> GetClientsAsync(int id)
+        {
+            return await _context.Clients.FindAsync(id);
+        }
+
+        public async Task<Order> GetConsumptionWithUsers(int id)
+        {
+            return await _context.Orders
+                .Include(p => p.User)
+                .Where(p => p.Id == id)
+                .FirstOrDefaultAsync();
         }
     }
 }

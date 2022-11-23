@@ -4,32 +4,63 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
-<hr class="center-ball" />
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Email)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap4.min.css" />
+
+<br />
+<br />
+<br />
+<br />
+<h1 class="big-title1 text-center"><i class="fas fa-walking"></i> Subscribers <br /><hr class="center-ball" /><br /></h1>
+
+<div class="table-responsive-sm">
+    <table id="example" class="table table-striped table-bordered" style="width: 100%;">
+        <thead>
+            <tr>
+                <th>
+                    <i class="fas fa-at"></i> @Html.DisplayNameFor(model => model.Email)
+                </th>
+                <th><i class="fas fa-filter"></i> Options</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger"><i class="fas fa-trash-alt"></i> Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <th>
+                    <i class="fas fa-at"></i> @Html.DisplayNameFor(model => model.Email)
+                </th>
+                <th><i class="fas fa-filter"></i> Options</th>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+
+@section Scripts{
+    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#MyTable').DataTable();
+        });
+    </script>
 }
-    </tbody>
-</table>

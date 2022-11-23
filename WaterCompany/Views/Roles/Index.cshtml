@@ -10,13 +10,13 @@
 <br />
 <br />
 <br />
-<h1 class="big-title">Roles <br /><hr class="center-ball" /><br /></h1>
+<h1 class="big-title1 text-center"><i class="fas fa-user-tag"></i> Roles <br /><hr class="center-ball" /><br /></h1>
 
 <div class="table-responsive-sm">
     <table id="example" class="table table-striped table-bordered" style="width:100%">
         <thead>
             <tr>
-                <th>Role</th>
+                <th><i class="fas fa-user-tag"></i> Role</th>
                 <th>Id</th>
             </tr>
         </thead>
@@ -29,6 +29,12 @@
                 </tr>
             }
         </tbody>
+         <tfoot>
+            <tr>
+                <th><i class="fas fa-user-tag"></i> Role</th>
+                <th>Id</th>
+            </tr>
+        </tfoot>
     </table>
 </div>
 <br />
@@ -38,3 +44,14 @@
 <br />
 <br />
 <br />
+
+@section Scripts{
+    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#MyTable').DataTable();
+        });
+    </script>
+}

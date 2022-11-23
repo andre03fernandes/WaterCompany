@@ -1,8 +1,8 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
-
-namespace WaterCompany.Data
+﻿namespace WaterCompany.Data
 {
+    using System.Linq;
+    using System.Threading.Tasks;
+
     public interface IGenericRepository<T> where T : class
     {
         IQueryable<T> GetAll();

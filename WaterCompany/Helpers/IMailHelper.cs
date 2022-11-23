@@ -1,6 +1,4 @@
-﻿using Azure;
-
-namespace WaterCompany.Helpers
+﻿namespace WaterCompany.Helpers
 {
     public interface IMailHelper
     {

@@ -3,11 +3,8 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Runtime.Intrinsics.X86;
-    using System.Security.Policy;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Identity;
-    using Microsoft.EntityFrameworkCore;
     using WaterCompany.Data.Entities;
     using WaterCompany.Helpers;
 
@@ -38,6 +35,12 @@
                 cities.Add(new City { Name = "Lisboa" });
                 cities.Add(new City { Name = "Porto" });
                 cities.Add(new City { Name = "Faro" });
+                cities.Add(new City { Name = "Viseu" });
+                cities.Add(new City { Name = "Aveiro" });
+                cities.Add(new City { Name = "Alentejo" });
+                cities.Add(new City { Name = "Almada" });
+                cities.Add(new City { Name = "Amadora" });
+                cities.Add(new City { Name = "Braga" });
 
                 _context.Countries.Add(new Country
                 {

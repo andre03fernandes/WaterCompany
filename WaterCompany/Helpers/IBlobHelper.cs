@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
-using System.Threading.Tasks;
-using System;
-
-namespace WaterCompany.Helpers
+﻿namespace WaterCompany.Helpers
 {
+    using System.Threading.Tasks;
+    using System;
+    using Microsoft.AspNetCore.Http;
+
     public interface IBlobHelper
     {
         Task<Guid> UploadBlobAsync(IFormFile file, string containerName);

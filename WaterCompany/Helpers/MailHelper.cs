@@ -1,11 +1,10 @@
-﻿using Azure;
-using MailKit.Net.Smtp;
-using Microsoft.Extensions.Configuration;
-using MimeKit;
-using System;
-
-namespace WaterCompany.Helpers
+﻿namespace WaterCompany.Helpers
 {
+    using System;
+    using MailKit.Net.Smtp;
+    using Microsoft.Extensions.Configuration;
+    using MimeKit;
+
     public class MailHelper : IMailHelper
     {
         private readonly IConfiguration _configuration;

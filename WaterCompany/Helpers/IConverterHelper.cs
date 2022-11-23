@@ -1,9 +1,9 @@
-﻿using System;
-using WaterCompany.Data.Entities;
-using WaterCompany.Models;
-
-namespace WaterCompany.Helpers
+﻿namespace WaterCompany.Helpers
 {
+    using System;
+    using WaterCompany.Data.Entities;
+    using WaterCompany.Models;
+
     public interface IConverterHelper
     {
         Client ToClient(ClientViewModel model, Guid imageId, bool isNew);

@@ -1,9 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.Linq;
-using WaterCompany.Data.Entities;
-
-namespace WaterCompany.Data
+﻿namespace WaterCompany.Data
 {
+    using System.Linq;
+    using System.Threading.Tasks;
+    using Microsoft.EntityFrameworkCore;
+    using WaterCompany.Data.Entities;
+
     public class ClientRepository : GenericRepository<Client>, IClientRepository
     {
         private readonly DataContext _context;
@@ -18,6 +19,11 @@ namespace WaterCompany.Data
             return _context.Clients
                 .Include(p => p.User)
                 .OrderBy(p => p.Id);
+        }
+
+        public async Task<Client> GetClientByUserName(string username)
+        {
+            return await _context.Clients.Where(c => c.User.UserName == username).FirstOrDefaultAsync();
         }
     }
 }

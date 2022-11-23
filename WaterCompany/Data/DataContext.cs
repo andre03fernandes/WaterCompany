@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
-using WaterCompany.Data.Entities;
-
-namespace WaterCompany.Data
+﻿namespace WaterCompany.Data
 {
+    using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore;
+    using WaterCompany.Data.Entities;
+
     public class DataContext : IdentityDbContext<User>
     {
         public DbSet<Client> Clients { get; set; }
@@ -29,6 +29,8 @@ namespace WaterCompany.Data
         public DbSet<OrderDetail> OrderDetails { get; set; }
 
         public DbSet<OrderDetailTemp> OrderDetailsTemp { get; set; }
+
+        public DbSet<ContactUs> ContactUs { get; set; }
 
         public DataContext(DbContextOptions<DataContext> options) : base(options) { }
 

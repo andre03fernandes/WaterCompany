@@ -1,14 +1,14 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Threading.Tasks;
-using Vereyon.Web;
-using WaterCompany.Data;
-using WaterCompany.Data.Entities;
-using WaterCompany.Models;
-
-namespace WaterCompany.Controllers
+﻿namespace WaterCompany.Controllers
 {
+    using System;
+    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Mvc;
+    using Vereyon.Web;
+    using WaterCompany.Data;
+    using WaterCompany.Data.Entities;
+    using WaterCompany.Models;
+
     [Authorize(Roles = "Admin")]
     public class CountriesController : Controller
     {
@@ -55,7 +55,6 @@ namespace WaterCompany.Controllers
 
             return View(city);
         }
-
 
         [HttpPost]
         public async Task<IActionResult> EditCity(City city)
