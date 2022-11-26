@@ -18,7 +18,7 @@
                     <br />
                     <div class="form-group">
                         <label asp-for="ClientId" class="control-label"></label>
-                        <select asp-for="ClientId" asp-items="Model.Clients" class=" form-control text-center"></select>
+                        <select asp-for="ClientId" asp-items="Model.Clients" class=" form-control text-center" disabled="true"></select>
                         <span asp-validation-for="ClientId" class="text-danger"></span>
                     </div>
                     <div class="form-group">
@@ -39,7 +39,7 @@
                     <div class="form-group">
                         <br />
                         <button type="submit" value="Save" class="btn btn-outline-primary"><i class="fas fa-save"></i> Save Changes</button>
-                        <a class="btn btn-outline-info" asp-action="Index"><i class="fas fa-backward"></i> Back to List</a>
+                        <a class="btn btn-outline-info" asp-action="ClientConsumptions"><i class="fas fa-backward"></i> Back to List</a>
                     </div>
                 </div>
             </div>

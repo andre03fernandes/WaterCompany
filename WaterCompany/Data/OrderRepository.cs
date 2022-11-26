@@ -29,7 +29,7 @@
                 return null;
             }
 
-            if (await _userHelper.IsUserInRoleAsync(user, "Admin"))
+            if (await _userHelper.IsUserInRoleAsync(user, "Employee"))
             {
                 return _context.Orders
                     .Include(o => o.User)

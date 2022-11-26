@@ -18,7 +18,10 @@
                 </div>
                 <div class="align-items-center align-content-center col-md-3 border-left mt-1" style="padding-top: 27px;">
                     <h6 class="text-success">Free shipping</h6>
-                    <div class="d-flex flex-column mt-4"><a asp-action="Index" asp-controller="Orders" class="btn btn-outline-primary btn-sm mt-2">Buy</a></div>
+                    @if (this.User.Identity.IsAuthenticated)
+                    {
+                        <div class="d-flex flex-column mt-4"><a asp-action="Index" asp-controller="Orders" class="btn btn-outline-primary btn-sm mt-2">Buy</a></div>
+                    }
                 </div>
             </div>
             <br />
@@ -31,7 +34,10 @@
                 </div>
                 <div class="align-items-center align-content-center col-md-3 border-left mt-1" style="padding-top: 27px;">
                     <h6 class="text-success">Free shipping</h6>
-                    <div class="d-flex flex-column mt-4"><a asp-action="Index" asp-controller="Orders" class="btn btn-outline-primary btn-sm mt-2">Buy</a></div>
+                    @if (this.User.Identity.IsAuthenticated)
+                    {
+                        <div class="d-flex flex-column mt-4"><a asp-action="Index" asp-controller="Orders" class="btn btn-outline-primary btn-sm mt-2">Buy</a></div>
+                    }
                 </div>
             </div>
             <br /><br />
@@ -44,7 +50,10 @@
                 </div>
                 <div class="align-items-center align-content-center col-md-3 border-left mt-1" style="padding-top: 27px;">
                     <h6 class="text-success">Free shipping</h6>
-                    <div class="d-flex flex-column mt-4"><a asp-action="Index" asp-controller="Orders" class="btn btn-outline-primary btn-sm mt-2">Buy</a></div>
+                    @if (this.User.Identity.IsAuthenticated)
+                    {
+                        <div class="d-flex flex-column mt-4"><a asp-action="Index" asp-controller="Orders" class="btn btn-outline-primary btn-sm mt-2">Buy</a></div>
+                    }
                 </div>
             </div>
             <br /><br />
@@ -57,7 +66,10 @@
                 </div>
                 <div class="align-items-center align-content-center col-md-3 border-left mt-1" style="padding-top: 27px;">
                     <h6 class="text-success">Free shipping</h6>
-                    <div class="d-flex flex-column mt-4"><a asp-action="Index" asp-controller="Orders" class="btn btn-outline-primary btn-sm mt-2">Buy</a></div>
+                    @if (this.User.Identity.IsAuthenticated)
+                    {
+                        <div class="d-flex flex-column mt-4"><a asp-action="Index" asp-controller="Orders" class="btn btn-outline-primary btn-sm mt-2">Buy</a></div>
+                    }
                 </div>
             </div>
         </div>

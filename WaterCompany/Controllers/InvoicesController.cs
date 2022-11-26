@@ -33,6 +33,55 @@
             return View(invoices);
         }
 
+        [Authorize(Roles = "Employee")]
+        public async Task<IActionResult> Edit(int? id)
+        {
+            var client = await _consumptionRepository.GetClientsAsync(id.Value);
+            var invoices = await _invoiceRepository.GetByIdAsync(id.Value);
+            var consumptions = await _consumptionRepository.GetConsumptionWithClients(id.Value);
+            var model = new Invoice();
+            if (invoices == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                model.IsPaid = invoices.IsPaid;
+                model.InvoiceDate = invoices.InvoiceDate;
+                model.Client = client;
+                model.User = invoices.User;
+                model.Consumption = consumptions;
+                model.Total = invoices.Total;
+            }
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int? id, Invoice model)
+        {
+            if (ModelState.IsValid)
+            {
+                var client = await _consumptionRepository.GetClientsAsync(id.Value);
+                var invoices = await _invoiceRepository.GetByIdAsync(id.Value);
+                var consumptions = await _consumptionRepository.GetConsumptionWithClients(id.Value);
+                if (invoices != null)
+                {
+                    invoices.IsPaid = model.IsPaid;
+                    invoices.InvoiceDate = model.InvoiceDate;
+                    invoices.User = model.User;
+                    invoices.Client = client;
+                    invoices.Consumption = consumptions;
+                    invoices.Total = invoices.Total;
+
+
+                    await _invoiceRepository.UpdateAsync(invoices);
+                    return View(model);
+                }
+            }
+            return View(model);
+        }
+
         public IActionResult InvoiceNotFound()
         {
             return View();

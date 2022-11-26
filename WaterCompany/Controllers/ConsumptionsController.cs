@@ -265,6 +265,7 @@
             }
             else
             {
+                model.Client = client;
                 model.ClientId = client.Id;
                 model.Clients = _consumptionRepository.GetComboClients();
                 model.UnitaryValue = consumptions.UnitaryValue;
@@ -310,6 +311,8 @@
 
                 invoice.Client = client;
                 invoice.Consumption = consumption;
+                invoice.Consumption.Echelon = consumption.Echelon;
+                invoice.Consumption.UnitaryValue = consumption.UnitaryValue;
                 invoice.User = await _userHelper.GetUserByUserNameAsync(this.User.Identity.Name);
 
                 await _invoiceRepository.UpdateAsync(invoice);
@@ -351,10 +354,10 @@
         [AutoValidateAntiforgeryToken]
         public async Task<IActionResult> CreateByClient(ConsumptionViewModel model)
         {
-            var client = await _consumptionRepository.GetClientsAsync(model.ClientId);
+            Client client = await _clientRepository.GetClientByUserName(this.User.Identity.Name);
             var user = await _userHelper.GetUserByUserNameAsync(this.User.Identity.Name);
-            if (ModelState.IsValid)
-            {
+            model.ClientId = client.Id;
+
                 int echelon = model.Echelon;
                 double unitaryValue = model.UnitaryValue;
                 double totalConsumption = model.TotalConsumption;
@@ -406,8 +409,6 @@
                 };
                 await _consumptionRepository.CreateAsync(consumption);
                 return RedirectToAction(nameof(ClientConsumptions));
-            }
-            return View(model);
         }
 
         public async Task<IActionResult> ClientConsumptions()
